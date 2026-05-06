@@ -15,8 +15,9 @@ export default function Layout() {
           <a href="/#about" className="hover:text-primary transition-colors">01. ABOUT</a>
           <a href="/#schedule" className="hover:text-primary transition-colors">02. SCHEDULE</a>
           <Link to="/editorial" className="hover:text-primary transition-colors">03. EDITORIAL</Link>
-          <a href="/#location" className="hover:text-primary transition-colors">04. JOIN</a>
-          <a href="/#contact" className="hover:text-primary transition-colors">05. CONTACT</a>
+          <Link to="/partners" className="hover:text-primary transition-colors">04. PARTNERS</Link>
+          <a href="/#location" className="hover:text-primary transition-colors">05. JOIN</a>
+          <a href="/#contact" className="hover:text-primary transition-colors">06. CONTACT</a>
         </div>
         <div className="flex items-center gap-4">
           <a href="https://www.twitch.tv/eggwens" target="_blank" rel="noreferrer" className="hidden sm:block">
@@ -53,6 +54,7 @@ export default function Layout() {
               <a href="/#about" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">About</a>
               <a href="/#schedule" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">Schedule</a>
               <Link to="/editorial" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">Editorial</Link>
+              <Link to="/partners" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">Partners</Link>
               <a href="/#location" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">Join</a>
               <a href="/#contact" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">Contact</a>
             </div>
