@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Terminal, MapPin, Mail, Twitter, Linkedin, Send, Clock, Users, CalendarPlus, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -216,7 +217,7 @@ export default function App() {
     <>
       
       {/* Background Graphic Watermark */}
-      <div className="fixed top-0 right-0 w-1/3 h-screen border-l border-white/10 flex items-center justify-center pointer-events-none z-0 hidden lg:flex">
+      <div className="fixed top-0 right-0 w-1/3 h-screen border-l border-white/10 items-center justify-center pointer-events-none z-0 hidden lg:flex">
         <span className="rotate-90 text-[140px] font-black text-white/5 tracking-tighter select-none whitespace-nowrap">COLLECTIVE_INPUT</span>
       </div>
 
@@ -230,8 +231,8 @@ export default function App() {
             className="w-full h-full object-cover blur-sm"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B] via-[#0A0A0B]/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0B] via-transparent to-[#0A0A0B]"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-[#0A0A0B] via-[#0A0A0B]/80 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-[#0A0A0B] via-transparent to-[#0A0A0B]"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-start gap-4">
@@ -266,6 +267,11 @@ export default function App() {
                 Join the Discord
               </Button>
             </a>
+            <Link to="/editorial">
+              <Button variant="outline" className="bg-transparent border-white/20 text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[10px] h-12 px-8 transition-colors">
+                Read Editorial
+              </Button>
+            </Link>
             <a href="https://www.twitch.tv/eggwens" target="_blank" rel="noreferrer">
               <Button variant="outline" className="bg-transparent border-white/20 text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[10px] h-12 px-8 transition-colors">
                 Watch Livestream
@@ -329,12 +335,12 @@ export default function App() {
               <div className="bg-white/5 p-6 border border-white/10 flex flex-col justify-between relative overflow-hidden">
                 <div className="text-[60px] absolute -bottom-4 -right-2 font-black opacity-10">04</div>
                 <span className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold mb-4">The Rule</span>
-                <span className="font-medium text-sm text-white/50">If your project crashes: <span className="text-primary font-bold text-white">perfect. 💀</span></span>
+                <span className="font-medium text-sm text-white/50">If your project crashes: <span className="text-primary font-bold">perfect. 💀</span></span>
               </div>
             </div>
           </div>
         </div>
-        <div className="relative aspect-square md:aspect-[4/3] overflow-hidden border border-white/10">
+        <div className="relative aspect-square md:aspect-4/3 overflow-hidden border border-white/10">
            <img 
             src="https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=3540&auto=format&fit=crop" 
             alt="Abstract coding graphic"
@@ -375,7 +381,7 @@ export default function App() {
               <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 relative z-10 w-full">
                 <div className="w-full lg:w-56 h-48 lg:h-auto lg:self-stretch shrink-0 rounded border border-white/10 overflow-hidden relative group/img">
                   <img src="https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?auto=format&fit=crop&q=80&w=800" alt="Creative coding session" className="w-full h-full object-cover absolute inset-0 opacity-60 grayscale-[0.5] group-hover/img:opacity-100 group-hover/img:grayscale-0 group-hover/img:scale-105 transition-all duration-700 ease-out" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B] via-transparent to-transparent opacity-80"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-[#0A0A0B] via-transparent to-transparent opacity-80"></div>
                   <div className="absolute inset-0 bg-primary/20 mix-blend-overlay group-hover/img:opacity-0 transition-opacity duration-700 z-10"></div>
                 </div>
                 <div className="text-left font-mono shrink-0 md:min-w-32">
@@ -462,7 +468,7 @@ export default function App() {
               <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 relative z-10 w-full">
                 <div className="w-full lg:w-56 h-48 lg:h-auto lg:self-stretch shrink-0 rounded border border-white/10 overflow-hidden relative group/img">
                   <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=800" alt="Downtown creative jam session" className="w-full h-full object-cover absolute inset-0 opacity-60 grayscale-[0.5] group-hover/img:opacity-100 group-hover/img:grayscale-0 group-hover/img:scale-105 transition-all duration-700 ease-out" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B] via-transparent to-transparent opacity-80"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-[#0A0A0B] via-transparent to-transparent opacity-80"></div>
                   <div className="absolute inset-0 bg-primary/20 mix-blend-overlay group-hover/img:opacity-0 transition-opacity duration-700 z-10"></div>
                 </div>
                 <div className="text-left font-mono shrink-0 md:min-w-32">

@@ -14,8 +14,9 @@ export default function Layout() {
         <div className="hidden md:flex items-center gap-8 text-[10px] font-bold uppercase tracking-widest text-white/60">
           <a href="/#about" className="hover:text-primary transition-colors">01. ABOUT</a>
           <a href="/#schedule" className="hover:text-primary transition-colors">02. SCHEDULE</a>
-          <a href="/#location" className="hover:text-primary transition-colors">03. JOIN</a>
-          <a href="/#contact" className="hover:text-primary transition-colors">04. CONTACT</a>
+          <Link to="/editorial" className="hover:text-primary transition-colors">03. EDITORIAL</Link>
+          <a href="/#location" className="hover:text-primary transition-colors">04. JOIN</a>
+          <a href="/#contact" className="hover:text-primary transition-colors">05. CONTACT</a>
         </div>
         <div className="flex items-center gap-4">
           <a href="https://www.twitch.tv/eggwens" target="_blank" rel="noreferrer" className="hidden sm:block">
@@ -51,6 +52,7 @@ export default function Layout() {
               <h4 className="text-[10px] uppercase tracking-[0.2em] font-bold text-white mb-2">Platform</h4>
               <a href="/#about" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">About</a>
               <a href="/#schedule" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">Schedule</a>
+              <Link to="/editorial" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">Editorial</Link>
               <a href="/#location" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">Join</a>
               <a href="/#contact" className="text-white/60 hover:text-primary transition-colors text-sm font-medium">Contact</a>
             </div>
