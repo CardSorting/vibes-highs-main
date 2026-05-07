@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   ExternalLink, ShieldCheck, Zap, Globe, Cpu, School, ArrowRight, Layers, 
   Command, Search, Github, Twitter, Linkedin, MapPin, Calendar, Info, 
-  TrendingUp, TrendingDown, Minus, BookOpen, Activity, Link as LinkIcon, Sparkles, Terminal
+  TrendingUp, TrendingDown, Minus, BookOpen, Activity, Link as LinkIcon, Sparkles, Terminal,
+  Copy, Check, Filter, X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,12 +17,15 @@ import {
 import { partners, Partner } from '../data/partners';
 import { editorialPosts } from '../data/editorial';
 import SEO from '../components/SEO';
+import { toast } from 'sonner';
 
 export default function Partners() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isCopied, setIsCopied] = useState(false);
   
   const activeCategory = searchParams.get('category') || 'All';
+  const activeTier = searchParams.get('tier') || 'All';
   const selectedPartnerId = searchParams.get('partner');
 
   const selectedPartner = useMemo(() => 
@@ -31,28 +35,23 @@ export default function Partners() {
   const categories = useMemo(() => 
     ['All', ...new Set(partners.filter(p => p.tier !== 'SPOTLIGHT').map(p => p.category))], 
   []);
+
+  const tiers = ['All', 'TITAN', 'PLATINUM', 'GOLD'];
   
   const filteredPartners = useMemo(() => {
     return partners.filter(p => {
       const matchesCategory = activeCategory === 'All' || p.category === activeCategory || p.tier === 'SPOTLIGHT';
+      const matchesTier = activeTier === 'All' || p.tier === activeTier || p.tier === 'SPOTLIGHT';
       const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                            p.description.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch && p.tier !== 'SPOTLIGHT';
+      return matchesCategory && matchesTier && matchesSearch && p.tier !== 'SPOTLIGHT';
     });
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, activeTier, searchQuery]);
 
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = { 'All': partners.filter(p => p.tier !== 'SPOTLIGHT').length };
-    partners.filter(p => p.tier !== 'SPOTLIGHT').forEach(p => {
-      counts[p.category] = (counts[p.category] || 0) + 1;
-    });
-    return counts;
-  }, []);
-
-  const handleCategoryChange = (category: string) => {
+  const handleFilterChange = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
-    if (category === 'All') params.delete('category');
-    else params.set('category', category);
+    if (value === 'All') params.delete(key);
+    else params.set(key, value);
     setSearchParams(params);
   };
 
@@ -61,6 +60,15 @@ export default function Partners() {
     if (partner) params.set('partner', partner.id);
     else params.delete('partner');
     setSearchParams(params);
+  };
+
+  const handleCopyLink = () => {
+    if (!selectedPartner) return;
+    const url = `${window.location.origin}${window.location.pathname}?partner=${selectedPartner.id}`;
+    navigator.clipboard.writeText(url);
+    setIsCopied(true);
+    toast.success("Link copied to clipboard!");
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   // SEO Breadcrumbs
@@ -72,6 +80,18 @@ export default function Partners() {
     breadcrumbs.push({ name: selectedPartner.name, item: `/partners?partner=${selectedPartner.id}` });
   }
 
+  // Dynamic Partner Schema
+  const partnerSchema = selectedPartner ? {
+    "@type": "Service",
+    "name": selectedPartner.name,
+    "description": selectedPartner.description,
+    "provider": {
+      "@type": "Organization",
+      "name": selectedPartner.name,
+      "url": selectedPartner.link
+    }
+  } : undefined;
+
   return (
     <div className="pt-24 min-h-screen bg-[#0A0A0B] selection:bg-primary selection:text-black">
       <SEO 
@@ -79,7 +99,8 @@ export default function Partners() {
         description={selectedPartner ? selectedPartner.description : "Explore the curated network of technical leaders and community pillars powering the Vibes & Highs ecosystem."}
         ogImage={selectedPartner?.logo}
         breadcrumbs={breadcrumbs}
-        keywords={[...(selectedPartner?.features || []), "partners", "ecosystem", "AI infrastructure", "V&H network"]}
+        structuredData={partnerSchema}
+        keywords={[...(selectedPartner?.features || []), "partners", "ecosystem", "AI infrastructure", "V&H network", "mariecoder"]}
       />
       
       {/* Background Decor */}
@@ -97,7 +118,7 @@ export default function Partners() {
                 animate={{ opacity: 1, x: 0 }}
                 className="flex items-center gap-2 text-primary font-mono text-[10px] uppercase tracking-[0.4em] mb-6"
               >
-                <Layers size={12} /> Ecosystem & Foundation
+                <Layers size={12} /> Registry & Ecosystem
               </motion.div>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -105,8 +126,8 @@ export default function Partners() {
                 transition={{ delay: 0.1 }}
                 className="font-display font-black text-6xl md:text-8xl tracking-tighter leading-none mb-8"
               >
-                CURATED <br />
-                <span className="font-serif italic font-light text-white/40">Collective.</span>
+                THE <br />
+                <span className="font-serif italic font-light text-white/40">Backbone.</span>
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }}
@@ -114,34 +135,17 @@ export default function Partners() {
                 transition={{ delay: 0.2 }}
                 className="text-white/60 text-xl font-light leading-relaxed"
               >
-                We don't just list logos. We integrate partners that provide the technical primitives and community substrate required to build the future of creative AI and internet culture.
+                Explore the technical registry of partners that provide the compute, intelligence, and networking substrate for the Vibes & Highs community.
               </motion.p>
             </div>
-            
-            {/* Quick Pulse Stats */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="hidden sm:flex gap-12 border-l border-white/10 pl-12 py-4"
-            >
-              <div>
-                <div className="text-2xl font-display font-black text-white">{partners.length}</div>
-                <div className="text-[10px] uppercase tracking-widest text-white/40 font-bold">Total Allies</div>
-              </div>
-              <div>
-                <div className="text-2xl font-display font-black text-primary">{categories.length - 1}</div>
-                <div className="text-[10px] uppercase tracking-widest text-white/40 font-bold">Tech Domains</div>
-              </div>
-            </motion.div>
           </div>
         </div>
 
-        {/* Spotlight Section */}
+        {/* Origin Spotlight */}
         <section className="mb-48">
           <div className="flex items-center gap-4 mb-8">
             <h2 className="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2">
-              <Sparkles size={14} /> Origin Spotlight
+              <Sparkles size={14} /> Origin spotlight
             </h2>
             <div className="h-px flex-1 bg-primary/20"></div>
           </div>
@@ -153,40 +157,56 @@ export default function Partners() {
           </div>
         </section>
 
-        {/* Discovery Interface */}
-        <div className="sticky top-24 z-30 mb-16 py-6 bg-[#0A0A0B]/95 backdrop-blur-xl border-y border-white/5 flex flex-col lg:flex-row items-center justify-between gap-8 px-6">
-          <div className="flex flex-col sm:flex-row items-center gap-6 w-full lg:w-auto">
-            <div className="relative w-full sm:w-80">
+        {/* Discovery & Filtering Interface */}
+        <div className="sticky top-24 z-30 mb-16 py-8 bg-[#0A0A0B]/95 backdrop-blur-xl border-y border-white/5 space-y-8 px-6">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="relative w-full lg:w-96">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={16} />
               <Input 
-                placeholder="Search registry..." 
+                placeholder="Search technical registry..." 
                 className="pl-10 bg-white/5 border-white/10 text-white rounded-none focus-visible:ring-primary focus-visible:border-primary placeholder:text-white/20 font-mono text-[10px] uppercase tracking-widest h-12"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="hidden sm:flex items-center gap-2 text-white/20 text-[10px] font-bold uppercase tracking-widest">
-              <Activity size={12} /> {filteredPartners.length} Registry Entries
+            
+            <div className="flex items-center gap-8 w-full lg:w-auto overflow-x-auto no-scrollbar pb-2 lg:pb-0">
+               <div className="flex items-center gap-3 shrink-0">
+                  <Filter size={12} className="text-white/20" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-white/20">Tiers:</span>
+                  <div className="flex gap-2">
+                    {tiers.map(tier => (
+                      <button 
+                        key={tier}
+                        onClick={() => handleFilterChange('tier', tier)}
+                        className={`px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all ${
+                          activeTier === tier ? 'bg-primary text-black' : 'bg-white/5 text-white/40 hover:bg-white/10'
+                        }`}
+                      >
+                        {tier}
+                      </button>
+                    ))}
+                  </div>
+               </div>
+               <div className="h-4 w-px bg-white/10 shrink-0" />
+               <div className="flex items-center gap-2 text-white/20 text-[10px] font-bold uppercase tracking-widest shrink-0">
+                <Activity size={12} /> {filteredPartners.length} Nodes Online
+              </div>
             </div>
           </div>
           
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap gap-2 pt-2 border-t border-white/5">
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => handleCategoryChange(cat)}
-                className={`group flex items-center gap-3 px-4 py-3 rounded-none text-[10px] font-bold uppercase tracking-widest transition-all ${
+                onClick={() => handleFilterChange('category', cat)}
+                className={`group flex items-center gap-3 px-4 py-2 rounded-none text-[10px] font-bold uppercase tracking-widest transition-all ${
                   activeCategory === cat 
-                    ? 'bg-primary text-black' 
-                    : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white'
+                    ? 'bg-white/10 text-primary border border-primary/50' 
+                    : 'text-white/40 hover:text-white'
                 }`}
               >
                 {cat}
-                <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${
-                   activeCategory === cat ? 'bg-black/10 text-black' : 'bg-white/5 text-white/30 group-hover:text-white'
-                }`}>
-                  {categoryCounts[cat]}
-                </span>
               </button>
             ))}
           </div>
@@ -211,13 +231,13 @@ export default function Partners() {
             ) : (
               <div className="col-span-2 py-32 flex flex-col items-center justify-center text-white/20 space-y-4">
                 <Search size={48} strokeWidth={1} />
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em]">No matching records found in registry</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em]">No matching records found</p>
                 <Button 
                   variant="ghost" 
-                  onClick={() => {setSearchQuery(''); handleCategoryChange('All')}}
+                  onClick={() => {setSearchQuery(''); handleFilterChange('category', 'All'); handleFilterChange('tier', 'All')}}
                   className="text-primary hover:text-primary hover:bg-primary/5 text-[10px] font-bold uppercase tracking-widest"
                 >
-                  Clear Filters
+                  Reset Registry
                 </Button>
               </div>
             )}
@@ -237,9 +257,18 @@ export default function Partners() {
                         <PartnerIcon name={selectedPartner.name} size={40} className="text-primary" />
                         <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
-                      <Badge className="bg-primary text-black rounded-none font-mono text-[10px] uppercase tracking-widest mb-4">
-                        {selectedPartner.tier}
-                      </Badge>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <Badge className="bg-primary text-black rounded-none font-mono text-[10px] uppercase tracking-widest">
+                          {selectedPartner.tier}
+                        </Badge>
+                        <button 
+                          onClick={handleCopyLink}
+                          className="p-1.5 bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-white/40 hover:text-white"
+                          title="Copy Link"
+                        >
+                          {isCopied ? <Check size={12} className="text-green-500" /> : <Copy size={12} />}
+                        </button>
+                      </div>
                       <h2 className="text-3xl font-display font-black uppercase tracking-tighter mb-2">{selectedPartner.name}</h2>
                       <p className="text-white/40 font-mono text-[10px] uppercase tracking-widest mb-8">{selectedPartner.category}</p>
                       
@@ -261,20 +290,23 @@ export default function Partners() {
                               <Github size={18} />
                             </a>
                           )}
-                          {selectedPartner.socials?.linkedin && (
-                            <a href={selectedPartner.socials.linkedin} target="_blank" rel="noreferrer" className="text-white/40 hover:text-primary transition-colors">
-                              <Linkedin size={18} />
-                            </a>
-                          )}
                         </div>
                       </div>
                     </div>
                     
-                    <a href={selectedPartner.link} target="_blank" rel="noreferrer" className="mt-12">
-                      <Button className="w-full bg-white text-black hover:bg-primary font-bold uppercase tracking-widest text-[10px] h-12 rounded-none">
-                        Visit Official Node <ExternalLink size={14} className="ml-2" />
-                      </Button>
-                    </a>
+                    <div className="space-y-4 mt-12">
+                      <a href={selectedPartner.link} target="_blank" rel="noreferrer" className="block">
+                        <Button className="w-full bg-white text-black hover:bg-primary font-bold uppercase tracking-widest text-[10px] h-12 rounded-none">
+                          Visit node <ExternalLink size={14} className="ml-2" />
+                        </Button>
+                      </a>
+                      <button 
+                        onClick={() => setSelectedPartner(null)}
+                        className="w-full flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/20 hover:text-white transition-colors py-2"
+                      >
+                        <X size={12} /> Exit investigation
+                      </button>
+                    </div>
                   </div>
                   
                   {/* Right Column: Content */}
@@ -282,7 +314,7 @@ export default function Partners() {
                     <div className="space-y-16">
                       <section>
                         <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary mb-6 flex items-center gap-2">
-                          <Info size={12} /> Technical Investigation
+                          <Info size={12} /> Detailed Investigation
                         </h3>
                         <p className="text-white/70 text-lg font-light leading-relaxed max-w-2xl">
                           {selectedPartner.longDescription || selectedPartner.description}
@@ -371,7 +403,7 @@ export default function Partners() {
                               <span className="text-[9px] font-mono uppercase tracking-widest font-bold">SHA_VERIFIED</span>
                             </div>
                          </div>
-                         <Badge variant="outline" className="border-primary/30 text-primary/60 text-[8px] font-mono rounded-none">V&H_SYSLOG_REV_04</Badge>
+                         <Badge variant="outline" className="border-primary/30 text-primary/60 text-[8px] font-mono rounded-none">V&H_SYSLOG_REV_05</Badge>
                       </section>
                     </div>
                   </div>
@@ -395,17 +427,17 @@ export default function Partners() {
               <span className="font-serif italic font-light text-primary">Collective.</span>
             </h2>
             <p className="text-white/60 text-lg font-light leading-relaxed mb-8">
-              Are you building the future of internet culture, AI, or infrastructure? We're looking for partners who want to support a new kind of creative collective.
+              Are you building the future of internet culture, AI, or infrastructure? Join the mariecoder collective and help us build the weird web.
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="mailto:willcruzdesigner@gmail.com">
                 <Button className="bg-white text-black hover:bg-primary font-bold uppercase tracking-widest text-[10px] h-14 px-10 transition-all group rounded-none">
-                  Sponsorship Protocol <ArrowRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  Registry protocol <ArrowRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </a>
               <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer">
                 <Button variant="outline" className="border-white/10 text-white hover:bg-white/5 font-bold uppercase tracking-widest text-[10px] h-14 px-10 rounded-none">
-                  Enter Discord
+                  Enter Community
                 </Button>
               </a>
             </div>
@@ -444,7 +476,7 @@ function OriginCard({ partner }: { partner: Partner; key?: string }) {
 
       <div className="flex-1 flex flex-col justify-center">
         <div className="flex items-center gap-3 mb-4">
-          <span className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-primary">Foundational Momentum</span>
+          <span className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-primary">Foundational Roots</span>
           <div className="h-px w-8 bg-primary/40"></div>
         </div>
         <h3 className="font-display font-black text-4xl md:text-7xl tracking-tighter text-white uppercase group-hover:text-primary transition-colors leading-none mb-6">
@@ -454,7 +486,7 @@ function OriginCard({ partner }: { partner: Partner; key?: string }) {
           {partner.description}
         </p>
         <div className="flex items-center gap-4 text-primary font-mono text-[10px] uppercase tracking-widest font-black group-hover:gap-6 transition-all">
-          Explore Origin Node <ArrowRight size={14} />
+          Explore origin node <ArrowRight size={14} />
         </div>
       </div>
     </motion.a>
@@ -496,9 +528,9 @@ function PartnerEntry({ partner, onClick }: { partner: Partner; onClick: () => v
           
           <div className="pt-6 border-t border-white/5">
             <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.2em]">
-              <span className="text-white/30 group-hover:text-primary transition-colors">Status: {partner.tier === 'TITAN' ? 'CRITICAL_INFRA' : 'ACTIVE_ALLY'}</span>
+              <span className="text-white/30 group-hover:text-primary transition-colors">Role: {partner.tier}</span>
               <span className="text-white/20 group-hover:text-white/50 transition-colors flex items-center gap-2 font-black">
-                Dig Deeper <ArrowRight size={10} />
+                Registry search <ArrowRight size={10} />
               </span>
             </div>
           </div>

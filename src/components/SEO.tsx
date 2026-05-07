@@ -22,10 +22,10 @@ interface SEOProps {
 
 const DEFAULT_TITLE = "Vibes & Highs | Creative Collective & Meetup";
 const DEFAULT_DESCRIPTION = "A casual meetup for people who make weird things. Code. Art. Music. Games. AI experiments. Internet projects. Half-finished ideas. Side quests.";
-const DEFAULT_URL = "https://vibesandhighs.com";
-const DEFAULT_KEYWORDS = ["creative meetup", "salt lake city", "tech community", "builders", "designers", "artists", "coding meetup", "AI research", "open source"];
+const DEFAULT_URL = "https://mariecoder.com";
+const DEFAULT_KEYWORDS = ["creative meetup", "salt lake city", "tech community", "builders", "designers", "artists", "coding meetup", "AI research", "open source", "mariecoder"];
 const DEFAULT_OG_IMAGE = "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop";
-const DEFAULT_TWITTER_HANDLE = "@vibesandhighs";
+const DEFAULT_TWITTER_HANDLE = "@goldeneggie";
 
 export default function SEO({ 
   title, 

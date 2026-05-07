@@ -48,9 +48,9 @@ export default function Layout() {
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               link.isAnchor ? (
-                <a 
+                <a
                   key={link.path}
-                  href={link.path} 
+                  href={link.path}
                   className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:text-primary relative group ${isActive(link.path) ? 'text-primary' : 'text-white/60'}`}
                 >
                   {link.label}
@@ -59,9 +59,9 @@ export default function Layout() {
                   )}
                 </a>
               ) : (
-                <Link 
+                <Link
                   key={link.path}
-                  to={link.path} 
+                  to={link.path}
                   className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:text-primary relative group ${isActive(link.path) ? 'text-primary' : 'text-white/60'}`}
                 >
                   {link.label}
@@ -92,7 +92,7 @@ export default function Layout() {
                 <Github size={16} />
               </a>
             </div>
-            
+
             <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="hidden md:block">
               <Button className="bg-white text-black hover:bg-primary font-bold uppercase tracking-widest text-[10px] h-11 px-8 rounded-none transition-all shadow-lg shadow-white/5">
                 Join Discord
@@ -100,7 +100,7 @@ export default function Layout() {
             </a>
 
             {/* Mobile Menu Toggle */}
-            <button 
+            <button
               className="lg:hidden w-11 h-11 flex items-center justify-center bg-white/5 border border-white/10 text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -129,7 +129,7 @@ export default function Layout() {
                   transition={{ delay: idx * 0.05 }}
                 >
                   {link.isAnchor ? (
-                    <a 
+                    <a
                       href={link.path}
                       className={`text-4xl font-display font-black uppercase tracking-tighter ${isActive(link.path) ? 'text-primary' : 'text-white/40 hover:text-white'}`}
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -137,7 +137,7 @@ export default function Layout() {
                       {link.label}
                     </a>
                   ) : (
-                    <Link 
+                    <Link
                       to={link.path}
                       className={`text-4xl font-display font-black uppercase tracking-tighter ${isActive(link.path) ? 'text-primary' : 'text-white/40 hover:text-white'}`}
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -167,7 +167,7 @@ export default function Layout() {
           </motion.div>
         )}
       </AnimatePresence>
-      
+
       <main className="relative pt-20">
         <Breadcrumbs />
         <Outlet />
@@ -188,7 +188,7 @@ export default function Layout() {
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((i) => (
                     <div key={i} className="w-10 h-10 rounded-full border-2 border-[#0A0A0B] bg-white/10 overflow-hidden">
-                      <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="Community member" className="grayscale" />
+                      <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Community member" className="grayscale" />
                     </div>
                   ))}
                 </div>
@@ -221,10 +221,10 @@ export default function Layout() {
               <div className="space-y-6">
                 <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-primary">Socials</h4>
                 <ul className="space-y-4">
-                  <li><a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Discord</a></li>
+                  <li><a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Discord Server</a></li>
                   <li><a href="https://x.com/goldeneggie" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Twitter / X</a></li>
-                  <li><a href="https://www.twitch.tv/eggwens" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Twitch</a></li>
-                  <li><a href="https://github.com/dreambees" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">GitHub</a></li>
+                  <li><a href="mailto:willcruzdesigner@gmail.com" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Email Contact</a></li>
+                  <li><a href="https://github.com/cardsorting" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">GitHub</a></li>
                 </ul>
               </div>
 
