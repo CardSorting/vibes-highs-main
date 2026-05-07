@@ -4,6 +4,8 @@ export interface Partner {
   logo: string;
   description: string;
   longDescription?: string;
+  eli5?: string; // "Explain Like I'm Five" - non-technical summary
+  systemRole?: string; // Role in the ecosystem (e.g., "The Brain", "The Engine", "The Shield")
   tier: 'TITAN' | 'PLATINUM' | 'GOLD' | 'SPOTLIGHT';
   category: string;
   link: string;
@@ -29,7 +31,9 @@ export const partners: Partner[] = [
     name: "Modal",
     logo: "https://modal.com/logo.svg",
     description: "Powering our high-performance AI experiments and serverless infrastructure for community projects.",
-    longDescription: "Modal is building the cloud for the future of AI. Their serverless platform allows us to run complex machine learning workloads, media processing, and high-performance computing without the overhead of managing infrastructure. For Vibes & Highs, Modal provides the compute backbone for our most ambitious technical experiments.",
+    longDescription: "Modal is building the cloud for the future of AI. Their serverless platform allows us to run complex machine learning workloads, media processing, and high-performance computing without the overhead of managing infrastructure.",
+    eli5: "A super-fast computer in the cloud that we can rent by the second to run smart AI programs without having to build our own servers.",
+    systemRole: "THE ENGINE",
     tier: "TITAN",
     category: "AI Infrastructure",
     link: "https://modal.com",
@@ -51,7 +55,9 @@ export const partners: Partner[] = [
     name: "NousResearch",
     logo: "https://nousresearch.com/logo.png",
     description: "Advancing open-source intelligence and providing the models that fuel our latent space explorations.",
-    longDescription: "Nous Research is at the forefront of open-source AI development. They focus on fine-tuning and developing state-of-the-art models that rival proprietary systems. Their commitment to open intelligence aligns perfectly with our ethos of creative experimentation and shared knowledge.",
+    longDescription: "Nous Research is at the forefront of open-source AI development. They focus on fine-tuning and developing state-of-the-art models that rival proprietary systems.",
+    eli5: "A group of researchers making open-source 'brains' for AI that anyone can use and learn from, making sure smart technology isn't just owned by big companies.",
+    systemRole: "THE INTELLIGENCE",
     tier: "TITAN",
     category: "Intelligence & Research",
     link: "https://nousresearch.com",
@@ -72,7 +78,9 @@ export const partners: Partner[] = [
     name: "Cloudflare",
     logo: "https://www.cloudflare.com/img/logo-cloudflare-dark.svg",
     description: "Securing our digital perimeter and ensuring low-latency delivery of weird internet things.",
-    longDescription: "Cloudflare is more than just a CDN. It's the security and performance layer of the modern internet. By utilizing Cloudflare Workers and their global edge network, we ensure that Vibes & Highs projects are fast, secure, and always accessible, no matter where our community is located.",
+    longDescription: "Cloudflare is more than just a CDN. It's the security and performance layer of the modern internet. By utilizing Cloudflare Workers and their global edge network.",
+    eli5: "A digital security guard and delivery service that makes sure our website is safe from hackers and loads incredibly fast for everyone around the world.",
+    systemRole: "THE SHIELD",
     tier: "PLATINUM",
     category: "Security & Network",
     link: "https://cloudflare.com",
@@ -94,7 +102,9 @@ export const partners: Partner[] = [
     name: "Google",
     logo: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png",
     description: "Providing the compute and cloud primitives that allow us to scale our creative output.",
-    longDescription: "Google Cloud Platform provides the fundamental building blocks for our digital infrastructure. From scalable storage to global networking, Google's technical primitives allow us to focus on the creative side of our projects while knowing the foundation is solid.",
+    longDescription: "Google Cloud Platform provides the fundamental building blocks for our digital infrastructure. From scalable storage to global networking.",
+    eli5: "The giant toolkit we use to store our data and connect our projects to the rest of the world using some of the most powerful technology on Earth.",
+    systemRole: "THE FOUNDATION",
     tier: "PLATINUM",
     category: "Cloud Computing",
     link: "https://google.com",
@@ -107,8 +117,10 @@ export const partners: Partner[] = [
     id: "silicon-slopes",
     name: "Silicon Slopes",
     logo: "https://www.siliconslopes.com/content/images/2023/04/Silicon-Slopes-Logo-Vertical-Black.png",
-    description: "Vibes & Highs emerged from the Silicon Slopes Start School community. We are proud to spotlight the network that helped spark our origin.",
-    longDescription: "Silicon Slopes is the heart of Utah's technology ecosystem. Vibes & Highs was born out of the 'Start School' initiative, where builders and creators gather to learn and grow. We owe our foundational momentum to this incredible community of entrepreneurs and technical talent.",
+    description: "Vibes & Highs emerged from the Silicon Slopes Start School community.",
+    longDescription: "Silicon Slopes is the heart of Utah's technology ecosystem. Vibes & Highs was born out of the 'Start School' initiative, where builders and creators gather to learn and grow.",
+    eli5: "The community of creators in Utah where Vibes & Highs first started, helping us find our feet and grow as a group of builders.",
+    systemRole: "THE ROOTS",
     tier: "SPOTLIGHT",
     category: "Community & Origins",
     link: "https://www.siliconslopes.com/",

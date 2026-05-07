@@ -46,6 +46,9 @@ export default function SEO({
   const currentUrl = canonical || window.location.href;
 
   useEffect(() => {
+    // Normalize URL for canonical
+    const normalizedUrl = currentUrl.replace(/\/$/, "");
+
     // Update Title
     document.title = fullTitle;
 
@@ -70,7 +73,7 @@ export default function SEO({
     // OpenGraph
     updateMetaTag('meta[property="og:title"]', 'property', 'og:title', fullTitle);
     updateMetaTag('meta[property="og:description"]', 'property', 'og:description', fullDescription);
-    updateMetaTag('meta[property="og:url"]', 'property', 'og:url', currentUrl);
+    updateMetaTag('meta[property="og:url"]', 'property', 'og:url', normalizedUrl);
     updateMetaTag('meta[property="og:type"]', 'property', 'og:type', ogType);
     updateMetaTag('meta[property="og:image"]', 'property', 'og:image', ogImage);
     updateMetaTag('meta[property="og:site_name"]', 'property', 'og:site_name', 'Vibes & Highs');
@@ -90,7 +93,18 @@ export default function SEO({
       link.setAttribute('rel', 'canonical');
       document.head.appendChild(link);
     }
-    link.setAttribute('href', currentUrl);
+    link.setAttribute('href', normalizedUrl);
+
+    // Performance: Preconnect
+    const preconnects = ["https://images.unsplash.com", "https://fonts.googleapis.com", "https://fonts.gstatic.com"];
+    preconnects.forEach(url => {
+      if (!document.querySelector(`link[href="${url}"][rel="preconnect"]`)) {
+        const pLink = document.createElement('link');
+        pLink.rel = "preconnect";
+        pLink.href = url;
+        document.head.appendChild(pLink);
+      }
+    });
 
     // Structured Data
     const schemas: any[] = [];
@@ -102,13 +116,28 @@ export default function SEO({
       "name": "Vibes & Highs",
       "url": DEFAULT_URL,
       "description": DEFAULT_DESCRIPTION,
-      "publisher": {
-        "@type": "Organization",
-        "name": "Vibes & Highs",
-        "logo": {
-          "@type": "ImageObject",
-          "url": DEFAULT_OG_IMAGE
-        }
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": `${DEFAULT_URL}/partners?partner={search_term_string}`,
+        "query-input": "required name=search_term_string"
+      }
+    });
+
+    // Organization Schema
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Vibes & Highs Collective",
+      "url": DEFAULT_URL,
+      "logo": DEFAULT_OG_IMAGE,
+      "sameAs": [
+        "https://x.com/goldeneggie",
+        "https://discord.gg/ua5UUXZTyz"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "willcruzdesigner@gmail.com",
+        "contactType": "Community Support"
       }
     });
 
@@ -141,14 +170,12 @@ export default function SEO({
       script.type = 'application/ld+json';
       document.head.appendChild(script);
     }
-    script.text = JSON.stringify(schemas.length === 1 ? schemas[0] : schemas);
+    script.text = JSON.stringify(schemas);
 
-    return () => {
-      // Cleanup structured data if needed
-    };
   }, [fullTitle, fullDescription, currentUrl, ogType, ogImage, keywords, structuredData, breadcrumbs, robots, author, themeColor, twitterHandle]);
 
   return null;
 }
+
 
 
