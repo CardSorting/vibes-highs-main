@@ -3,7 +3,8 @@ export interface Partner {
   name: string;
   logo: string;
   description: string;
-  tier: 'TITAN' | 'PLATINUM' | 'GOLD';
+  tier: 'TITAN' | 'PLATINUM' | 'GOLD' | 'SPOTLIGHT';
+  category: string;
   link: string;
 }
 
@@ -11,9 +12,10 @@ export const partners: Partner[] = [
   {
     id: "1",
     name: "Modal",
-    logo: "https://modal.com/logo.svg", // Fallback to a nice placeholder if needed, but I'll use text-based logos or stylized cards
+    logo: "https://modal.com/logo.svg",
     description: "Powering our high-performance AI experiments and serverless infrastructure for community projects.",
     tier: "TITAN",
+    category: "AI Infrastructure",
     link: "https://modal.com"
   },
   {
@@ -22,6 +24,7 @@ export const partners: Partner[] = [
     logo: "https://nousresearch.com/logo.png",
     description: "Advancing open-source intelligence and providing the models that fuel our latent space explorations.",
     tier: "TITAN",
+    category: "Intelligence & Research",
     link: "https://nousresearch.com"
   },
   {
@@ -30,6 +33,7 @@ export const partners: Partner[] = [
     logo: "https://www.cloudflare.com/img/logo-cloudflare-dark.svg",
     description: "Securing our digital perimeter and ensuring low-latency delivery of weird internet things.",
     tier: "PLATINUM",
+    category: "Security & Network",
     link: "https://cloudflare.com"
   },
   {
@@ -38,14 +42,16 @@ export const partners: Partner[] = [
     logo: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png",
     description: "Providing the compute and cloud primitives that allow us to scale our creative output.",
     tier: "PLATINUM",
+    category: "Cloud Computing",
     link: "https://google.com"
   },
   {
     id: "5",
     name: "Silicon Slopes",
     logo: "https://www.siliconslopes.com/content/images/2023/04/Silicon-Slopes-Logo-Vertical-Black.png",
-    description: "Championing Utah's startup and builder scene through open, community-centric support and the Start School initiative.",
-    tier: "PLATINUM",
+    description: "Vibes & Highs emerged from the Silicon Slopes Start School community. We are proud to spotlight the network that helped spark our origin and continues to champion Utah's builder scene.",
+    tier: "SPOTLIGHT",
+    category: "Community & Origins",
     link: "https://www.siliconslopes.com/"
   }
 ];

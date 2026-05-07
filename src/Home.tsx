@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Terminal, MapPin, Mail, Twitter, Linkedin, Send, Clock, Users, CalendarPlus, Share2 } from 'lucide-react';
+import { Terminal, MapPin, Mail, Twitter, Linkedin, Send, Clock, Users, CalendarPlus, Share2, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -544,6 +544,115 @@ export default function App() {
               </div>
             </Card>
           </div>
+
+          {/* Experimental Notice */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-16 p-8 border border-dashed border-primary/30 bg-primary/5 relative overflow-hidden group rounded-none"
+          >
+            {/* Background scanline effect */}
+            <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(0,255,0,0.03),rgba(0,255,0,0.01),rgba(0,255,0,0.03))] bg-size-[100%_4px,4px_100%] z-0 opacity-30"></div>
+            
+            <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-primary/50 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-primary/20 to-transparent"></div>
+            
+            <div className="flex flex-col md:flex-row gap-8 items-start relative z-10">
+              <div className="shrink-0 hidden sm:block">
+                <div className="w-16 h-16 rounded-none border border-primary/20 flex items-center justify-center bg-primary/10 text-primary animate-pulse">
+                  <AlertTriangle size={32} />
+                </div>
+              </div>
+              
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="sm:hidden w-8 h-8 rounded-none border border-primary/20 flex items-center justify-center bg-primary/10 text-primary">
+                    <AlertTriangle size={16} />
+                  </div>
+                  <div>
+                    <h3 className="font-mono text-primary text-[10px] font-bold tracking-[0.3em] uppercase">
+                      System Notice // experimental_v0.1
+                    </h3>
+                    <h4 className="font-display font-black text-2xl sm:text-4xl tracking-tighter text-white mt-1 uppercase">
+                      ⚠️ Vibes & Highs — Experimental Meetup Notice ⚠️
+                    </h4>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                  <div className="space-y-4">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[10px] uppercase text-white/40 font-bold tracking-widest font-mono">Current Phase</span>
+                      <div className="inline-block px-3 py-1.5 bg-primary/20 border border-primary/40 text-primary text-[11px] font-black uppercase tracking-widest w-max">
+                        PRE-ALPHA COMMUNITY MODE 💀
+                      </div>
+                    </div>
+                    <p className="text-white/70 text-sm leading-relaxed font-light">
+                      This is a low-pressure experimental creative meetup built around:
+                    </p>
+                    <ul className="grid grid-cols-1 gap-1 text-white/90 text-xs font-mono">
+                      <li className="flex items-center gap-2"><span className="text-primary">/</span> weird projects</li>
+                      <li className="flex items-center gap-2"><span className="text-primary">/</span> side quests</li>
+                      <li className="flex items-center gap-2"><span className="text-primary">/</span> vibecoding</li>
+                      <li className="flex items-center gap-2"><span className="text-primary">/</span> demos</li>
+                      <li className="flex items-center gap-2"><span className="text-primary">/</span> internet energy</li>
+                      <li className="flex items-center gap-2"><span className="text-primary">/</span> spontaneous collaboration</li>
+                    </ul>
+                    <p className="text-white/40 text-[10px] font-mono italic mt-2">Not corporate infrastructure. 😂</p>
+                  </div>
+
+                  <div className="space-y-4 border-l border-white/5 pl-0 lg:pl-10">
+                    <span className="text-[10px] uppercase text-white/40 font-bold tracking-widest font-mono">Deployment Logic</span>
+                    <p className="text-white/70 text-sm leading-relaxed font-light">
+                      This meetup may occur:
+                    </p>
+                    <ul className="space-y-1.5 text-white/90 text-xs font-mono">
+                      <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-primary/50"></span> in-person</li>
+                      <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-primary/50"></span> virtually</li>
+                      <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-primary/50"></span> hybrid</li>
+                      <li className="flex items-center gap-2 text-primary font-bold"><span className="w-1.5 h-1.5 bg-primary animate-pulse"></span> or somewhere between chaos and failure</li>
+                    </ul>
+                    <div className="pt-4 space-y-3">
+                      <div className="p-3 bg-white/5 border border-white/10 rounded-sm">
+                        <p className="text-white/60 text-[11px] leading-snug">
+                          <span className="text-white font-bold block mb-1">DEFAULT_STATE:</span> Assume in-person by default.
+                        </p>
+                      </div>
+                      <p className="text-white/50 text-[10px] leading-relaxed italic">
+                        If virtual fallback deployment is activated, updates will be posted in Discord.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4 border-l border-white/5 pl-0 lg:pl-10">
+                    <span className="text-[10px] uppercase text-white/40 font-bold tracking-widest font-mono">Exception Handling</span>
+                    <p className="text-white/70 text-sm leading-relaxed font-light">
+                      If turnout is low, the event may become:
+                    </p>
+                    <ul className="space-y-1.5 text-white/90 text-xs font-mono">
+                      <li className="flex items-center gap-2"><span className="text-primary opacity-50">&gt;</span> livestream mode</li>
+                      <li className="flex items-center gap-2"><span className="text-primary opacity-50">&gt;</span> remote hangout mode</li>
+                      <li className="flex items-center gap-2 italic text-white/40"><span className="text-primary opacity-50">&gt;</span> “organizer accidentally fell asleep after debugging reality” mode</li>
+                    </ul>
+                    
+                    <div className="mt-8 pt-6">
+                      <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="block">
+                        <Button className="w-full bg-primary text-black hover:bg-white transition-all font-black uppercase tracking-[0.2em] text-[10px] h-12 rounded-none group/btn">
+                          <span className="group-hover/btn:scale-110 transition-transform flex items-center gap-2">
+                            Check Discord Status ✨
+                          </span>
+                        </Button>
+                      </a>
+                      <p className="text-center text-white/30 text-[9px] uppercase tracking-widest mt-3 font-mono">
+                        Verify status before arrival
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
