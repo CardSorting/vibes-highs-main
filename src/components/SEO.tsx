@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
 
+interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
 interface SEOProps {
   title?: string;
   description?: string;
@@ -8,6 +13,7 @@ interface SEOProps {
   ogImage?: string;
   keywords?: string[];
   structuredData?: object;
+  breadcrumbs?: BreadcrumbItem[];
   robots?: string;
   author?: string;
   themeColor?: string;
@@ -29,6 +35,7 @@ export default function SEO({
   ogImage = DEFAULT_OG_IMAGE,
   keywords = DEFAULT_KEYWORDS,
   structuredData,
+  breadcrumbs,
   robots = "index, follow",
   author = "Vibes & Highs Collective",
   themeColor = "#0A0A0B",
@@ -86,50 +93,62 @@ export default function SEO({
     link.setAttribute('href', currentUrl);
 
     // Structured Data
-    if (structuredData) {
-      let script = document.getElementById('structured-data') as HTMLScriptElement;
-      if (!script) {
-        script = document.createElement('script');
-        script.id = 'structured-data';
-        script.type = 'application/ld+json';
-        document.head.appendChild(script);
+    const schemas: any[] = [];
+
+    // Base WebSite Schema
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Vibes & Highs",
+      "url": DEFAULT_URL,
+      "description": DEFAULT_DESCRIPTION,
+      "publisher": {
+        "@type": "Organization",
+        "name": "Vibes & Highs",
+        "logo": {
+          "@type": "ImageObject",
+          "url": DEFAULT_OG_IMAGE
+        }
       }
-      script.text = JSON.stringify({
+    });
+
+    // Custom Structured Data
+    if (structuredData) {
+      schemas.push({
         "@context": "https://schema.org",
         ...structuredData
       });
-    } else {
-      // Default WebSite Structured Data
-      let script = document.getElementById('structured-data') as HTMLScriptElement;
-      if (!script) {
-        script = document.createElement('script');
-        script.id = 'structured-data';
-        script.type = 'application/ld+json';
-        document.head.appendChild(script);
-      }
-      script.text = JSON.stringify({
+    }
+
+    // Breadcrumb Schema
+    if (breadcrumbs) {
+      schemas.push({
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Vibes & Highs",
-        "url": DEFAULT_URL,
-        "description": DEFAULT_DESCRIPTION,
-        "publisher": {
-          "@type": "Organization",
-          "name": "Vibes & Highs",
-          "logo": {
-            "@type": "ImageObject",
-            "url": DEFAULT_OG_IMAGE
-          }
-        }
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbs.map((crumb, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": crumb.name,
+          "item": crumb.item.startsWith('http') ? crumb.item : `${DEFAULT_URL}${crumb.item}`
+        }))
       });
     }
 
+    let script = document.getElementById('structured-data') as HTMLScriptElement;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'structured-data';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.text = JSON.stringify(schemas.length === 1 ? schemas[0] : schemas);
+
     return () => {
-      // We don't necessarily want to remove meta tags on unmount as it might flash for SEO crawlers
-      // but structured data can be cleaned up if it's page-specific.
+      // Cleanup structured data if needed
     };
-  }, [fullTitle, fullDescription, currentUrl, ogType, ogImage, keywords, structuredData, robots, author, themeColor, twitterHandle]);
+  }, [fullTitle, fullDescription, currentUrl, ogType, ogImage, keywords, structuredData, breadcrumbs, robots, author, themeColor, twitterHandle]);
 
   return null;
 }
+
 

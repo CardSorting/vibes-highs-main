@@ -15,11 +15,17 @@ export interface Partner {
   };
   founded?: string;
   location?: string;
+  impactMetrics?: {
+    label: string;
+    value: string;
+    trend: 'up' | 'stable' | 'down';
+  }[];
+  integrationNotes?: string;
 }
 
 export const partners: Partner[] = [
   {
-    id: "1",
+    id: "modal",
     name: "Modal",
     logo: "https://modal.com/logo.svg",
     description: "Powering our high-performance AI experiments and serverless infrastructure for community projects.",
@@ -32,10 +38,16 @@ export const partners: Partner[] = [
       twitter: "https://x.com/modal_labs",
       github: "https://github.com/modal-labs"
     },
-    location: "San Francisco, CA"
+    location: "San Francisco, CA",
+    impactMetrics: [
+      { label: "Cold Start Time", value: "< 2.0s", trend: "up" },
+      { label: "GPU Availability", value: "On-Demand", trend: "stable" },
+      { label: "Developer NPS", value: "98/100", trend: "up" }
+    ],
+    integrationNotes: "Primary provider for all heavy-duty AI workloads. Native Python integration makes it a favorite among our researcher cohort."
   },
   {
-    id: "2",
+    id: "nousresearch",
     name: "NousResearch",
     logo: "https://nousresearch.com/logo.png",
     description: "Advancing open-source intelligence and providing the models that fuel our latent space explorations.",
@@ -47,10 +59,16 @@ export const partners: Partner[] = [
     socials: {
       twitter: "https://x.com/NousResearch",
       github: "https://github.com/NousResearch"
-    }
+    },
+    impactMetrics: [
+      { label: "Model Downloads", value: "1M+", trend: "up" },
+      { label: "Research Citations", value: "Exponential", trend: "up" },
+      { label: "Community Devs", value: "2.5K+", trend: "up" }
+    ],
+    integrationNotes: "Knowledge partner. We frequently use Nous-tuned models as the baseline for our custom fine-tuning experiments."
   },
   {
-    id: "3",
+    id: "cloudflare",
     name: "Cloudflare",
     logo: "https://www.cloudflare.com/img/logo-cloudflare-dark.svg",
     description: "Securing our digital perimeter and ensuring low-latency delivery of weird internet things.",
@@ -63,10 +81,16 @@ export const partners: Partner[] = [
       twitter: "https://x.com/cloudflare",
       github: "https://github.com/cloudflare"
     },
-    location: "Global / San Francisco"
+    location: "Global / San Francisco",
+    impactMetrics: [
+      { label: "Network Coverage", value: "310+ Cities", trend: "up" },
+      { label: "Request Velocity", value: "50M/sec", trend: "up" },
+      { label: "Community Trust", value: "High", trend: "stable" }
+    ],
+    integrationNotes: "Fully integrated into the V&H backbone. Currently exploring Cloudflare AI at the edge for low-latency inference experiments."
   },
   {
-    id: "4",
+    id: "google",
     name: "Google",
     logo: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_92x30dp.png",
     description: "Providing the compute and cloud primitives that allow us to scale our creative output.",
@@ -80,7 +104,7 @@ export const partners: Partner[] = [
     }
   },
   {
-    id: "5",
+    id: "silicon-slopes",
     name: "Silicon Slopes",
     logo: "https://www.siliconslopes.com/content/images/2023/04/Silicon-Slopes-Logo-Vertical-Black.png",
     description: "Vibes & Highs emerged from the Silicon Slopes Start School community. We are proud to spotlight the network that helped spark our origin.",
@@ -96,4 +120,3 @@ export const partners: Partner[] = [
     location: "Lehi, UT"
   }
 ];
-

@@ -204,7 +204,7 @@ export default function App() {
             <div className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30 whitespace-nowrap">Supported by the Ecosystem:</div>
             <div className="flex flex-wrap justify-center md:justify-start items-center gap-12 opacity-40 hover:opacity-100 transition-opacity duration-700">
                {partners.map(p => (
-                 <Link key={p.id} to="/partners" className="group flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
+                 <Link key={p.id} to={`/partners?partner=${p.id}`} className="group flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
                     {p.name === 'Modal' && <Zap size={14} className="text-primary" />}
                     {p.name === 'Cloudflare' && <Globe size={14} className="text-primary" />}
                     {p.name === 'NousResearch' && <Cpu size={14} className="text-primary" />}

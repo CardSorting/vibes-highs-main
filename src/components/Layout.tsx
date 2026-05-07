@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Terminal, Menu, X, Github, Twitter, Linkedin, Mail, ExternalLink, ChevronRight } from 'lucide-react';
+import { Terminal, Menu, X, Github, Twitter, Linkedin, Mail, ExternalLink, ChevronRight, Search, Command } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
+import Breadcrumbs from './Breadcrumbs';
+import CommandPalette from './CommandPalette';
 
 export default function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -32,6 +34,7 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0B] text-[#F0F0F0] selection:bg-primary selection:text-black relative overflow-x-hidden font-sans">
+      <CommandPalette />
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0A0A0B]/80 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-primary group">
@@ -71,6 +74,16 @@ export default function Layout() {
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Quick Search Shortcut */}
+            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-md cursor-pointer hover:bg-white/10 transition-colors mr-4 group" onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}>
+              <Search size={14} className="text-white/40 group-hover:text-primary transition-colors" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white/20 group-hover:text-white/60 transition-colors">Search</span>
+              <div className="flex items-center gap-0.5 ml-2">
+                <Command size={10} className="text-white/20" />
+                <span className="text-[9px] font-bold text-white/20">K</span>
+              </div>
+            </div>
+
             <div className="hidden sm:flex items-center gap-3 border-r border-white/10 pr-6 mr-2">
               <a href="https://x.com/goldeneggie" target="_blank" rel="noreferrer" className="text-white/40 hover:text-primary transition-colors">
                 <Twitter size={16} />
@@ -155,7 +168,8 @@ export default function Layout() {
         )}
       </AnimatePresence>
       
-      <main className="relative">
+      <main className="relative pt-20">
+        <Breadcrumbs />
         <Outlet />
       </main>
 
@@ -246,4 +260,5 @@ export default function Layout() {
     </div>
   );
 }
+
 
