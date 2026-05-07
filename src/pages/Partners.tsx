@@ -77,15 +77,6 @@ export default function Partners() {
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  // SEO Breadcrumbs
-  const breadcrumbs = [
-    { name: 'Home', item: '/' },
-    { name: 'Technical Registry', item: '/partners' }
-  ];
-  if (selectedPartner) {
-    breadcrumbs.push({ name: selectedPartner.name, item: `/partners?partner=${selectedPartner.id}` });
-  }
-
   // Dynamic Partner Schema
   const partnerSchema = selectedPartner ? {
     "@type": "Service",
@@ -102,10 +93,14 @@ export default function Partners() {
     <TooltipProvider>
       <div className="pt-24 min-h-screen bg-[#0A0A0B] selection:bg-primary selection:text-black">
         <SEO 
-          title={selectedPartner ? `${selectedPartner.name} | Technical Investigation` : "Ecosystem Registry"} 
-          description={selectedPartner ? selectedPartner.description : "An investigative directory of technical partners and infrastructure powering the mariecoder ecosystem."}
+          title={selectedPartner ? `${selectedPartner.name} | Community Registry` : "Community Ecosystem | Technical Registry"} 
+          description={selectedPartner ? selectedPartner.description : "An investigative directory of technical partners and infrastructure powering the Vibes & Highs ecosystem."}
           ogImage={selectedPartner?.logo}
-          breadcrumbs={breadcrumbs}
+          breadcrumbs={[
+            { name: 'Home', item: '/' },
+            { name: 'Community', item: '/partners' },
+            ...(selectedPartner ? [{ name: selectedPartner.name, item: `/partners?partner=${selectedPartner.id}` }] : [])
+          ]}
           structuredData={partnerSchema}
           keywords={[...(selectedPartner?.features || []), "technical registry", "ecosystem", "mariecoder", "AI infra"]}
         />

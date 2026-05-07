@@ -120,15 +120,70 @@ export default function App() {
   return (
     <div className="selection:bg-primary selection:text-black bg-[#0A0A0B]">
       <SEO 
-        title="Build Weird Things" 
+        title="Build Weird Things | Vibes & Highs SLC" 
         description="A casual, non-transactional meetup for people making weird internet projects, creative code, and AI explorations in Salt Lake City."
+        breadcrumbs={[
+          { name: 'Home', item: '/' }
+        ]}
+        structuredData={[
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is Vibes & Highs?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Vibes & Highs is a casual, non-transactional meetup for builders, artists, and researchers in Salt Lake City. We focus on building weird internet projects and creative experiments."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do I need to be a technical expert to join?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Not at all. While many members are developers or researchers, we welcome anyone who wants to make things. 'Weird' is the only requirement."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is there a cost to attend?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No, our weekly meetups are free. We are a community-driven collective, not a business."
+                }
+              }
+            ]
+          },
+          {
+            "@type": "Event",
+            "name": "Wednesday Builder Session",
+            "startDate": "2024-05-08T16:00",
+            "endDate": "2024-05-08T20:00",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "location": {
+              "@type": "Place",
+              "name": "GameHaven Herriman",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "5254 Anthem Peak Ln",
+                "addressLocality": "Herriman",
+                "addressRegion": "UT",
+                "postalCode": "84096",
+                "addressCountry": "US"
+              }
+            },
+            "description": "Weekly session for builders and creative coders in Herriman."
+          }
+        ]}
       />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col justify-center px-6 pt-32 overflow-hidden border-b border-white/5">
         {/* Background Graphic */}
         <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-          <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=3540&auto=format&fit=crop" alt="" className="w-full h-full object-cover" />
+          <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=3540&auto=format&fit=crop" alt="Vibes & Highs creative collective meetup in Salt Lake City" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-[#0A0A0B] bg-size-[40px_40px] opacity-90"></div>
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[40px_40px]"></div>
         </div>
@@ -329,6 +384,31 @@ export default function App() {
               hasRsvpd={hasRsvpd.fri}
               mapUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.905477833056!2d-111.90692112341517!3d40.7631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8752f50c0c0c0c0c%3A0x0!2sWoodbine%20Food%20Hall!5e0!3m2!1sen!2sus!4v1714864433355!5m2!1sen!2sus"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section - Human Centric */}
+      <section id="faq" className="py-32 border-b border-white/5 bg-black/40">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-24">
+            <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em] mb-6">Clarifications</div>
+            <h2 className="font-display font-black text-6xl md:text-8xl tracking-tighter uppercase mb-6">Common<br/><span className="font-serif italic font-light text-white/40 lowercase">Questions.</span></h2>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="p-8 bg-white/2 border border-white/5 space-y-4">
+              <h3 className="text-lg font-bold text-white uppercase tracking-tight">What is "Weird"?</h3>
+              <p className="text-white/50 font-light leading-relaxed text-sm">Anything that doesn't have a clear commercial intent yet. Experiments, art, niche tools, or just exploring a new library. We like the unconventional.</p>
+            </div>
+            <div className="p-8 bg-white/2 border border-white/5 space-y-4">
+              <h3 className="text-lg font-bold text-white uppercase tracking-tight">Who can join?</h3>
+              <p className="text-white/50 font-light leading-relaxed text-sm">Anyone who wants to build. We have high-school students, retired engineers, professional artists, and curious beginners.</p>
+            </div>
+            <div className="p-8 bg-white/2 border border-white/5 space-y-4">
+              <h3 className="text-lg font-bold text-white uppercase tracking-tight">What do I bring?</h3>
+              <p className="text-white/50 font-light leading-relaxed text-sm">Your laptop, your sketchbook, or just yourself. We are demo-first, so if you have something to show, bring it.</p>
+            </div>
           </div>
         </div>
       </section>

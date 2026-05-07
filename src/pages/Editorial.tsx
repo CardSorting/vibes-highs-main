@@ -12,11 +12,16 @@ export default function Editorial() {
   return (
     <div className="pt-24 min-h-screen bg-[#0A0A0B]">
       <SEO 
-        title={selectedPost ? selectedPost.title : "Editorial Journal"} 
+        title={selectedPost ? selectedPost.title : "Journal | Latent & Logic"} 
         description={selectedPost ? selectedPost.excerpt : "Deep dives into AI exploration, creative coding, and the culture of building weird things. No fluff, just pure signal."}
         ogImage={selectedPost?.image}
         ogType={selectedPost ? "article" : "website"}
         keywords={selectedPost ? [...selectedPost.tags, "editorial", "blog"] : ["creative coding", "AI research", "tech journal", "Vibes & Highs"]}
+        breadcrumbs={[
+          { name: 'Home', item: '/' },
+          { name: 'Journal', item: '/editorial' },
+          ...(selectedPost ? [{ name: selectedPost.title, item: `/editorial` }] : [])
+        ]}
       />
       {/* Background Decor */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">

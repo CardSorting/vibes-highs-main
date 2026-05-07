@@ -17,12 +17,12 @@ export default function Layout() {
   }, [location]);
 
   const navLinks = [
-    { label: 'About', path: '/#about', isAnchor: true },
-    { label: 'Schedule', path: '/#schedule', isAnchor: true },
-    { label: 'Editorial', path: '/editorial', isAnchor: false },
-    { label: 'Partners', path: '/partners', isAnchor: false },
-    { label: 'Join', path: '/#location', isAnchor: true },
-    { label: 'Contact', path: '/#contact', isAnchor: true },
+    { label: 'Our Story', path: '/#about', isAnchor: true, description: 'Learn about our mission and culture' },
+    { label: 'Schedule', path: '/#schedule', isAnchor: true, description: 'Upcoming meetups and events' },
+    { label: 'Journal', path: '/editorial', isAnchor: false, description: 'Technical deep dives and logic' },
+    { label: 'Community', path: '/partners', isAnchor: false, description: 'The builders powering our ecosystem' },
+    { label: 'Join Us', path: '/#location', isAnchor: true, description: 'Find our physical and digital roots' },
+    { label: 'Contact', path: '/#contact', isAnchor: true, description: 'Get in touch with the collective' },
   ];
 
   const isActive = (path: string) => {
@@ -35,9 +35,9 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-[#0A0A0B] text-[#F0F0F0] selection:bg-primary selection:text-black relative overflow-x-hidden font-sans">
       <CommandPalette />
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0A0A0B]/80 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-primary group">
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0A0A0B]/80 border-b border-white/10">
+        <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" aria-label="Main navigation">
+          <Link to="/" className="flex items-center gap-2 text-primary group" aria-label="Vibes & Highs Home">
             <div className="w-10 h-10 bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all duration-500">
               <Terminal size={20} />
             </div>
@@ -47,55 +47,67 @@ export default function Layout() {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
-              link.isAnchor ? (
-                <a
-                  key={link.path}
-                  href={link.path}
-                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:text-primary relative group ${isActive(link.path) ? 'text-primary' : 'text-white/60'}`}
-                >
-                  {link.label}
-                  {isActive(link.path) && (
-                    <motion.div layoutId="nav-active" className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary" />
-                  )}
-                </a>
-              ) : (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:text-primary relative group ${isActive(link.path) ? 'text-primary' : 'text-white/60'}`}
-                >
-                  {link.label}
-                  {isActive(link.path) && (
-                    <motion.div layoutId="nav-active" className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary" />
-                  )}
-                </Link>
-              )
+              <div key={link.path} className="relative group/nav">
+                {link.isAnchor ? (
+                  <a
+                    href={link.path}
+                    className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:text-primary relative flex flex-col items-center ${isActive(link.path) ? 'text-primary' : 'text-white/60'}`}
+                  >
+                    {link.label}
+                    {isActive(link.path) && (
+                      <motion.div layoutId="nav-active" className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary" />
+                    )}
+                  </a>
+                ) : (
+                  <Link
+                    to={link.path}
+                    className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:text-primary relative flex flex-col items-center ${isActive(link.path) ? 'text-primary' : 'text-white/60'}`}
+                  >
+                    {link.label}
+                    {isActive(link.path) && (
+                      <motion.div layoutId="nav-active" className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary" />
+                    )}
+                  </Link>
+                )}
+                
+                {/* Mega-menu Tooltip */}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 pointer-events-none group-hover/nav:opacity-100 transition-opacity z-50">
+                  <div className="bg-[#141415] border border-white/10 p-3 w-48 shadow-2xl shadow-black">
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-primary mb-1">{link.label}</p>
+                    <p className="text-[10px] text-white/40 leading-tight font-light">{link.description}</p>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Quick Search Shortcut */}
-            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-md cursor-pointer hover:bg-white/10 transition-colors mr-4 group" onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}>
-              <Search size={14} className="text-white/40 group-hover:text-primary transition-colors" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-white/20 group-hover:text-white/60 transition-colors">Search</span>
-              <div className="flex items-center gap-0.5 ml-2">
-                <Command size={10} className="text-white/20" />
-                <span className="text-[9px] font-bold text-white/20">K</span>
+            {/* Visible Search Button for Non-Technical Users */}
+            <button 
+              className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-none hover:bg-white/10 transition-colors group"
+              onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+              aria-label="Open search"
+            >
+              <Search size={16} className="text-white/40 group-hover:text-primary transition-colors" />
+              <span className="hidden md:block text-[10px] font-bold uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">Search</span>
+              <div className="hidden xl:flex items-center gap-0.5 ml-2 opacity-20">
+                <Command size={10} />
+                <span className="text-[9px] font-bold">K</span>
               </div>
-            </div>
+            </button>
 
             <div className="hidden sm:flex items-center gap-3 border-r border-white/10 pr-6 mr-2">
-              <a href="https://x.com/goldeneggie" target="_blank" rel="noreferrer" className="text-white/40 hover:text-primary transition-colors">
+              <a href="https://x.com/goldeneggie" target="_blank" rel="noreferrer" className="text-white/40 hover:text-primary transition-colors" aria-label="Follow us on X">
                 <Twitter size={16} />
               </a>
-              <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-white/40 hover:text-primary transition-colors">
+              <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-white/40 hover:text-primary transition-colors" aria-label="Join our Discord">
                 <Github size={16} />
               </a>
             </div>
 
             <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="hidden md:block">
               <Button className="bg-white text-black hover:bg-primary font-bold uppercase tracking-widest text-[10px] h-11 px-8 rounded-none transition-all shadow-lg shadow-white/5">
-                Join Discord
+                Join Community
               </Button>
             </a>
 
@@ -103,12 +115,14 @@ export default function Layout() {
             <button
               className="lg:hidden w-11 h-11 flex items-center justify-center bg-white/5 border border-white/10 text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-expanded={isMobileMenuOpen}
+              aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
 
       {/* Mobile Navigation Menu */}
       <AnimatePresence>
@@ -173,10 +187,10 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer className="relative z-10 pt-32 pb-12 px-6 border-t border-white/5 bg-[#0A0A0B]">
+      <footer className="relative z-10 pt-32 pb-12 px-6 border-t border-white/5 bg-[#0A0A0B]" role="contentinfo">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-24">
-            <div className="lg:col-span-5 space-y-8">
+            <section className="lg:col-span-5 space-y-8">
               <Link to="/" className="flex items-center gap-2 text-primary">
                 <Terminal size={32} />
                 <span className="font-display font-black text-2xl tracking-tighter text-white">VIBES<span className="text-primary">&amp;</span>HIGHS</span>
@@ -194,10 +208,10 @@ export default function Layout() {
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">Join 500+ members</span>
               </div>
-            </div>
+            </section>
 
             <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12">
-              <div className="space-y-6">
+              <nav className="space-y-6" aria-label="Footer navigation">
                 <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-primary">Navigation</h4>
                 <ul className="space-y-4">
                   {navLinks.map(link => (
@@ -216,9 +230,9 @@ export default function Layout() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </nav>
 
-              <div className="space-y-6">
+              <section className="space-y-6" aria-label="Social connections">
                 <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-primary">Socials</h4>
                 <ul className="space-y-4">
                   <li><a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Discord Server</a></li>
@@ -226,16 +240,16 @@ export default function Layout() {
                   <li><a href="mailto:willcruzdesigner@gmail.com" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Email Contact</a></li>
                   <li><a href="https://github.com/cardsorting" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">GitHub</a></li>
                 </ul>
-              </div>
+              </section>
 
-              <div className="space-y-6 col-span-2 md:col-span-1">
+              <section className="space-y-6 col-span-2 md:col-span-1" aria-label="Legal information">
                 <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-primary">Legal</h4>
                 <ul className="space-y-4">
                   <li><Link to="/privacy" className="text-white/60 hover:text-white transition-colors text-sm font-medium">Privacy Policy</Link></li>
                   <li><Link to="/terms" className="text-white/60 hover:text-white transition-colors text-sm font-medium">Terms of Service</Link></li>
                   <li><Link to="/conduct" className="text-white/60 hover:text-white transition-colors text-sm font-medium">Code of Conduct</Link></li>
                 </ul>
-              </div>
+              </section>
             </div>
           </div>
 

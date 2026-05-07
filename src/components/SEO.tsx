@@ -130,23 +130,52 @@ export default function SEO({
       "name": "Vibes & Highs Collective",
       "url": DEFAULT_URL,
       "logo": DEFAULT_OG_IMAGE,
-      "sameAs": [
-        "https://x.com/goldeneggie",
-        "https://discord.gg/ua5UUXZTyz"
-      ],
       "contactPoint": {
         "@type": "ContactPoint",
         "email": "willcruzdesigner@gmail.com",
         "contactType": "Community Support"
-      }
+      },
+      "sameAs": [
+        "https://x.com/goldeneggie",
+        "https://discord.gg/ua5UUXZTyz",
+        "https://github.com/cardsorting"
+      ]
     });
+
+    // Article Schema (if ogType is article)
+    if (ogType === "article") {
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": fullTitle,
+        "description": fullDescription,
+        "image": ogImage,
+        "author": {
+          "@type": "Person",
+          "name": author
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Vibes & Highs Collective",
+          "logo": DEFAULT_OG_IMAGE
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": normalizedUrl
+        }
+      });
+    }
 
     // Custom Structured Data
     if (structuredData) {
-      schemas.push({
-        "@context": "https://schema.org",
-        ...structuredData
-      });
+      if (Array.isArray(structuredData)) {
+        structuredData.forEach(sd => schemas.push({ "@context": "https://schema.org", ...sd }));
+      } else {
+        schemas.push({
+          "@context": "https://schema.org",
+          ...structuredData
+        });
+      }
     }
 
     // Breadcrumb Schema
