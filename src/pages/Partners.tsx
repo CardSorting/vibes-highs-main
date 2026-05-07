@@ -19,10 +19,10 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../components/ui/tooltip";
-import { partners, Partner } from '../data/partners';
-import { editorialPosts } from '../data/editorial';
-import SEO from '../components/SEO';
+} from "@/components/ui/tooltip";
+import { partners, Partner } from '@/data/partners';
+import { editorialPosts } from '@/data/editorial';
+import SEO from '@/components/SEO';
 import { toast } from 'sonner';
 
 export default function Partners() {
