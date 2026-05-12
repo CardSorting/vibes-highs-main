@@ -40,11 +40,11 @@ export function Schedule({
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
           <div className="max-w-2xl">
-            <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em] mb-6">Weekly Operations</div>
-            <h2 className="font-display font-black text-6xl md:text-9xl tracking-tighter leading-[0.8] mb-6 uppercase">THE<br/><span className="font-serif italic font-light text-white/40 lowercase">Schedule.</span></h2>
+            <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em] mb-6">Join the Sessions</div>
+            <h2 className="font-display font-black text-6xl md:text-9xl tracking-tighter leading-[0.8] mb-6 uppercase">WHERE WE<br/><span className="font-serif italic font-light text-white/40 lowercase">Gather.</span></h2>
           </div>
           <div className="flex items-center gap-6 text-white/30 text-[10px] font-mono uppercase tracking-widest font-black">
-             <Activity size={12} className="text-primary" /> System Online
+             <Activity size={12} className="text-primary" /> Session Active
           </div>
         </div>
 
@@ -119,7 +119,7 @@ function SessionRow({ day, time, location, address, state, isToday, onRsvp, onCa
            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                  <Users size={14} className="text-primary" />
-                 <span className="text-[10px] font-bold text-white uppercase tracking-widest">{attending} Registered</span>
+                 <span className="text-[10px] font-bold text-white uppercase tracking-widest">{attending} Going</span>
               </div>
               <button 
                 onClick={() => setIsMapOpen(!isMapOpen)}
@@ -135,14 +135,14 @@ function SessionRow({ day, time, location, address, state, isToday, onRsvp, onCa
                 disabled={hasRsvpd}
                 className={`h-12 rounded-none font-black uppercase tracking-widest text-[9px] transition-all ${hasRsvpd ? 'bg-green-500/20 text-green-500 border border-green-500/30' : 'bg-white text-black hover:bg-primary'}`}
               >
-                {hasRsvpd ? <span className="flex items-center gap-2"><Check size={12} /> CONFIRMED</span> : 'RSVP PROTOCOL'}
+                {hasRsvpd ? <span className="flex items-center gap-2"><Check size={12} /> I'M GOING</span> : 'SAVE A SEAT'}
               </Button>
               <Button 
                 variant="outline" 
                 onClick={onCalendar}
                 className="h-12 rounded-none border-white/10 text-white hover:bg-white/5 font-black uppercase tracking-widest text-[9px]"
               >
-                <CalendarPlus size={12} className="mr-2" /> CALENDAR
+                <CalendarPlus size={12} className="mr-2" /> ADD TO CALENDAR
               </Button>
            </div>
         </div>

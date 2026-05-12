@@ -106,8 +106,8 @@ export default function Partners() {
     <TooltipProvider>
       <div className="pt-24 min-h-screen bg-[#0A0A0B] selection:bg-primary selection:text-black">
         <SEO 
-          title={selectedPartner ? `${selectedPartner.name} | Community Registry` : "Community Ecosystem | Technical Registry"} 
-          description={selectedPartner ? selectedPartner.description : "An investigative directory of technical partners and infrastructure powering the Vibes & Highs ecosystem."}
+          title={selectedPartner ? `${selectedPartner.name} | Community Map` : "Community Ecosystem | The Ecosystem"} 
+          description={selectedPartner ? selectedPartner.description : "A directory of the friends, tools, and infrastructure powering the Vibes & Highs collective."}
           ogImage={selectedPartner?.logo}
           breadcrumbs={[
             { name: 'Home', item: '/' },
@@ -115,7 +115,7 @@ export default function Partners() {
             ...(selectedPartner ? [{ name: selectedPartner.name, item: `/partners?partner=${selectedPartner.id}` }] : [])
           ]}
           structuredData={partnerSchema}
-          keywords={[...(selectedPartner?.features || []), "technical registry", "ecosystem", "mariecoder", "AI infra"]}
+          keywords={[...(selectedPartner?.features || []), "community map", "ecosystem", "mariecoder", "AI infra"]}
         />
         
         <SystemScanner />
@@ -127,8 +127,8 @@ export default function Partners() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 pb-32">
            <div className="fixed top-24 right-8 z-50 flex flex-col items-end pointer-events-none opacity-20 hidden xl:flex">
-              <div className="text-[8px] font-mono text-white/40 uppercase tracking-widest">Registry_Scan_Status</div>
-              <div className="text-[10px] font-mono text-primary uppercase tracking-[0.2em] font-black animate-pulse">Scanning_Nodes...</div>
+              <div className="text-[8px] font-mono text-white/40 uppercase tracking-widest">Ecosystem_Sync</div>
+              <div className="text-[10px] font-mono text-primary uppercase tracking-[0.2em] font-black animate-pulse">Finding_Friends...</div>
            </div>
           {/* Hero Section */}
           <div className="pt-20 mb-24">
@@ -139,7 +139,7 @@ export default function Partners() {
                   animate={{ opacity: 1, x: 0 }}
                   className="flex items-center gap-2 text-primary font-mono text-[10px] uppercase tracking-[0.4em] mb-6"
                 >
-                  <Network size={12} /> System Topology & Registry
+                  <Network size={12} /> Our Connections
                 </motion.div>
                 <motion.h1
                   initial={{ opacity: 0, y: 20 }}
@@ -156,7 +156,7 @@ export default function Partners() {
                   transition={{ delay: 0.2 }}
                   className="text-white/60 text-xl font-light leading-relaxed max-w-2xl"
                 >
-                  A comprehensive technical investigation into the partners, infrastructure, and community roots powering the mariecoder collective.
+                  A map of the friends, tools, and infrastructure powering the mariecoder collective and our shared experiments.
                 </motion.p>
               </div>
             </div>
@@ -168,7 +168,7 @@ export default function Partners() {
               <div className="relative w-full lg:w-96">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" size={16} />
                 <Input 
-                  placeholder="Scan registry records..." 
+                  placeholder="Search the community..." 
                   className="pl-10 bg-white/5 border-white/10 text-white rounded-none focus-visible:ring-primary focus-visible:border-primary placeholder:text-white/20 font-mono text-[10px] uppercase tracking-widest h-12"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -178,7 +178,7 @@ export default function Partners() {
               <div className="flex items-center gap-8 w-full lg:w-auto overflow-x-auto no-scrollbar pb-2 lg:pb-0">
                  <div className="flex items-center gap-3 shrink-0">
                     <Filter size={12} className="text-white/20" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/20">Registry Tiers:</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/20">Community Tiers:</span>
                     <div className="flex gap-2">
                       {tiers.map(tier => (
                         <button 
@@ -195,7 +195,7 @@ export default function Partners() {
                  </div>
                  <div className="h-4 w-px bg-white/10 shrink-0" />
                  <div className="flex items-center gap-2 text-white/20 text-[10px] font-bold uppercase tracking-widest shrink-0">
-                  <Activity size={12} className="text-primary" /> {filteredPartners.length} Active Nodes
+                  <Activity size={12} className="text-primary" /> {filteredPartners.length} Active Friends
                 </div>
               </div>
             </div>
@@ -281,33 +281,33 @@ export default function Partners() {
                       </div>
                       
                       <div className="space-y-4 mt-12">
-                        <a href={selectedPartner.link} target="_blank" rel="noreferrer" className="block">
-                          <Button className="w-full bg-white text-black hover:bg-primary font-bold uppercase tracking-widest text-[10px] h-12 rounded-none">
-                            Visit official node <ExternalLink size={14} className="ml-2" />
-                          </Button>
-                        </a>
-                      </div>
+                      <a href={selectedPartner.link} target="_blank" rel="noreferrer" className="block">
+                        <Button className="w-full bg-white text-black hover:bg-primary font-bold uppercase tracking-widest text-[10px] h-12 rounded-none">
+                          Visit official site <ExternalLink size={14} className="ml-2" />
+                        </Button>
+                      </a>
                     </div>
-                    
-                    {/* Deep Investigation View */}
-                    <div className="flex-1 p-8 lg:p-16 overflow-y-auto custom-scrollbar bg-[#0C0C0D]">
-                      <div className="space-y-20">
-                        {/* Investigation Protocol */}
-                        <section>
-                          <div className="flex items-center gap-3 mb-8">
-                             <div className="h-px w-12 bg-primary/40" />
-                             <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">Technical investigation protocol</h3>
-                          </div>
-                          <p className="text-white/70 text-xl font-light leading-relaxed max-w-3xl">
-                            {selectedPartner.longDescription || selectedPartner.description}
-                          </p>
-                        </section>
+                  </div>
+                  
+                  {/* Deep Investigation View */}
+                  <div className="flex-1 p-8 lg:p-16 overflow-y-auto custom-scrollbar bg-[#0C0C0D]">
+                    <div className="space-y-20">
+                      {/* Investigation Protocol */}
+                      <section>
+                        <div className="flex items-center gap-3 mb-8">
+                           <div className="h-px w-12 bg-primary/40" />
+                           <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">The Story</h3>
+                        </div>
+                        <p className="text-white/70 text-xl font-light leading-relaxed max-w-3xl">
+                          {selectedPartner.longDescription || selectedPartner.description}
+                        </p>
+                      </section>
 
-                        {/* Visual Topology Diagram - Minimalist & Technical */}
-                        <section className="p-12 bg-white/2 border border-white/5 relative overflow-hidden group">
-                           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#primary10,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                           <div className="relative z-10 flex flex-col items-center text-center">
-                              <div className="text-[10px] font-bold uppercase tracking-widest text-white/20 mb-12">Registry System Topology</div>
+                      {/* Visual Topology Diagram - Minimalist & Technical */}
+                      <section className="p-12 bg-white/2 border border-white/5 relative overflow-hidden group">
+                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#primary10,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                         <div className="relative z-10 flex flex-col items-center text-center">
+                            <div className="text-[10px] font-bold uppercase tracking-widest text-white/20 mb-12">Our Network</div>
                               <div className="flex items-center gap-8 md:gap-24">
                                  <div className="flex flex-col items-center gap-4">
                                     <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/20"><Terminal size={20} /></div>
@@ -380,7 +380,7 @@ export default function Partners() {
                         {selectedPartner.integrationNotes && (
                           <section>
                             <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary mb-8 flex items-center gap-2">
-                              <Terminal size={12} /> Integration syslogs
+                              <Terminal size={12} /> How we work together
                             </h3>
                             <div className="p-6 bg-black border border-white/10 font-mono text-[10px] text-white/50 leading-relaxed relative group overflow-hidden">
                                <div className="absolute top-0 left-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-colors" />
@@ -424,7 +424,7 @@ export default function Partners() {
               <div className="flex flex-wrap gap-4">
                 <a href="mailto:willcruzdesigner@gmail.com">
                   <Button className="bg-white text-black hover:bg-primary font-black uppercase tracking-widest text-[11px] h-14 px-10 transition-all group rounded-none">
-                    Registry protocol <ArrowRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    Join the ecosystem <ArrowRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </a>
               </div>

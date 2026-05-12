@@ -53,7 +53,7 @@ export function Hero({ nextUpEvent }: HeroProps) {
                 transition={{ delay: 0.2 }} 
                 className="text-white/60 text-xl md:text-2xl font-light leading-snug max-w-2xl"
               >
-                A casual, non-transactional meetup for people making weird internet projects, creative code, and latent space explorations.
+                A friendly, non-transactional meetup for people making weird internet projects, creative code, and latent space explorations.
               </motion.p>
             </div>
 
@@ -86,7 +86,7 @@ export function Hero({ nextUpEvent }: HeroProps) {
               <div className="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-100 transition-opacity">
                 <Activity size={24} className="text-primary animate-pulse" />
               </div>
-              <div className="text-[10px] uppercase font-mono tracking-[0.3em] text-white/30 font-bold mb-8">System :: Next_Session</div>
+              <div className="text-[10px] uppercase font-mono tracking-[0.3em] text-white/30 font-bold mb-8">Upcoming :: Session</div>
               <div className="space-y-8">
                 <div>
                   <h3 className="text-3xl font-display font-black text-white tracking-tighter leading-none mb-2 uppercase">
@@ -105,7 +105,7 @@ export function Hero({ nextUpEvent }: HeroProps) {
                 </div>
                 <a href="#schedule" className="block pt-4">
                   <Button variant="link" className="p-0 text-[10px] uppercase font-black text-primary hover:text-white tracking-[0.3em] h-auto">
-                    &gt; VIEW_LOGS
+                    &gt; SEE_FULL_SCHEDULE
                   </Button>
                 </a>
               </div>
@@ -120,7 +120,7 @@ export function Hero({ nextUpEvent }: HeroProps) {
 function renderCompactCountdown(state: EventState | null) {
   if (!state || state.isHappeningNow) return (
     <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary border border-primary/20 text-[9px] font-black uppercase tracking-widest animate-pulse">
-      <Activity size={10} /> Active Deployment Now
+      <Activity size={10} /> We're Gathered Now
     </div>
   );
   if (!state.timeLeft) return null;

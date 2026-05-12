@@ -43,14 +43,14 @@ export default function Editorial() {
               <div className="mb-20">
                 <div className="text-[10px] uppercase tracking-[0.4em] text-primary font-bold mb-4 flex items-center gap-4">
                   <div className="h-px w-12 bg-primary"></div>
-                  EDITORIAL_JOURNAL / V0.1
+                  FIELD_NOTES / V0.1
                 </div>
                 <h1 className="font-display font-black text-6xl md:text-8xl tracking-tighter leading-none mb-6">
                   LATENT<br />
                   <span className="font-serif italic font-light text-white/50">&amp; Logic.</span>
                 </h1>
                 <p className="text-white/60 text-xl font-light max-w-2xl leading-relaxed">
-                  Deep dives into AI exploration, creative coding, and the culture of building weird things. No fluff, just pure signal.
+                  Explore the intersection of technology and creativity through our shared stories of building, breaking, and finding the signal in the noise.
                 </p>
               </div>
 

@@ -5,7 +5,7 @@ export function FAQ() {
     <section id="faq" className="py-32 border-b border-white/5 bg-black/40">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-24">
-          <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em] mb-6">Clarifications</div>
+          <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em] mb-6">Curious?</div>
           <h2 className="font-display font-black text-6xl md:text-8xl tracking-tighter uppercase mb-6">Common<br/><span className="font-serif italic font-light text-white/40 lowercase">Questions.</span></h2>
         </div>
         
@@ -36,19 +36,19 @@ export function GlobalCTA() {
       </div>
       <div className="relative z-10 max-w-4xl mx-auto text-center space-y-12">
         <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-none text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em]">
-           System_Ready // Transmission_Start
+           Community_Open // v1.0
         </div>
         <h2 className="font-display font-black text-6xl md:text-9xl tracking-tighter leading-[0.8] text-white uppercase">
           BUILD THE<br/>
           <span className="font-serif italic font-light text-primary pr-4 lowercase">Weird</span> WEB.
         </h2>
         <p className="text-white/60 text-xl font-light leading-relaxed max-w-2xl mx-auto">
-          Ready to demo? Or just want to hang out in a high-output environment? Join the collective and let's make things.
+          Ready to demo? Or just want to hang out in a high-output environment? Join the collective and let's make something cool together.
         </p>
         <div className="flex flex-wrap justify-center gap-6">
           <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer">
             <Button className="bg-white text-black hover:bg-primary font-black uppercase tracking-widest text-[11px] h-20 px-16 rounded-none transition-all">
-              Access Collective
+              Join the Group
             </Button>
           </a>
         </div>
