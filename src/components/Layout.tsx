@@ -194,7 +194,7 @@ export default function Layout() {
       <div className="noise" />
 
       {/* Substrate Status Indicator */}
-      <div className="fixed bottom-6 left-6 z-[100] hidden md:flex items-center gap-3 px-3 py-1.5 bg-black/40 border border-white/10 backdrop-blur-md pointer-events-none">
+      <div className="fixed bottom-6 left-6 z-100 hidden md:flex items-center gap-3 px-3 py-1.5 bg-black/40 border border-white/10 backdrop-blur-md pointer-events-none">
         <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
         <span className="text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-white/40">Substrate_Integrity // Stable</span>
       </div>

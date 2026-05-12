@@ -31,7 +31,7 @@ function SystemScanner() {
       initial={{ top: -100 }}
       animate={{ top: '100%' }}
       transition={{ duration: 2, ease: "linear" }}
-      className="fixed left-0 right-0 h-1 bg-primary/20 z-[100] pointer-events-none"
+      className="fixed left-0 right-0 h-1 bg-primary/20 z-100 pointer-events-none"
     >
       <div className="absolute inset-0 bg-primary blur-sm"></div>
     </motion.div>
@@ -126,7 +126,7 @@ export default function Partners() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 pb-32">
-           <div className="fixed top-24 right-8 z-50 flex flex-col items-end pointer-events-none opacity-20 hidden xl:flex">
+           <div className="fixed top-24 right-8 z-50 hidden xl:flex xl:flex-col items-end pointer-events-none opacity-20">
               <div className="text-[8px] font-mono text-white/40 uppercase tracking-widest">Ecosystem_Sync</div>
               <div className="text-[10px] font-mono text-primary uppercase tracking-[0.2em] font-black animate-pulse">Finding_Friends...</div>
            </div>

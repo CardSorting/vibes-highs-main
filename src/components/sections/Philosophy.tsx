@@ -39,7 +39,7 @@ export function Philosophy() {
             <div className="grid md:grid-cols-2 gap-6">
               <motion.div 
                 whileHover={{ y: -5 }}
-                className="p-10 bg-white/[0.03] border border-white/10 space-y-6 group hover:bg-white/[0.05] hover:border-primary/30 transition-all duration-500 relative overflow-hidden"
+                className="p-10 bg-white/3 border border-white/10 space-y-6 group hover:bg-white/5 hover:border-primary/30 transition-all duration-500 relative overflow-hidden"
               >
                 <div className="absolute -right-4 -top-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
                   <Coffee size={120} />
@@ -54,7 +54,7 @@ export function Philosophy() {
 
               <motion.div 
                 whileHover={{ y: -5 }}
-                className="p-10 bg-white/[0.03] border border-white/10 space-y-6 group hover:bg-white/[0.05] hover:border-primary/30 transition-all duration-500 relative overflow-hidden"
+                className="p-10 bg-white/3 border border-white/10 space-y-6 group hover:bg-white/5 hover:border-primary/30 transition-all duration-500 relative overflow-hidden"
               >
                 <div className="absolute -right-4 -top-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
                   <Rocket size={120} />
@@ -87,7 +87,7 @@ export function Philosophy() {
                    </div>
                 </div>
 
-                <div className="bg-white/[0.03] border border-white/10 p-10 md:p-12 overflow-hidden relative group hover:bg-white/[0.05] hover:border-primary/20 transition-all">
+                <div className="bg-white/3 border border-white/10 p-10 md:p-12 overflow-hidden relative group hover:bg-white/5 hover:border-primary/20 transition-all">
                    <div className="relative z-10 space-y-4">
                       <div className="flex items-center gap-3 text-primary mb-2">
                         <Laptop size={20} />
