@@ -25,6 +25,19 @@ import { editorialPosts } from '@/data/editorial';
 import SEO from '@/components/SEO';
 import { toast } from 'sonner';
 
+function SystemScanner() {
+  return (
+    <motion.div 
+      initial={{ top: -100 }}
+      animate={{ top: '100%' }}
+      transition={{ duration: 2, ease: "linear" }}
+      className="fixed left-0 right-0 h-1 bg-primary/20 z-[100] pointer-events-none"
+    >
+      <div className="absolute inset-0 bg-primary blur-sm"></div>
+    </motion.div>
+  );
+}
+
 export default function Partners() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
@@ -105,12 +118,18 @@ export default function Partners() {
           keywords={[...(selectedPartner?.features || []), "technical registry", "ecosystem", "mariecoder", "AI infra"]}
         />
         
+        <SystemScanner />
+        
         {/* Background Decor */}
         <div className="fixed inset-0 pointer-events-none z-0 opacity-20">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[40px_40px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 pb-32">
+           <div className="fixed top-24 right-8 z-50 flex flex-col items-end pointer-events-none opacity-20 hidden xl:flex">
+              <div className="text-[8px] font-mono text-white/40 uppercase tracking-widest">Registry_Scan_Status</div>
+              <div className="text-[10px] font-mono text-primary uppercase tracking-[0.2em] font-black animate-pulse">Scanning_Nodes...</div>
+           </div>
           {/* Hero Section */}
           <div className="pt-20 mb-24">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">

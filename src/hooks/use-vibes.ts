@@ -101,6 +101,44 @@ export function useVibes() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleCalendar = useCallback((type: 'wed' | 'fri') => {
+    const now = new Date();
+    const dayOfWeek = type === 'wed' ? 3 : 5;
+    const startHour = 16;
+    const endHour = type === 'wed' ? 20 : 18;
+
+    // Find next occurrence
+    const nextDate = new Date(now);
+    nextDate.setDate(now.getDate() + (dayOfWeek + 7 - now.getDay()) % 7);
+    nextDate.setHours(startHour, 0, 0, 0);
+
+    const endDate = new Date(nextDate);
+    endDate.setHours(endHour, 0, 0, 0);
+
+    const formatISO = (date: Date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    
+    const text = type === 'wed' ? "GameHaven Builder Session" : "WoodBine Creative Hangout";
+    const dates = `${formatISO(nextDate)}/${formatISO(endDate)}`;
+    const location = type === 'wed' ? "5254 Anthem Peak Ln, Herriman, UT 84096" : "545 West 700 S, Salt Lake City, UT 84101";
+    
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${dates}&ctz=America/Denver&recur=${encodeURIComponent(`RRULE:FREQ=WEEKLY;BYDAY=${type === 'wed' ? 'WE' : 'FR'}`)}&location=${encodeURIComponent(location)}`;
+    window.open(url, '_blank');
+  }, []);
+
+  // Simulated live registration drift
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Math.random() > 0.95) {
+        setRsvps(prev => ({
+          ...prev,
+          wed: prev.wed + (Math.random() > 0.5 ? 1 : 0),
+          fri: prev.fri + (Math.random() > 0.5 ? 1 : 0),
+        }));
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const nextUpEvent = wedState?.isNext ? { name: 'Wednesday @ Herriman', state: wedState } : { name: 'Friday @ SLC', state: friState };
 
   return {
@@ -111,6 +149,7 @@ export function useVibes() {
     rsvps,
     hasRsvpd,
     handleRsvp,
+    handleCalendar,
     nextUpEvent
   };
 }

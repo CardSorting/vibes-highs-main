@@ -6,6 +6,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import Breadcrumbs from './Breadcrumbs';
 import CommandPalette from './CommandPalette';
+import { InteractiveGrid } from '@/components/InteractiveGrid';
 
 export default function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -35,6 +36,7 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-[#0A0A0B] text-[#F0F0F0] selection:bg-primary selection:text-black relative overflow-x-hidden font-sans">
       <CommandPalette />
+      <InteractiveGrid />
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0A0A0B]/80 border-b border-white/10">
         <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" aria-label="Main navigation">
           <Link to="/" className="flex items-center gap-2 text-primary group" aria-label="Vibes & Highs Home">
@@ -186,6 +188,16 @@ export default function Layout() {
         <Breadcrumbs />
         <Outlet />
       </main>
+
+      {/* Global Aesthetics: Scanning lines and Noise overlay */}
+      <div className="fixed inset-0 pointer-events-none z-999 opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[100%_2px,3px_100%]"></div>
+      <div className="noise" />
+
+      {/* Substrate Status Indicator */}
+      <div className="fixed bottom-6 left-6 z-[100] hidden md:flex items-center gap-3 px-3 py-1.5 bg-black/40 border border-white/10 backdrop-blur-md pointer-events-none">
+        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+        <span className="text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-white/40">Substrate_Integrity // Stable</span>
+      </div>
 
       <footer className="relative z-10 pt-32 pb-12 px-6 border-t border-white/5 bg-[#0A0A0B]" role="contentinfo">
         <div className="max-w-7xl mx-auto">

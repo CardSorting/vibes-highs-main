@@ -24,15 +24,9 @@ export default function Home() {
     rsvps,
     hasRsvpd,
     handleRsvp,
+    handleCalendar,
     nextUpEvent
   } = useVibes();
-
-  const handleCalendar = (type: 'wed' | 'fri') => {
-    const text = type === 'wed' ? "GameHaven Herriman" : "WoodBine game night";
-    const dates = type === 'wed' ? "20240508T160000/20240508T200000" : "20240510T160000/20240510T180000";
-    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${dates}&ctz=America/Denver&recur=${encodeURIComponent(`RRULE:FREQ=WEEKLY;BYDAY=${type === 'wed' ? 'WE' : 'FR'}`)}&location=${encodeURIComponent(type === 'wed' ? "5254 Anthem Peak Ln, Herriman, UT 84096" : "545 West 700 S, Salt Lake City, UT 84101")}`;
-    window.open(url, '_blank');
-  };
 
   // Forensic grounding: Ensure we scroll to top on mount
   useEffect(() => {
@@ -121,8 +115,6 @@ export default function Home() {
         <GlobalCTA />
       </main>
 
-      {/* Global Aesthetics: Scanning lines overlay */}
-      <div className="fixed inset-0 pointer-events-none z-999 opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[100%_2px,3px_100%]"></div>
     </div>
   );
 }
