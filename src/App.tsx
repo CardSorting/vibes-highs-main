@@ -16,8 +16,11 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Suspense fallback={
-        <div className="h-screen w-full bg-[#0A0A0B] flex items-center justify-center">
-          <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <div className="h-screen w-full bg-[#0A0A0B] flex flex-col items-center justify-center font-mono text-primary gap-4">
+          <div className="w-16 h-px bg-primary/20 relative overflow-hidden">
+            <div className="absolute inset-0 bg-primary animate-[shimmer_2s_infinite]"></div>
+          </div>
+          <div className="text-[10px] uppercase tracking-[0.5em] animate-pulse">Initializing_Substrate...</div>
         </div>
       }>
         <Routes>
