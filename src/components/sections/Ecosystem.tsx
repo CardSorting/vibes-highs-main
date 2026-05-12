@@ -8,8 +8,8 @@ export function Ecosystem() {
       <div className="max-w-7xl mx-auto px-6">
          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="space-y-2 text-center md:text-left">
-              <div className="text-primary font-mono text-[10px] uppercase tracking-[0.4em] font-black">Ecosystem Infrastructure</div>
-              <div className="text-white/40 text-[10px] font-mono uppercase tracking-widest">Technical registry supporting the collective</div>
+              <div className="text-primary font-mono text-[10px] uppercase tracking-[0.4em] font-black">The Ecosystem</div>
+              <div className="text-white/40 text-[10px] font-mono uppercase tracking-widest">Friends and tools that help us build</div>
             </div>
             <div className="flex flex-wrap justify-center gap-12 items-center">
               {partners.map(p => (

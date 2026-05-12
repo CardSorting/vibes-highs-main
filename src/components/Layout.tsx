@@ -71,7 +71,7 @@ export default function Layout() {
                     )}
                   </Link>
                 )}
-                
+
                 {/* Mega-menu Tooltip */}
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 pointer-events-none group-hover/nav:opacity-100 transition-opacity z-50">
                   <div className="bg-[#141415] border border-white/10 p-3 w-48 shadow-2xl shadow-black">
@@ -85,7 +85,7 @@ export default function Layout() {
 
           <div className="flex items-center gap-4">
             {/* Visible Search Button for Non-Technical Users */}
-            <button 
+            <button
               className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-none hover:bg-white/10 transition-colors group"
               onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
               aria-label="Open search"
@@ -196,7 +196,7 @@ export default function Layout() {
       {/* Substrate Status Indicator */}
       <div className="fixed bottom-6 left-6 z-100 hidden md:flex items-center gap-3 px-3 py-1.5 bg-black/40 border border-white/10 backdrop-blur-md pointer-events-none">
         <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-        <span className="text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-white/40">Substrate_Integrity // Stable</span>
+        <span className="text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-white/40">Community_Pulse // Stable</span>
       </div>
 
       <footer className="relative z-10 pt-32 pb-12 px-6 border-t border-white/5 bg-[#0A0A0B]" role="contentinfo">
@@ -208,7 +208,7 @@ export default function Layout() {
                 <span className="font-display font-black text-2xl tracking-tighter text-white">VIBES<span className="text-primary">&amp;</span>HIGHS</span>
               </Link>
               <p className="text-white/50 text-lg font-light leading-relaxed max-w-md">
-                A casual meetup for people who make weird things. We champion a non-transactional, high-output community of builders, artists, and researchers.
+                A casual meetup for people who make weird things. We’re a passionate, creative community of builders, artists, and researchers sharing the joy of the build.
               </p>
               <div className="flex items-center gap-4">
                 <div className="flex -space-x-2">

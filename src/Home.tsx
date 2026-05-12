@@ -37,7 +37,7 @@ export default function Home() {
     <div className="selection:bg-primary selection:text-black bg-[#0A0A0B] min-h-screen text-white antialiased">
       <SEO 
         title="Build Weird Things | Vibes & Highs SLC" 
-        description="A casual, non-transactional meetup for people making weird internet projects, creative code, and AI explorations in Salt Lake City."
+        description="A casual, no-pressure meetup for people making weird internet projects, creative code, and AI explorations in Salt Lake City."
         breadcrumbs={[
           { name: 'Home', item: '/' }
         ]}
