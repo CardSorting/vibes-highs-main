@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Terminal, Menu, X, Github, Twitter, Linkedin, Mail, ExternalLink, ChevronRight, Search, Command } from 'lucide-react';
+import { Terminal, Menu, X, Github, Twitter, Linkedin, Mail, ExternalLink, ChevronRight, Search, Command, MessageSquare, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
 import { Link, Outlet, useLocation } from 'react-router-dom';
@@ -99,17 +99,17 @@ export default function Layout() {
             </button>
 
             <div className="hidden sm:flex items-center gap-3 border-r border-white/10 pr-6 mr-2">
-              <a href="https://x.com/goldeneggie" target="_blank" rel="noreferrer" className="text-white/40 hover:text-primary transition-colors" aria-label="Follow us on X">
+              <a href="https://x.com/goldeneggie" target="_blank" rel="noreferrer" className="text-white/40 hover:text-[#1DA1F2] transition-colors" aria-label="Follow us on X">
                 <Twitter size={16} />
               </a>
-              <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-white/40 hover:text-primary transition-colors" aria-label="Join our Discord">
-                <Github size={16} />
+              <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-white/40 hover:text-[#5865F2] transition-colors" aria-label="Join our Discord">
+                <MessageSquare size={16} />
               </a>
             </div>
 
-            <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="hidden md:block">
-              <Button className="bg-white text-black hover:bg-primary font-bold uppercase tracking-widest text-[10px] h-11 px-8 rounded-none transition-all shadow-lg shadow-white/5">
-                Join Community
+            <a href="/#contact" className="hidden md:block">
+              <Button className="bg-primary text-black hover:bg-white font-bold uppercase tracking-widest text-[10px] h-11 px-8 rounded-none transition-all shadow-lg shadow-primary/20">
+                Get in Touch
               </Button>
             </a>
 
@@ -170,13 +170,13 @@ export default function Layout() {
               <div className="flex flex-col gap-4">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-white/20">Connect with us</p>
                 <div className="flex gap-6">
-                  <a href="https://discord.gg/ua5UUXZTyz" className="text-white/60 flex items-center gap-2 text-sm font-medium">Discord <ExternalLink size={14} /></a>
-                  <a href="https://x.com/goldeneggie" className="text-white/60 flex items-center gap-2 text-sm font-medium">Twitter <ExternalLink size={14} /></a>
+                  <a href="https://discord.gg/ua5UUXZTyz" className="text-white/60 flex items-center gap-2 text-sm font-medium">Discord <MessageSquare size={14} /></a>
+                  <a href="https://x.com/goldeneggie" className="text-white/60 flex items-center gap-2 text-sm font-medium">Twitter <Twitter size={14} /></a>
                 </div>
               </div>
-              <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="block">
+              <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)} className="block">
                 <Button className="w-full bg-primary text-black hover:bg-white font-bold uppercase tracking-widest text-[10px] h-14 rounded-none">
-                  Join the Community
+                  Contact the Collective
                 </Button>
               </a>
             </div>
@@ -193,8 +193,23 @@ export default function Layout() {
       <div className="fixed inset-0 pointer-events-none z-999 opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[100%_2px,3px_100%]"></div>
       <div className="noise" />
 
+      {/* Floating Connectivity FAB */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="fixed bottom-6 right-6 z-[60]"
+      >
+        <a 
+          href="/#contact" 
+          className="flex items-center gap-3 px-6 py-4 bg-primary text-black font-black uppercase tracking-widest text-[10px] shadow-2xl shadow-primary/20 hover:bg-white transition-all group"
+        >
+          <MessageCircle size={18} className="group-hover:rotate-12 transition-transform" />
+          <span className="hidden sm:inline">Connect</span>
+        </a>
+      </motion.div>
+
       {/* Substrate Status Indicator */}
-      <div className="fixed bottom-6 left-6 z-100 hidden md:flex items-center gap-3 px-3 py-1.5 bg-black/40 border border-white/10 backdrop-blur-md pointer-events-none">
+      <div className="fixed bottom-6 left-6 z-[60] hidden md:flex items-center gap-3 px-3 py-1.5 bg-black/40 border border-white/10 backdrop-blur-md pointer-events-none">
         <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
         <span className="text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-white/40">Community_Pulse // Stable</span>
       </div>

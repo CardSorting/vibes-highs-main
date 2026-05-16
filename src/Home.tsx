@@ -6,6 +6,7 @@ import { Ecosystem } from '@/components/sections/Ecosystem';
 import { SystemPulse } from '@/components/SystemPulse';
 import { Philosophy } from '@/components/sections/Philosophy';
 import { Schedule } from '@/components/sections/Schedule';
+import { Connect } from '@/components/sections/Connect';
 import { FAQ, GlobalCTA } from '@/components/sections/FooterSections';
 
 /**
@@ -111,9 +112,11 @@ export default function Home() {
           onRsvp={handleRsvp}
           onCalendar={handleCalendar}
         />
+        <Connect />
         <FAQ />
         <GlobalCTA />
       </main>
+
 
     </div>
   );
