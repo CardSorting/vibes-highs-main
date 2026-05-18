@@ -3,7 +3,7 @@
  */
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Activity, MapPin, Users, Check, CalendarPlus } from 'lucide-react';
+import { Activity, MapPin, Users, Check, CalendarPlus, Clock, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { EventState } from '@/hooks/use-vibes';
@@ -57,7 +57,7 @@ export function Schedule({
         <div className="grid gap-2">
           <SessionRow 
             day="Wednesday"
-            time="16:00 — 20:00"
+            time="4:00 PM — Concludes"
             location="GameHaven Herriman"
             address="5254 Anthem Peak Ln, Herriman, UT 84096"
             state={wedState}
@@ -71,7 +71,7 @@ export function Schedule({
           />
           <SessionRow 
             day="Friday"
-            time="16:00 — 18:00"
+            time="4:00 PM — Concludes"
             location="WoodBine SLC"
             address="545 West 700 S, Salt Lake City, UT 84101"
             state={friState}
@@ -100,9 +100,9 @@ function SessionRow({ day, time, location, address, state, isToday, onRsvp, onCa
           <div className="shrink-0 w-36">
              <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em] mb-2">{day}</div>
              <div className="text-3xl font-display font-black text-white uppercase tracking-tighter">{time.split(' — ')[0]}</div>
-             <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold mb-1.5">Weekly Session</div>
+             <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold mb-1.5">Mountain Time</div>
              <span className="inline-block px-1.5 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[8px] font-mono font-black uppercase tracking-widest">
-               Unified Agenda
+               Drop-ins Welcome
              </span>
           </div>
           
@@ -119,6 +119,16 @@ function SessionRow({ day, time, location, address, state, isToday, onRsvp, onCa
              </div>
              <div className="flex items-center gap-4 text-white/40 text-[10px] font-mono uppercase tracking-widest">
                 <MapPin size={12} className="text-primary" /> {address}
+             </div>
+             <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-white/5 text-[11px] text-white/50 leading-relaxed font-sans">
+               <div className="flex items-start gap-2.5">
+                 <Clock size={14} className="text-primary mt-0.5 shrink-0" />
+                 <div>
+                   <span className="text-white font-bold">4:00 PM MST</span> — Drop-ins welcome from 4:00 PM. 
+                   Ends when the event concludes (usually ~2 hours, but can run longer sometimes). 
+                   Check in on our <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-primary hover:underline font-semibold inline-flex items-center gap-0.5">Discord <MessageSquare size={10} /></a> for more info.
+                 </div>
+               </div>
              </div>
           </div>
         </div>

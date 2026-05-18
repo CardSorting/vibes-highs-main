@@ -92,7 +92,7 @@ export default function Home() {
                 "addressCountry": "US"
               }
             },
-            "description": "Weekly session for builders and creative coders in Herriman."
+            "description": "Weekly session for builders and creative coders in Herriman. Drop-ins welcome from 4:00 PM MST. Ends when the event concludes (usually ~2 hours, but can run longer sometimes). Check in on our Discord for more info."
           }
         ]}
       />
