@@ -22,19 +22,19 @@ const AGENDA_PILLARS: AgendaPillar[] = [
   {
     id: 'setup',
     number: '01',
-    title: 'Local Setup & Onboarding',
+    title: 'Easy Local Setup',
     icon: Settings,
-    description: 'Get the Nous Hermes agent completely configured and running locally on your hardware. We solve decision paralysis and configure model endpoints.',
+    description: 'Get your friendly Nous Hermes AI helper running right on your own computer. We keep it simple, skip the confusion, and show you exactly what to do step-by-step.',
     details: [
-      'Model provider selection and API orchestration',
-      'Configuring terminal backends & system privileges',
-      'Verifying the deterministic "Happy Path" onboarding',
-      'Resolving dependency version drift on local systems'
+      'Helping you choose the best model settings for your machine',
+      'Setting up your command line and computer settings',
+      'Testing a simple, guaranteed setup to get you going',
+      'Fixing common setup errors and package issues'
     ],
     terminalCommand: 'hermes setup --chapter-slc',
     terminalOutput: [
       '❯ Initializing local workspace...',
-      '❯ Linking to Nous Research SLC Chapter primitives...',
+      '❯ Linking to the Salt Lake City Chapter guide...',
       '✔ Selected Model: Nous-Hermes-2-Theta (Native)',
       '✔ Configured Terminal Backend: Secure SSH/Local Shell',
       '✔ Persona definition [SOUL.md] synchronized successfully.',
@@ -44,14 +44,14 @@ const AGENDA_PILLARS: AgendaPillar[] = [
   {
     id: 'walkthroughs',
     number: '02',
-    title: 'Guided Agent Walkthroughs',
+    title: 'Guided Walkthroughs',
     icon: PlayCircle,
-    description: 'We pull back the curtain on advanced agent execution. Trace reasoning paths, inspect structured output protocols, and debug live agent runs.',
+    description: 'We show you exactly how AI assistants think. Watch them work in real-time, see how they solve problems, and learn how to guide their actions.',
     details: [
-      'Steering model outputs with fine-tuned parameters',
-      'Tracing multi-agent negotiation logs in real-time',
-      'Evaluating prompt injection defenses and recovery strategies',
-      'Building custom tools and local system hooks for your agents'
+      'Learning how to guide AI answers to get exactly what you need',
+      'Watching and understanding how different AI tools talk to each other',
+      'Keeping your AI safe from hackers and fixing errors',
+      'Creating custom shortcuts and custom tools for your AI companion'
     ],
     terminalCommand: 'hermes run --demo-trace',
     terminalOutput: [
@@ -60,20 +60,20 @@ const AGENDA_PILLARS: AgendaPillar[] = [
       '  ├─ Analyzing current open-source model releases...',
       '  ├─ Activating tools: git_pull, web_search, file_audit',
       '  └─ Formulating agentic strategy...',
-      '✔ Executive Trace: Run completed in 1.45s with perfect grounding.'
+      '✔ Walkthrough completed in 1.45s. Your AI helper is ready!'
     ]
   },
   {
     id: 'breakdown',
     number: '03',
-    title: 'Weekly AI & Agentic Breakdown',
+    title: 'Weekly Tech Breakdowns',
     icon: BookOpen,
-    description: 'AI moves at terminal velocity. Each week, we curate, run, and dissect the absolute newest models, papers, tools, and benchmarks.',
+    description: 'Artificial intelligence moves incredibly fast. Each week, we gather, play with, and explain the newest free models, smart tools, and exciting tech.',
     details: [
-      'Unpacking new open weights releases from Nous Research',
-      'Dissecting state-of-the-art benchmarks and prompt recipes',
-      'Exploring latent space art, music, and Procedural Web projects',
-      'Helping you steer your own side quests using weekly tech'
+      'Exploring the newest free models released by Nous Research',
+      'Breaking down top prompt designs and how smart new models are',
+      'Looking at cool AI art, music, and creative web projects',
+      'Helping you build your own fun side projects and ideas'
     ],
     terminalCommand: 'hermes analyze --week-latest',
     terminalOutput: [
@@ -111,11 +111,11 @@ export function Agenda() {
               <span className="font-serif italic font-light text-white/30 lowercase">agenda.</span>
             </h2>
             <p className="text-white/70 text-lg md:text-xl font-light leading-relaxed font-sans max-w-2xl">
-              Each session covers the <span className="text-primary font-medium">exact same material</span>, regardless of whether you join us in Herriman or downtown SLC. As the official <span className="text-white font-medium underline decoration-primary decoration-2 underline-offset-4">Nous Research Chapter of Salt Lake City</span>, we offer structured modules centered around open-source intelligence.
+              Each meetup covers the <span className="text-primary font-medium">exact same friendly material</span>, whether you join us in Herriman or downtown Salt Lake City. As the local <span className="text-white font-medium underline decoration-primary decoration-2 underline-offset-4">Nous Research Chapter of SLC</span>, we host weekly learning sessions centered around free, open-source AI tools.
             </p>
           </div>
           <div className="flex items-center gap-2 px-4 py-2 border border-white/10 bg-white/2 rounded-none text-white/50 text-[10px] font-mono uppercase tracking-widest font-black">
-            <span>Focus: Nous Hermes &amp; Agentic Systems</span>
+            <span>Focus: Open AI Tools &amp; Local Helpers</span>
           </div>
         </div>
 
@@ -131,10 +131,10 @@ export function Agenda() {
                 <Sparkles size={14} /> NOUS RESEARCH CHAPTER // SALT LAKE CITY
               </div>
               <h3 className="text-3xl font-display font-black text-white uppercase tracking-tight">
-                Empowering the Open Source Intellect
+                Empowering Everyone with Free AI
               </h3>
               <p className="text-white/60 font-light text-base leading-relaxed max-w-4xl">
-                Our primary research vehicle is the <span className="text-white font-semibold">Hermes Agent</span>, built on state-of-the-art open-source foundations from Nous Research. By providing an uncompromised development runway—free from vendor lock-in or transactional paywalls—we ensure local builders are equipped to lead the agentic frontier.
+                We focus heavily on the <span className="text-white font-semibold">Hermes Agent</span>, an amazing open-source AI created by Nous Research. We believe in high-quality, free technology that doesn't hide behind paid subscriptions or monthly bills—ensuring everyone in our local community has the tools to learn, build, and explore.
               </p>
             </div>
             <div className="lg:col-span-4 flex justify-start lg:justify-end">
@@ -191,10 +191,10 @@ export function Agenda() {
             {/* Custom info alert box */}
             <div className="p-6 bg-white/2 border border-white/5 text-white/40 font-mono text-[11px] leading-relaxed rounded-none space-y-2">
               <div className="flex items-center gap-2 text-white/60 font-bold">
-                <HelpCircle size={14} className="text-primary" /> SCHEDULE PROTOCOL
+                <HelpCircle size={14} className="text-primary" /> HOW WE GATHER
               </div>
               <p>
-                Attend Herriman on Wednesdays or Salt Lake City on Fridays. We cover the same topics at both meetings so you never experience FOMO.
+                Join us in Herriman on Wednesdays or Salt Lake City on Fridays. We cover the exact same friendly topics at both meetings so you can choose whichever fits your schedule!
               </p>
             </div>
           </div>
@@ -262,7 +262,7 @@ export function Agenda() {
                 {/* Pillar Specific Curricular Details */}
                 <div className="pt-8 border-t border-white/5 space-y-4">
                   <div className="text-[10px] text-white/30 uppercase tracking-widest font-black flex items-center gap-2">
-                    <ActiveIcon size={12} className="text-primary" /> Curricular Elements
+                    <ActiveIcon size={12} className="text-primary" /> What we cover
                   </div>
                   <AnimatePresence mode="wait">
                     <motion.ul 
@@ -296,13 +296,13 @@ export function Agenda() {
           <div className="space-y-8">
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-primary font-mono text-[10px] uppercase tracking-[0.4em]">
-                <Compass size={12} className="text-primary" /> Geographic Footprint
+                <Compass size={12} className="text-primary" /> Two Gathering Spots
               </div>
               <h3 className="text-3xl font-display font-black text-white uppercase tracking-tight">
-                Two Locations. Choose Your Vibe.
+                Two Locations. Choose Your Favorite Vibe.
               </h3>
               <p className="text-white/60 font-light leading-relaxed text-base">
-                We organize two weekly physical meetups to make participating as simple and flexible as possible. Both cover the <span className="text-white font-medium">exact same structured offering</span>, but choose the location that is closest to you and matches your preferred style of collaboration:
+                We meet in two different locations each week to make it as easy as possible for everyone to join. Both meetups cover the <span className="text-white font-medium">exact same friendly lessons</span>, so you never have to worry about missing out. Simply choose the location that is closest to you or matches the style of meeting you prefer:
               </p>
             </div>
 
@@ -314,7 +314,7 @@ export function Agenda() {
                 </div>
                 <h4 className="text-lg font-display font-black text-white uppercase tracking-tight mb-2">GameHaven Herriman</h4>
                 <p className="text-white/40 text-[11px] font-light leading-relaxed">
-                  A high-fidelity tabletop & gaming sanctuary. Ideal for low-pressure evening coding, snacks, deep technical focus, and comfortable workstation tables.
+                  A comfortable, fun board game and tabletop shop. Perfect for relaxed evening learning, snacks, friendly focus, and plenty of table space.
                 </p>
               </div>
 
@@ -325,7 +325,7 @@ export function Agenda() {
                 </div>
                 <h4 className="text-lg font-display font-black text-white uppercase tracking-tight mb-2">Woodbine SLC</h4>
                 <p className="text-white/40 text-[11px] font-light leading-relaxed">
-                  A vibrant, modern downtown food hall. Perfect for weekend warmups, creative brainstorming, food pairings, craft drinks, and casual social energy.
+                  A beautiful, lively downtown food hall. Great for weekend warmups, creative conversations, delicious food, craft drinks, and friendly social energy.
                 </p>
               </div>
             </div>
@@ -352,23 +352,23 @@ export function Agenda() {
 
               <div className="space-y-4">
                 <h5 className="text-sm font-bold text-white uppercase tracking-wider font-mono text-primary">
-                  The Onboarding Success Guarantee
+                  Our Onboarding Promise
                 </h5>
                 <p className="text-white/60 font-light leading-relaxed text-sm">
-                  William, the host of the Nous Research Salt Lake City Chapter, makes local setup easy and helps guide you step-by-step through your agentic journey, ensuring your success.
+                  William, the host of our Salt Lake City Chapter, makes setting up your AI companion simple and fun. He will help guide you step-by-step and make sure you feel confident on your learning journey.
                 </p>
                 
                 <p className="text-white/40 text-[11px] font-light leading-relaxed">
-                  William has successfully guided builders across every skill level: from senior systems engineers and deep learning researchers to absolute beginners who have never touched code or are opening a terminal for the very first time on a completely fresh computer. He has seen every bug and is excited to support you!
+                  William has helped people of all backgrounds get set up: from professional software developers and researchers to complete beginners who have never written code or are opening a terminal for the very first time on a brand-new computer. He is friendly, patient, has seen it all, and is excited to help you succeed!
                 </p>
               </div>
             </div>
 
             <div className="pt-6 mt-6 border-t border-white/5 flex flex-wrap gap-2 items-center text-[10px] font-mono uppercase tracking-widest text-white/40">
               <span className="text-primary font-black">Guiding success for:</span>
-              <span className="px-2 py-0.5 bg-white/5 border border-white/10 text-white/60">Senior Devs</span>
+              <span className="px-2 py-0.5 bg-white/5 border border-white/10 text-white/60">Developers</span>
               <span className="px-2 py-0.5 bg-white/5 border border-white/10 text-white/60">Researchers</span>
-              <span className="px-2 py-0.5 bg-white/5 border border-white/10 text-white/60">Non-Coders</span>
+              <span className="px-2 py-0.5 bg-white/5 border border-white/10 text-white/60">Absolute Beginners</span>
             </div>
           </div>
 

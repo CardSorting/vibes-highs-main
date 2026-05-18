@@ -46,7 +46,7 @@ export function Schedule({
             <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em]">Join the Sessions</div>
             <h2 className="font-display font-black text-6xl md:text-9xl tracking-tighter leading-[0.8] uppercase">WHERE WE<br/><span className="font-serif italic font-light text-white/40 lowercase">Gather.</span></h2>
             <p className="text-white/40 text-xs font-mono uppercase tracking-widest leading-relaxed">
-              Same Nous Research Chapter Curriculum covered at both locations weekly.
+              We cover the exact same friendly lessons at both locations weekly. Choose whichever is closest or matches your vibe!
             </p>
           </div>
           <div className="flex items-center gap-6 text-white/30 text-[10px] font-mono uppercase tracking-widest font-black">
