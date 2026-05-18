@@ -130,5 +130,22 @@ export const partners: Partner[] = [
       linkedin: "https://www.linkedin.com/company/silicon-slopes/"
     },
     location: "Lehi, UT"
+  },
+  {
+    id: "forge-utah",
+    name: "Forge Utah",
+    logo: "https://forgeutah.tech/logo.png",
+    description: "Building a high-density, non-profit community specifically for technologists, creators, and developers in Utah.",
+    longDescription: "Forge Utah is a dedicated 501(c)(3) non-profit organization focused entirely on building and empowering a thriving community for technologists, developers, and engineers in Utah. Through hands-on meetups, professional networking, and deep technical resource curation, they champion high-density collaboration and support for the builders of tomorrow.",
+    eli5: "A friendly not-for-profit group in Utah that brings programmers, developers, and engineers together to share ideas, learn new skills, and support each other.",
+    systemRole: "THE COHORT",
+    tier: "SPOTLIGHT",
+    category: "Community & Origins",
+    link: "https://forgeutah.tech/",
+    features: ["Community Infrastructure", "Technologist Networking", "Developer Workshops", "Collaborative Growth"],
+    socials: {
+      linkedin: "https://www.linkedin.com/company/forge-utah/"
+    },
+    location: "Utah, USA"
   }
 ];

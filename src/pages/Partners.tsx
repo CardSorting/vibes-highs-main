@@ -52,18 +52,18 @@ export default function Partners() {
   [selectedPartnerId]);
 
   const categories = useMemo(() => 
-    ['All', ...new Set(partners.filter(p => p.tier !== 'SPOTLIGHT').map(p => p.category))], 
+    ['All', ...new Set(partners.map(p => p.category))], 
   []);
 
-  const tiers = ['All', 'TITAN', 'PLATINUM', 'GOLD'];
+  const tiers = ['All', 'TITAN', 'PLATINUM', 'GOLD', 'SPOTLIGHT'];
   
   const filteredPartners = useMemo(() => {
     return partners.filter(p => {
-      const matchesCategory = activeCategory === 'All' || p.category === activeCategory || p.tier === 'SPOTLIGHT';
-      const matchesTier = activeTier === 'All' || p.tier === activeTier || p.tier === 'SPOTLIGHT';
+      const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
+      const matchesTier = activeTier === 'All' || p.tier === activeTier;
       const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                            p.description.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesTier && matchesSearch && p.tier !== 'SPOTLIGHT';
+      return matchesCategory && matchesTier && matchesSearch;
     });
   }, [activeCategory, activeTier, searchQuery]);
 
@@ -405,6 +405,31 @@ export default function Partners() {
             </DialogContent>
           </Dialog>
 
+          {/* Spotlight / Foundational Roots Section */}
+          {partners.filter(p => p.tier === 'SPOTLIGHT').length > 0 && (
+            <section className="mt-32 space-y-12">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-primary font-mono text-[10px] uppercase tracking-[0.4em]">
+                  <Sparkles size={12} className="animate-pulse" /> Foundational Roots
+                </div>
+                <h2 className="font-display font-black text-4xl md:text-7xl tracking-tighter uppercase leading-none">
+                  Our Origin Spotlight
+                </h2>
+                <p className="text-white/40 text-xs font-mono uppercase tracking-widest leading-relaxed max-w-2xl">
+                  Celebrating the community and organizations that helped grow Vibes & Highs from day one.
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                {partners
+                  .filter(p => p.tier === 'SPOTLIGHT')
+                  .map(partner => (
+                    <OriginCard key={partner.id} partner={partner} />
+                  ))}
+              </div>
+            </section>
+          )}
+
           {/* Join CTA */}
           <motion.section 
             initial={{ opacity: 0, y: 40 }}
@@ -454,13 +479,19 @@ function OriginCard({ partner }: { partner: Partner; key?: string }) {
 
       <div className="shrink-0">
         <div className="w-24 h-24 md:w-40 md:h-40 rounded-none border border-white/10 flex items-center justify-center bg-white/5 text-primary group-hover:border-primary/50 group-hover:bg-primary/5 transition-all duration-700">
-          <School size={64} className="group-hover:scale-110 transition-transform duration-700" />
+          {partner.id === 'silicon-slopes' ? (
+            <School size={64} className="group-hover:scale-110 transition-transform duration-700" />
+          ) : (
+            <Command size={64} className="group-hover:scale-110 transition-transform duration-700" />
+          )}
         </div>
       </div>
 
       <div className="flex-1 flex flex-col justify-center">
         <div className="flex items-center gap-3 mb-4">
-          <span className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-primary">Foundational Roots</span>
+          <span className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-primary">
+            {partner.id === 'silicon-slopes' ? 'Foundational Roots' : 'Technologist Ecosystem'}
+          </span>
           <div className="h-px w-8 bg-primary/40"></div>
         </div>
         <h3 className="font-display font-black text-4xl md:text-7xl tracking-tighter text-white uppercase group-hover:text-primary transition-colors leading-none mb-6">
