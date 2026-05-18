@@ -134,7 +134,7 @@ export function Agenda() {
                 Empowering Everyone with Free AI
               </h3>
               <p className="text-white/60 font-light text-base leading-relaxed max-w-4xl">
-                We focus heavily on the <span className="text-white font-semibold">Hermes Agent</span>, an amazing open-source AI created by Nous Research. We believe in high-quality, free technology that doesn't hide behind paid subscriptions or monthly bills—ensuring everyone in our local community has the tools to learn, build, and explore.
+                We focus heavily on the <span className="text-white font-semibold">Hermes Agent</span>, an amazing open-weight AI built by Nous Research. While professional enterprise scaling is supported via premium portal plans, the core model weights are fully open and accessible—ensuring everyone in our local community can run, fine-tune, and build with state-of-the-art models entirely on local, cost-effective hardware.
               </p>
             </div>
             <div className="lg:col-span-4 flex justify-start lg:justify-end">
