@@ -241,7 +241,7 @@ export default function Partners() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="mb-12 bg-white/[0.01] border border-white/5 p-6 md:p-8 relative overflow-hidden rounded-none group"
+                className="mb-12 bg-white/1 border border-white/5 p-6 md:p-8 relative overflow-hidden rounded-none group"
               >
                 <button 
                   onClick={() => setIsGuideOpen(false)}
@@ -283,7 +283,7 @@ export default function Partners() {
           </AnimatePresence>
 
           {/* Interactive Guided Recommender Assistant (Wizard) */}
-          <div className="mb-12 bg-white/[0.01] border border-white/5 p-8 relative overflow-hidden rounded-none">
+          <div className="mb-12 bg-white/1 border border-white/5 p-8 relative overflow-hidden rounded-none">
             <div className="absolute top-0 right-0 p-6 text-primary/5 pointer-events-none">
               <Sparkles size={64} />
             </div>
@@ -651,7 +651,7 @@ export default function Partners() {
                             onClick={() => setModalViewMode('approachable')}
                             className={`flex items-center gap-2 px-4 py-3 border-b-2 font-mono text-[10px] uppercase tracking-widest transition-all ${
                               modalViewMode === 'approachable'
-                                ? 'border-primary text-primary font-black bg-primary/[0.02]'
+                                ? 'border-primary text-primary font-black bg-primary/2'
                                 : 'border-transparent text-white/40 hover:text-white hover:bg-white/5'
                             }`}
                           >
@@ -661,7 +661,7 @@ export default function Partners() {
                             onClick={() => setModalViewMode('developer')}
                             className={`flex items-center gap-2 px-4 py-3 border-b-2 font-mono text-[10px] uppercase tracking-widest transition-all ${
                               modalViewMode === 'developer'
-                                ? 'border-primary text-primary font-black bg-primary/[0.02]'
+                                ? 'border-primary text-primary font-black bg-primary/2'
                                 : 'border-transparent text-white/40 hover:text-white hover:bg-white/5'
                             }`}
                           >
@@ -686,7 +686,7 @@ export default function Partners() {
                             </section>
 
                             {/* Main ELI5 Summary Callout */}
-                            <section className="p-6 bg-primary/[0.02] border border-primary/20 relative overflow-hidden">
+                            <section className="p-6 bg-primary/2 border border-primary/20 relative overflow-hidden">
                               <div className="absolute top-0 right-0 p-4 text-primary/10">
                                 <HelpCircle size={48} />
                               </div>
@@ -707,7 +707,7 @@ export default function Partners() {
                                   </h3>
                                   <div className="grid grid-cols-1 gap-2">
                                     {selectedPartner.features.map(feature => (
-                                      <div key={feature} className="p-3.5 border border-white/5 text-[10px] font-medium text-white/70 bg-white/[0.01] flex items-center gap-3">
+                                      <div key={feature} className="p-3.5 border border-white/5 text-[10px] font-medium text-white/70 bg-white/1 flex items-center gap-3">
                                         <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
                                         {feature}
                                       </div>
@@ -724,7 +724,7 @@ export default function Partners() {
                                   </h3>
                                   <div className="space-y-3">
                                     {selectedPartner.impactMetrics.map(metric => (
-                                      <div key={metric.label} className="p-4 bg-white/[0.01] border border-white/5 space-y-2 group hover:bg-white/2 transition-colors">
+                                      <div key={metric.label} className="p-4 bg-white/1 border border-white/5 space-y-2 group hover:bg-white/2 transition-colors">
                                         <div className="flex items-center justify-between">
                                           <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-white/60">{metric.label}</div>
                                           <div className="flex items-center gap-2">
@@ -759,7 +759,7 @@ export default function Partners() {
                                           <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/20"><Terminal size={16} /></div>
                                           <div className="text-[8px] font-mono uppercase text-white/40">V&H Core</div>
                                        </div>
-                                       <div className="flex-1 h-px w-16 sm:w-24 bg-gradient-to-r from-white/10 via-primary/50 to-white/10 relative">
+                                       <div className="flex-1 h-px w-16 sm:w-24 bg-linear-to-r from-white/10 via-primary/50 to-white/10 relative">
                                           <motion.div 
                                             animate={{ x: [0, 96, 0] }}
                                             transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
@@ -772,7 +772,7 @@ export default function Partners() {
                                           </div>
                                           <div className="text-[9px] font-bold uppercase text-primary tracking-widest">{selectedPartner.systemRole}</div>
                                        </div>
-                                       <div className="flex-1 h-px w-16 sm:w-24 bg-gradient-to-r from-white/10 via-primary/50 to-white/10" />
+                                       <div className="flex-1 h-px w-16 sm:w-24 bg-linear-to-r from-white/10 via-primary/50 to-white/10" />
                                        <div className="flex flex-col items-center gap-3">
                                           <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/20"><Globe size={16} /></div>
                                           <div className="text-[8px] font-mono uppercase text-white/40">The Internet</div>
@@ -839,8 +839,8 @@ export default function Partners() {
                                   <div className="text-[9px] font-mono text-white/20 uppercase tracking-[0.3em]">SHA_VERIFIED_ENTRY_2024</div>
                                   <div className="h-4 w-px bg-white/5 hidden sm:block" />
                                   <div className="text-[9px] font-mono text-white/20 uppercase tracking-[0.3em]">REGISTRY_ID: {selectedPartner.id.toUpperCase()}</div>
-                                font-sans</div>
-                               <Badge variant="outline" className="border-primary/25 text-primary/50 text-[8px] font-mono rounded-none self-start sm:self-auto font-mono">V&H_SYSLOG_REV_06</Badge>
+                               </div>
+                               <Badge variant="outline" className="border-primary/25 text-primary/50 text-[8px] font-mono rounded-none self-start sm:self-auto">V&H_SYSLOG_REV_06</Badge>
                             </section>
                           </div>
                         )}
@@ -948,7 +948,7 @@ function OriginCard({ partner }: { partner: Partner; key?: string }) {
         <p className="text-white/70 text-lg md:text-2xl font-light leading-relaxed max-w-3xl mb-8 font-sans">
           {partner.description}
         </p>
-        <div className="flex items-center gap-4 text-primary font-mono text-[10px] uppercase tracking-widest font-black group-hover:gap-6 transition-all font-mono">
+        <div className="flex items-center gap-4 text-primary font-mono text-[10px] uppercase tracking-widest font-black group-hover:gap-6 transition-all">
           Explore origin node <ArrowRight size={14} />
         </div>
       </div>
@@ -1004,7 +1004,7 @@ function PartnerEntry({
               <h3 className="text-xl font-display font-black text-white uppercase tracking-tight group-hover:text-primary transition-colors">
                 <Highlight text={partner.name} query={searchQuery} />
               </h3>
-              <span className="text-[8px] font-mono px-2 py-0.5 bg-primary/10 text-primary border border-primary/25 font-bold uppercase tracking-wider font-mono">
+              <span className="text-[8px] font-mono px-2 py-0.5 bg-primary/10 text-primary border border-primary/25 font-bold uppercase tracking-wider">
                 {partner.category}
               </span>
             </div>
@@ -1023,7 +1023,7 @@ function PartnerEntry({
         </div>
         
         <div className="flex items-center gap-6 shrink-0 w-full sm:w-auto border-t sm:border-t-0 pt-4 sm:pt-0 justify-between sm:justify-end z-10">
-          <span className="text-[9px] font-mono text-white/30 font-mono">
+          <span className="text-[9px] font-mono text-white/30">
             {getTierBadgeLabel(partner.tier)}
           </span>
           <span className="text-xs text-white/30 group-hover:text-white/60 flex items-center gap-1 font-bold">
@@ -1049,14 +1049,14 @@ function PartnerEntry({
       <div className="relative z-10 space-y-10">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">
-            <div className="text-[9px] font-mono text-primary font-bold uppercase tracking-widest flex items-center gap-2 font-mono">
+            <div className="text-[9px] font-mono text-primary font-bold uppercase tracking-widest flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shrink-0"></span>
               <Highlight text={partner.category} query={searchQuery} />
             </div>
             <h3 className="text-3xl md:text-5xl font-display font-black text-white uppercase tracking-tighter group-hover:text-primary transition-colors leading-none">
               <Highlight text={partner.name} query={searchQuery} />
             </h3>
-            <div className="text-[9px] font-mono text-white/20 uppercase tracking-[0.2em] font-mono">{partner.systemRole}</div>
+            <div className="text-[9px] font-mono text-white/20 uppercase tracking-[0.2em]">{partner.systemRole}</div>
           </div>
           <div className="text-white/20 group-hover:text-primary/40 transition-colors shrink-0">
              <PartnerIcon name={partner.name} size={32} />
@@ -1076,7 +1076,7 @@ function PartnerEntry({
           </p>
           
           <div className="pt-8 border-t border-white/5">
-            <div className="flex items-center justify-between text-[9px] font-mono uppercase tracking-[0.2em] gap-4 font-mono">
+            <div className="flex items-center justify-between text-[9px] font-mono uppercase tracking-[0.2em] gap-4">
               <span className="text-white/30 group-hover:text-primary transition-colors truncate">
                 {getTierBadgeLabel(partner.tier)}
               </span>

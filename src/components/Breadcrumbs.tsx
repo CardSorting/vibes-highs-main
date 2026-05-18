@@ -1,9 +1,11 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { ChevronRight, Home } from 'lucide-react';
 import { motion } from 'motion/react';
+import { partners } from '../data/partners';
 
 export default function Breadcrumbs() {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const pathnames = location.pathname.split('/').filter((x) => x);
 
   if (location.pathname === '/') return null;
@@ -15,6 +17,9 @@ export default function Breadcrumbs() {
     'terms': 'Terms',
     'conduct': 'Code of Conduct'
   };
+
+  const activePartnerId = searchParams.get('partner');
+  const activePartner = activePartnerId ? partners.find(p => p.id === activePartnerId) : null;
 
   return (
     <div className="max-w-7xl mx-auto px-6 pt-6">
@@ -28,7 +33,7 @@ export default function Breadcrumbs() {
         </Link>
         
         {pathnames.map((value, index) => {
-          const last = index === pathnames.length - 1;
+          const last = index === pathnames.length - 1 && !activePartner;
           const to = `/${pathnames.slice(0, index + 1).join('/')}`;
           const label = labelMap[value] || value.replace(/-/g, ' ');
 
@@ -51,6 +56,20 @@ export default function Breadcrumbs() {
             </div>
           );
         })}
+
+        {/* Dynamic Query Parameter Appending */}
+        {activePartner && (
+          <div className="flex items-center gap-2">
+            <ChevronRight size={10} className="text-white/10" />
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-primary font-black"
+            >
+              {activePartner.name}
+            </motion.span>
+          </div>
+        )}
       </nav>
     </div>
   );

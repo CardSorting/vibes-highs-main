@@ -87,7 +87,7 @@ export default function Layout() {
             {/* Visible Search Button for Non-Technical Users */}
             <button
               className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-none hover:bg-white/10 transition-colors group"
-              onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+              onClick={() => window.dispatchEvent(new CustomEvent('open-command-palette'))}
               aria-label="Open search"
             >
               <Search size={16} className="text-white/40 group-hover:text-primary transition-colors" />
@@ -197,7 +197,7 @@ export default function Layout() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="fixed bottom-6 right-6 z-[60]"
+        className="fixed bottom-6 right-6 z-60"
       >
         <a 
           href="/#contact" 
@@ -209,7 +209,7 @@ export default function Layout() {
       </motion.div>
 
       {/* Substrate Status Indicator */}
-      <div className="fixed bottom-6 left-6 z-[60] hidden md:flex items-center gap-3 px-3 py-1.5 bg-black/40 border border-white/10 backdrop-blur-md pointer-events-none">
+      <div className="fixed bottom-6 left-6 z-60 hidden md:flex items-center gap-3 px-3 py-1.5 bg-black/40 border border-white/10 backdrop-blur-md pointer-events-none">
         <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
         <span className="text-[8px] font-mono font-bold uppercase tracking-[0.3em] text-white/40">Community_Pulse // Stable</span>
       </div>

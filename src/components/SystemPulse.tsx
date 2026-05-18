@@ -109,7 +109,7 @@ export function SystemPulse() {
             return (
               <div 
                 key={i} 
-                className="bg-white/[0.01] border border-white/5 p-6 space-y-4 hover:border-primary/20 transition-all duration-300 relative overflow-hidden group select-none"
+                className="bg-white/1 border border-white/5 p-6 space-y-4 hover:border-primary/20 transition-all duration-300 relative overflow-hidden group select-none"
               >
                 {/* Subtle cyber background pulse */}
                 <motion.div 

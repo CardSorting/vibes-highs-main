@@ -22,7 +22,13 @@ export default function CommandPalette() {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    const handleOpenEvent = () => setIsOpen(true);
+    window.addEventListener('open-command-palette', handleOpenEvent);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-command-palette', handleOpenEvent);
+    };
   }, [handleKeyDown]);
 
   const popularSearches = [
