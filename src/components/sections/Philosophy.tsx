@@ -1,3 +1,6 @@
+/**
+ * [LAYER: UI]
+ */
 import { motion } from 'motion/react';
 import { Sparkles, Terminal, Laptop, Coffee, Rocket } from 'lucide-react';
 

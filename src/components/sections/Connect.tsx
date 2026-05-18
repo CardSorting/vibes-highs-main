@@ -1,3 +1,6 @@
+/**
+ * [LAYER: UI]
+ */
 import { motion } from 'motion/react';
 import { Mail, MessageSquare, Twitter, Github, ArrowUpRight, Copy, Check } from 'lucide-react';
 import { useState } from 'react';

@@ -1,3 +1,6 @@
+/**
+ * [LAYER: UI]
+ */
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Activity, MapPin, Users, Check, CalendarPlus } from 'lucide-react';
@@ -39,9 +42,12 @@ export function Schedule({
     <section id="schedule" className="relative py-32 bg-[#0A0A0B]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
-          <div className="max-w-2xl">
-            <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em] mb-6">Join the Sessions</div>
-            <h2 className="font-display font-black text-6xl md:text-9xl tracking-tighter leading-[0.8] mb-6 uppercase">WHERE WE<br/><span className="font-serif italic font-light text-white/40 lowercase">Gather.</span></h2>
+          <div className="max-w-2xl space-y-4">
+            <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em]">Join the Sessions</div>
+            <h2 className="font-display font-black text-6xl md:text-9xl tracking-tighter leading-[0.8] uppercase">WHERE WE<br/><span className="font-serif italic font-light text-white/40 lowercase">Gather.</span></h2>
+            <p className="text-white/40 text-xs font-mono uppercase tracking-widest leading-relaxed">
+              Same Nous Research Chapter Curriculum covered at both locations weekly.
+            </p>
           </div>
           <div className="flex items-center gap-6 text-white/30 text-[10px] font-mono uppercase tracking-widest font-black">
              <Activity size={12} className="text-primary" /> Session Active
@@ -91,10 +97,13 @@ function SessionRow({ day, time, location, address, state, isToday, onRsvp, onCa
       <div className="flex flex-col lg:flex-row items-stretch gap-px">
         {/* Main Info */}
         <div className="flex-1 p-8 lg:p-12 flex flex-col md:flex-row gap-12 items-start md:items-center">
-          <div className="shrink-0 w-32">
+          <div className="shrink-0 w-36">
              <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em] mb-2">{day}</div>
              <div className="text-3xl font-display font-black text-white uppercase tracking-tighter">{time.split(' — ')[0]}</div>
-             <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Weekly Session</div>
+             <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold mb-1.5">Weekly Session</div>
+             <span className="inline-block px-1.5 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[8px] font-mono font-black uppercase tracking-widest">
+               Unified Agenda
+             </span>
           </div>
           
           <Separator orientation="vertical" className="h-16 hidden md:block bg-white/10" />

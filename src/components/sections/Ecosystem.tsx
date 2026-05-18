@@ -1,3 +1,6 @@
+/**
+ * [LAYER: UI]
+ */
 import { Link } from 'react-router-dom';
 import { Zap, Globe, Cpu, ShieldCheck, School } from 'lucide-react';
 import { partners } from '@/data/partners';

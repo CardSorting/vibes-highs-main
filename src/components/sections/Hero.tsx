@@ -1,3 +1,6 @@
+/**
+ * [LAYER: UI]
+ */
 import { motion } from 'motion/react';
 import { ChevronRight, Activity, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';

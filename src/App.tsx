@@ -1,3 +1,6 @@
+/**
+ * [LAYER: CORE]
+ */
 import { lazy, Suspense } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Layout from './components/Layout';
