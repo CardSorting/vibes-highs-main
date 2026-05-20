@@ -53,7 +53,7 @@ export function Schedule({
         <div className="grid gap-2">
           <SessionRow 
             day="Wednesday"
-            time="4:00 PM — Concludes"
+            time="6:00 PM — Concludes"
             location="GameHaven Herriman"
             address="5254 Anthem Peak Ln, Herriman, UT 84096"
             state={wedState}
@@ -106,7 +106,7 @@ function SessionRow({ day, time, location, address, state, isToday, onRsvp, onCa
                <div className="flex items-start gap-2.5">
                  <Clock size={14} className="text-primary mt-0.5 shrink-0" />
                  <div>
-                   <span className="text-white font-bold">4:00 PM MST</span> — Drop-ins welcome from 4:00 PM. 
+                   <span className="text-white font-bold">6:00 PM MST</span> — Drop-ins welcome from 6:00 PM. 
                    Ends when the event concludes (usually ~2 hours, but can run longer sometimes). 
                    Check in on our <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-primary hover:underline font-semibold inline-flex items-center gap-0.5">Discord <MessageSquare size={10} /></a> for more info.
                  </div>
