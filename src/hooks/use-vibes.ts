@@ -6,13 +6,11 @@ export type EventState = { isHappeningNow: boolean; isNext: boolean; timeLeft: T
 
 export function useVibes() {
   const [wedState, setWedState] = useState<EventState | null>(null);
-  const [friState, setFriState] = useState<EventState | null>(null);
   const [isWednesdayToday, setIsWednesdayToday] = useState(false);
-  const [isFridayToday, setIsFridayToday] = useState(false);
 
   // RSVP State
-  const [rsvps, setRsvps] = useState<{wed: number, fri: number}>({ wed: 12, fri: 8 });
-  const [hasRsvpd, setHasRsvpd] = useState<{wed: boolean, fri: boolean}>({ wed: false, fri: false });
+  const [rsvps, setRsvps] = useState<{wed: number}>({ wed: 12 });
+  const [hasRsvpd, setHasRsvpd] = useState<{wed: boolean}>({ wed: false });
 
   useEffect(() => {
     const savedRsvps = localStorage.getItem('vibes-rsvps');
@@ -21,7 +19,7 @@ export function useVibes() {
     if (savedHasRsvpd) setHasRsvpd(JSON.parse(savedHasRsvpd));
   }, []);
 
-  const handleRsvp = useCallback((event: 'wed' | 'fri') => {
+  const handleRsvp = useCallback((event: 'wed') => {
     if (hasRsvpd[event]) return;
     setRsvps(prev => {
       const next = { ...prev, [event]: prev[event] + 1 };
@@ -34,7 +32,7 @@ export function useVibes() {
       return next;
     });
     toast.success("RSVP Confirmed! ✨", { 
-      description: `See you on ${event === 'wed' ? 'Wednesday' : 'Friday'}.`,
+      description: "See you on Wednesday.",
       className: "bg-black border-primary/20 text-white font-mono"
     });
   }, [hasRsvpd]);
@@ -86,14 +84,10 @@ export function useVibes() {
       const mtDate = new Date(getPart('year'), getPart('month') - 1, getPart('day'), getPart('hour'), getPart('minute'), getPart('second'));
       
       setIsWednesdayToday(mtDate.getDay() === 3);
-      setIsFridayToday(mtDate.getDay() === 5);
       
       const wedInfo = computeEventState(mtDate, 3, 16, 20);
-      const friInfo = computeEventState(mtDate, 5, 16, 18);
-      const isWedNext = wedInfo.isHappeningNow || (!friInfo.isHappeningNow && wedInfo.diffMs < friInfo.diffMs);
       
-      setWedState({ isHappeningNow: wedInfo.isHappeningNow, isNext: isWedNext, timeLeft: wedInfo.timeLeft });
-      setFriState({ isHappeningNow: friInfo.isHappeningNow, isNext: !isWedNext, timeLeft: friInfo.timeLeft });
+      setWedState({ isHappeningNow: wedInfo.isHappeningNow, isNext: true, timeLeft: wedInfo.timeLeft });
     };
     
     calculateTimeLeft();
@@ -101,11 +95,11 @@ export function useVibes() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleCalendar = useCallback((type: 'wed' | 'fri') => {
+  const handleCalendar = useCallback((type: 'wed') => {
     const now = new Date();
-    const dayOfWeek = type === 'wed' ? 3 : 5;
+    const dayOfWeek = 3;
     const startHour = 16;
-    const endHour = type === 'wed' ? 20 : 18;
+    const endHour = 20;
 
     // Find next occurrence
     const nextDate = new Date(now);
@@ -117,11 +111,11 @@ export function useVibes() {
 
     const formatISO = (date: Date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
     
-    const text = type === 'wed' ? "GameHaven Builder Session" : "WoodBine Creative Hangout";
+    const text = "GameHaven Builder Session";
     const dates = `${formatISO(nextDate)}/${formatISO(endDate)}`;
-    const location = type === 'wed' ? "5254 Anthem Peak Ln, Herriman, UT 84096" : "545 West 700 S, Salt Lake City, UT 84101";
+    const location = "5254 Anthem Peak Ln, Herriman, UT 84096";
     
-    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${dates}&ctz=America/Denver&recur=${encodeURIComponent(`RRULE:FREQ=WEEKLY;BYDAY=${type === 'wed' ? 'WE' : 'FR'}`)}&location=${encodeURIComponent(location)}`;
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${dates}&ctz=America/Denver&recur=${encodeURIComponent(`RRULE:FREQ=WEEKLY;BYDAY=WE`)}&location=${encodeURIComponent(location)}`;
     window.open(url, '_blank');
   }, []);
 
@@ -132,20 +126,17 @@ export function useVibes() {
         setRsvps(prev => ({
           ...prev,
           wed: prev.wed + (Math.random() > 0.5 ? 1 : 0),
-          fri: prev.fri + (Math.random() > 0.5 ? 1 : 0),
         }));
       }
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  const nextUpEvent = wedState?.isNext ? { name: 'Wednesday @ Herriman', state: wedState } : { name: 'Friday @ SLC', state: friState };
+  const nextUpEvent = { name: 'Wednesday @ Herriman', state: wedState };
 
   return {
     wedState,
-    friState,
     isWednesdayToday,
-    isFridayToday,
     rsvps,
     hasRsvpd,
     handleRsvp,

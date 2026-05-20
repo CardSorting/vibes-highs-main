@@ -101,7 +101,7 @@ export function Hero({ nextUpEvent }: HeroProps) {
                 </div>
                 <div className="flex items-center gap-3 text-white/60">
                   <MapPin size={16} className="text-primary" />
-                  <span className="text-[10px] font-mono font-bold tracking-widest uppercase">{nextUpEvent.name.includes('Herriman') ? 'GameHaven Herriman' : 'WoodBine SLC'}</span>
+                  <span className="text-[10px] font-mono font-bold tracking-widest uppercase">GameHaven Herriman</span>
                 </div>
                 <div className="pt-8 border-t border-white/5">
                   {renderCompactCountdown(nextUpEvent.state)}

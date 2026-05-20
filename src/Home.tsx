@@ -20,9 +20,7 @@ import { FAQ, GlobalCTA } from '@/components/sections/FooterSections';
 export default function Home() {
   const {
     wedState,
-    friState,
     isWednesdayToday,
-    isFridayToday,
     rsvps,
     hasRsvpd,
     handleRsvp,
@@ -106,9 +104,7 @@ export default function Home() {
         <Agenda />
         <Schedule 
           wedState={wedState}
-          friState={friState}
           isWednesdayToday={isWednesdayToday}
-          isFridayToday={isFridayToday}
           rsvps={rsvps}
           hasRsvpd={hasRsvpd}
           onRsvp={handleRsvp}
