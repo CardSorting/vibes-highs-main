@@ -76,8 +76,8 @@ export default function Home() {
           {
             "@type": "Event",
             "name": "Wednesday Builder Session",
-            "startDate": "2024-05-08T18:00",
-            "endDate": "2024-05-08T20:00",
+            "startDate": "2024-05-08T16:00",
+            "endDate": "2024-05-08T18:00",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
             "eventStatus": "https://schema.org/EventScheduled",
             "location": {
@@ -92,7 +92,7 @@ export default function Home() {
                 "addressCountry": "US"
               }
             },
-            "description": "Weekly session for builders and creative coders in Herriman. Drop-ins welcome from 6:00 PM MST. Ends when the event concludes (usually ~2 hours, but can run longer sometimes). Check in on our Discord for more info."
+            "description": "Weekly session for builders and creative coders in Herriman. Drop-ins welcome from 4:00 PM MST. Ends when the event concludes (usually ~2 hours, but can run longer sometimes). Check in on our Discord for more info."
           },
           {
             "@type": "Event",

@@ -57,7 +57,7 @@ export function Schedule({
         <div className="grid gap-2">
           <SessionRow 
             day="Wednesday"
-            time="6:00 PM — Concludes"
+            time="4:00 PM — Concludes"
             location="GameHaven Herriman"
             address="5254 Anthem Peak Ln, Herriman, UT 84096"
             state={wedState}

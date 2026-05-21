@@ -107,11 +107,11 @@ export function Agenda() {
               <Cpu size={12} className="animate-pulse" /> The Unified Curriculum
             </div>
             <h2 className="font-display font-black text-5xl md:text-8xl tracking-tighter leading-[0.9] mb-6 uppercase">
-              ONE WEEKLY<br />
+              TWO WEEKLY<br />
               <span className="font-serif italic font-light text-white/30 lowercase">agenda.</span>
             </h2>
             <p className="text-white/70 text-lg md:text-xl font-light leading-relaxed font-sans max-w-2xl">
-              Each meetup covers the <span className="text-primary font-medium">exact same friendly material</span>, whether you join us in Herriman or downtown Salt Lake City. As the local <span className="text-white font-medium underline decoration-primary decoration-2 underline-offset-4">Nous Research Chapter of SLC</span>, we host weekly learning sessions centered around free, open-source AI tools.
+              We host two weekly meetups covering the <span className="text-primary font-medium">exact same friendly material</span>, whether you join us in Herriman or downtown Salt Lake City. As the local <span className="text-white font-medium underline decoration-primary decoration-2 underline-offset-4">Nous Research Chapter of SLC</span>, our sessions center around free, open-source AI tools.
             </p>
           </div>
           <div className="flex items-center gap-2 px-4 py-2 border border-white/10 bg-white/2 rounded-none text-white/50 text-[10px] font-mono uppercase tracking-widest font-black">
@@ -310,11 +310,11 @@ export function Agenda() {
               <div className="p-6 bg-white/2 border border-white/5 hover:border-primary/20 transition-all duration-300 relative group rounded-none">
                 <div className="text-[10px] font-mono text-primary font-black uppercase tracking-widest mb-3 flex items-center justify-between">
                   <span>WEDNESDAY</span>
-                  <span className="px-1.5 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[8px] font-bold">6:00 PM MST</span>
+                  <span className="px-1.5 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[8px] font-bold">4:00 PM MST</span>
                 </div>
                 <h4 className="text-lg font-display font-black text-white uppercase tracking-tight mb-2">GameHaven Herriman</h4>
                 <p className="text-white/40 text-[11px] font-light leading-relaxed">
-                  A comfortable, fun board game and tabletop shop. Perfect for relaxed evening learning, snacks, friendly focus, and plenty of table space. Drop-ins welcome from 6:00 PM MST; concludes usually after ~2 hours but can run longer sometimes.
+                  A comfortable, fun board game and tabletop shop. Perfect for relaxed evening learning, snacks, friendly focus, and plenty of table space. Drop-ins welcome from 4:00 PM MST; concludes usually after ~2 hours but can run longer sometimes.
                 </p>
               </div>
 
