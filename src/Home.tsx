@@ -20,7 +20,9 @@ import { FAQ, GlobalCTA } from '@/components/sections/FooterSections';
 export default function Home() {
   const {
     wedState,
+    friState,
     isWednesdayToday,
+    isFridayToday,
     rsvps,
     hasRsvpd,
     handleRsvp,
@@ -91,6 +93,27 @@ export default function Home() {
               }
             },
             "description": "Weekly session for builders and creative coders in Herriman. Drop-ins welcome from 6:00 PM MST. Ends when the event concludes (usually ~2 hours, but can run longer sometimes). Check in on our Discord for more info."
+          },
+          {
+            "@type": "Event",
+            "name": "Friday Creative Hangout",
+            "startDate": "2024-05-10T16:00",
+            "endDate": "2024-05-10T18:00",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "location": {
+              "@type": "Place",
+              "name": "Woodbine SLC",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "545 West 700 S",
+                "addressLocality": "Salt Lake City",
+                "addressRegion": "UT",
+                "postalCode": "84101",
+                "addressCountry": "US"
+              }
+            },
+            "description": "Weekly session for builders and creative coders in Salt Lake City. Drop-ins welcome from 4:00 PM MST. Ends when the event concludes (usually ~2 hours, but can run longer sometimes). Check in on our Discord for more info."
           }
         ]}
       />
@@ -104,7 +127,9 @@ export default function Home() {
         <Agenda />
         <Schedule 
           wedState={wedState}
+          friState={friState}
           isWednesdayToday={isWednesdayToday}
+          isFridayToday={isFridayToday}
           rsvps={rsvps}
           hasRsvpd={hasRsvpd}
           onRsvp={handleRsvp}

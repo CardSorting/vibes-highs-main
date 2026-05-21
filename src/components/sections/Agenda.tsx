@@ -111,7 +111,7 @@ export function Agenda() {
               <span className="font-serif italic font-light text-white/30 lowercase">agenda.</span>
             </h2>
             <p className="text-white/70 text-lg md:text-xl font-light leading-relaxed font-sans max-w-2xl">
-              We host weekly learning sessions in Herriman centered around free, open-source AI tools. As the local <span className="text-white font-medium underline decoration-primary decoration-2 underline-offset-4">Nous Research Chapter of SLC</span>, we host weekly learning sessions centered around free, open-source AI tools.
+              Each meetup covers the <span className="text-primary font-medium">exact same friendly material</span>, whether you join us in Herriman or downtown Salt Lake City. As the local <span className="text-white font-medium underline decoration-primary decoration-2 underline-offset-4">Nous Research Chapter of SLC</span>, we host weekly learning sessions centered around free, open-source AI tools.
             </p>
           </div>
           <div className="flex items-center gap-2 px-4 py-2 border border-white/10 bg-white/2 rounded-none text-white/50 text-[10px] font-mono uppercase tracking-widest font-black">
@@ -194,7 +194,7 @@ export function Agenda() {
                 <HelpCircle size={14} className="text-primary" /> HOW WE GATHER
               </div>
               <p>
-                Join us in Herriman every Wednesday. We cover friendly topics, skipping the confusion, to get you running and building with open-weight AI tools.
+                Join us in Herriman on Wednesdays or Salt Lake City on Fridays. We cover the exact same friendly topics at both meetings so you can choose whichever fits your schedule!
               </p>
             </div>
           </div>
@@ -296,17 +296,17 @@ export function Agenda() {
           <div className="space-y-8">
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-primary font-mono text-[10px] uppercase tracking-[0.4em]">
-                <Compass size={12} className="text-primary" /> Our Gathering Spot
+                <Compass size={12} className="text-primary" /> Two Gathering Spots
               </div>
               <h3 className="text-3xl font-display font-black text-white uppercase tracking-tight">
-                Gather and Learn at GameHaven Herriman
+                Two Locations. Choose Your Favorite Vibe.
               </h3>
               <p className="text-white/60 font-light leading-relaxed text-base">
-                We meet weekly in Herriman to build and explore together. Join us for a friendly, supportive environment with plenty of table space, snacks, and collaborative learning.
+                We meet in two different locations each week to make it as easy as possible for everyone to join. Both meetups cover the <span className="text-white font-medium">exact same friendly lessons</span>, so you never have to worry about missing out. Simply choose the location that is closest to you or matches the style of meeting you prefer:
               </p>
             </div>
 
-            <div className="grid gap-4">
+            <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-6 bg-white/2 border border-white/5 hover:border-primary/20 transition-all duration-300 relative group rounded-none">
                 <div className="text-[10px] font-mono text-primary font-black uppercase tracking-widest mb-3 flex items-center justify-between">
                   <span>WEDNESDAY</span>
@@ -315,6 +315,17 @@ export function Agenda() {
                 <h4 className="text-lg font-display font-black text-white uppercase tracking-tight mb-2">GameHaven Herriman</h4>
                 <p className="text-white/40 text-[11px] font-light leading-relaxed">
                   A comfortable, fun board game and tabletop shop. Perfect for relaxed evening learning, snacks, friendly focus, and plenty of table space. Drop-ins welcome from 6:00 PM MST; concludes usually after ~2 hours but can run longer sometimes.
+                </p>
+              </div>
+
+              <div className="p-6 bg-white/2 border border-white/5 hover:border-primary/20 transition-all duration-300 relative group rounded-none">
+                <div className="text-[10px] font-mono text-primary font-black uppercase tracking-widest mb-3 flex items-center justify-between">
+                  <span>FRIDAY</span>
+                  <span className="px-1.5 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[8px] font-bold">4:00 PM MST</span>
+                </div>
+                <h4 className="text-lg font-display font-black text-white uppercase tracking-tight mb-2">Woodbine SLC</h4>
+                <p className="text-white/40 text-[11px] font-light leading-relaxed">
+                  A beautiful, lively downtown food hall. Great for weekend warmups, creative conversations, delicious food, craft drinks, and friendly social energy. Drop-ins welcome from 4:00 PM MST; concludes usually after ~2 hours but can run longer sometimes.
                 </p>
               </div>
             </div>
