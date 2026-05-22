@@ -310,22 +310,22 @@ export function Agenda() {
               <div className="p-6 bg-white/2 border border-white/5 hover:border-primary/20 transition-all duration-300 relative group rounded-none">
                 <div className="text-[10px] font-mono text-primary font-black uppercase tracking-widest mb-3 flex items-center justify-between">
                   <span>WEDNESDAY</span>
-                  <span className="px-1.5 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[8px] font-bold">4:00 PM MST</span>
+                  <span className="px-1.5 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[8px] font-bold">1:00 PM MST</span>
                 </div>
                 <h4 className="text-lg font-display font-black text-white uppercase tracking-tight mb-2">GameHaven Herriman</h4>
                 <p className="text-white/40 text-[11px] font-light leading-relaxed">
-                  A comfortable, fun board game and tabletop shop. Perfect for relaxed evening learning, snacks, friendly focus, and plenty of table space. Drop-ins welcome from 4:00 PM MST; concludes usually after ~2 hours but can run longer sometimes.
+                  A comfortable, fun board game and tabletop shop. Perfect for relaxed evening learning, snacks, friendly focus, and plenty of table space. Drop-ins welcome from 1:00 PM MST; concludes usually after ~2 hours but can run longer sometimes.
                 </p>
               </div>
 
               <div className="p-6 bg-white/2 border border-white/5 hover:border-primary/20 transition-all duration-300 relative group rounded-none">
                 <div className="text-[10px] font-mono text-primary font-black uppercase tracking-widest mb-3 flex items-center justify-between">
                   <span>FRIDAY</span>
-                  <span className="px-1.5 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[8px] font-bold">4:00 PM MST</span>
+                  <span className="px-1.5 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[8px] font-bold">1:00 PM MST</span>
                 </div>
                 <h4 className="text-lg font-display font-black text-white uppercase tracking-tight mb-2">Woodbine SLC</h4>
                 <p className="text-white/40 text-[11px] font-light leading-relaxed">
-                  A beautiful, lively downtown food hall. Great for weekend warmups, creative conversations, delicious food, craft drinks, and friendly social energy. Drop-ins welcome from 4:00 PM MST; concludes usually after ~2 hours but can run longer sometimes.
+                  A beautiful, lively downtown food hall. Great for weekend warmups, creative conversations, delicious food, craft drinks, and friendly social energy. Drop-ins welcome from 1:00 PM MST; concludes usually after ~2 hours but can run longer sometimes.
                 </p>
               </div>
             </div>
