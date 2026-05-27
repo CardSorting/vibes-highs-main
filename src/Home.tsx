@@ -19,9 +19,7 @@ import { FAQ, GlobalCTA } from '@/components/sections/FooterSections';
  */
 export default function Home() {
   const {
-    wedState,
     friState,
-    isWednesdayToday,
     isFridayToday,
     rsvps,
     hasRsvpd,
@@ -75,27 +73,6 @@ export default function Home() {
           },
           {
             "@type": "Event",
-            "name": "Wednesday Builder Session",
-            "startDate": "2024-05-08T13:00",
-            "endDate": "2024-05-08T15:00",
-            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "eventStatus": "https://schema.org/EventScheduled",
-            "location": {
-              "@type": "Place",
-              "name": "GameHaven Herriman",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "5254 Anthem Peak Ln",
-                "addressLocality": "Herriman",
-                "addressRegion": "UT",
-                "postalCode": "84096",
-                "addressCountry": "US"
-              }
-            },
-            "description": "Weekly session for builders and creative coders in Herriman. Drop-ins welcome from 1:00 PM MST. Ends when the event concludes (usually ~2 hours, but can run longer sometimes). Check in on our Discord for more info."
-          },
-          {
-            "@type": "Event",
             "name": "Friday Creative Hangout",
             "startDate": "2024-05-10T13:00",
             "endDate": "2024-05-10T15:00",
@@ -126,9 +103,7 @@ export default function Home() {
         <Philosophy />
         <Agenda />
         <Schedule 
-          wedState={wedState}
           friState={friState}
-          isWednesdayToday={isWednesdayToday}
           isFridayToday={isFridayToday}
           rsvps={rsvps}
           hasRsvpd={hasRsvpd}

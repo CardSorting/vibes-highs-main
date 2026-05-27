@@ -4,18 +4,16 @@ import { toast } from 'sonner';
 export type TimeLeft = { days: number, hours: number, minutes: number, seconds: number };
 export type EventState = { isHappeningNow: boolean; isNext: boolean; timeLeft: TimeLeft | null };
 
-const DEFAULT_RSVPS = { wed: 12, fri: 8 };
-const DEFAULT_HAS_RSVPD = { wed: false, fri: false };
+const DEFAULT_RSVPS = { fri: 8 };
+const DEFAULT_HAS_RSVPD = { fri: false };
 
 export function useVibes() {
-  const [wedState, setWedState] = useState<EventState | null>(null);
   const [friState, setFriState] = useState<EventState | null>(null);
-  const [isWednesdayToday, setIsWednesdayToday] = useState(false);
   const [isFridayToday, setIsFridayToday] = useState(false);
 
   // RSVP State
-  const [rsvps, setRsvps] = useState<{wed: number, fri: number}>(DEFAULT_RSVPS);
-  const [hasRsvpd, setHasRsvpd] = useState<{wed: boolean, fri: boolean}>(DEFAULT_HAS_RSVPD);
+  const [rsvps, setRsvps] = useState<{ fri: number }>(DEFAULT_RSVPS);
+  const [hasRsvpd, setHasRsvpd] = useState<{ fri: boolean }>(DEFAULT_HAS_RSVPD);
 
   useEffect(() => {
     const savedRsvps = localStorage.getItem('vibes-rsvps');
@@ -24,7 +22,7 @@ export function useVibes() {
     if (savedHasRsvpd) setHasRsvpd({ ...DEFAULT_HAS_RSVPD, ...JSON.parse(savedHasRsvpd) });
   }, []);
 
-  const handleRsvp = useCallback((event: 'wed' | 'fri') => {
+  const handleRsvp = useCallback((event: 'fri') => {
     if (hasRsvpd[event]) return;
     setRsvps(prev => {
       const next = { ...prev, [event]: prev[event] + 1 };
@@ -37,7 +35,7 @@ export function useVibes() {
       return next;
     });
     toast.success("RSVP Confirmed! ✨", { 
-      description: `See you on ${event === 'wed' ? 'Wednesday' : 'Friday'}.`,
+      description: `See you on Friday.`,
       className: "bg-black border-primary/20 text-white font-mono"
     });
   }, [hasRsvpd]);
@@ -88,15 +86,11 @@ export function useVibes() {
       const getPart = (type: string) => parseInt(parts.find(p => p.type === type)?.value || '0', 10);
       const mtDate = new Date(getPart('year'), getPart('month') - 1, getPart('day'), getPart('hour'), getPart('minute'), getPart('second'));
       
-      setIsWednesdayToday(mtDate.getDay() === 3);
       setIsFridayToday(mtDate.getDay() === 5);
       
-      const wedInfo = computeEventState(mtDate, 3, 13, 15);
       const friInfo = computeEventState(mtDate, 5, 13, 15);
-      const isWedNext = wedInfo.isHappeningNow || (!friInfo.isHappeningNow && wedInfo.diffMs < friInfo.diffMs);
       
-      setWedState({ isHappeningNow: wedInfo.isHappeningNow, isNext: isWedNext, timeLeft: wedInfo.timeLeft });
-      setFriState({ isHappeningNow: friInfo.isHappeningNow, isNext: !isWedNext, timeLeft: friInfo.timeLeft });
+      setFriState({ isHappeningNow: friInfo.isHappeningNow, isNext: true, timeLeft: friInfo.timeLeft });
     };
     
     calculateTimeLeft();
@@ -104,9 +98,9 @@ export function useVibes() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleCalendar = useCallback((type: 'wed' | 'fri') => {
+  const handleCalendar = useCallback((type: 'fri') => {
     const now = new Date();
-    const dayOfWeek = type === 'wed' ? 3 : 5;
+    const dayOfWeek = 5;
     const startHour = 13;
     const endHour = 15;
 
@@ -120,11 +114,11 @@ export function useVibes() {
 
     const formatISO = (date: Date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
     
-    const text = type === 'wed' ? "GameHaven Builder Session" : "Woodbine Creative Hangout";
+    const text = "Woodbine Creative Hangout";
     const dates = `${formatISO(nextDate)}/${formatISO(endDate)}`;
-    const location = type === 'wed' ? "5254 Anthem Peak Ln, Herriman, UT 84096" : "545 West 700 S, Salt Lake City, UT 84101";
+    const location = "545 West 700 S, Salt Lake City, UT 84101";
     
-    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${dates}&ctz=America/Denver&recur=${encodeURIComponent(`RRULE:FREQ=WEEKLY;BYDAY=${type === 'wed' ? 'WE' : 'FR'}`)}&location=${encodeURIComponent(location)}`;
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${dates}&ctz=America/Denver&recur=${encodeURIComponent(`RRULE:FREQ=WEEKLY;BYDAY=FR`)}&location=${encodeURIComponent(location)}`;
     window.open(url, '_blank');
   }, []);
 
@@ -134,7 +128,6 @@ export function useVibes() {
       if (Math.random() > 0.95) {
         setRsvps(prev => ({
           ...prev,
-          wed: prev.wed + (Math.random() > 0.5 ? 1 : 0),
           fri: prev.fri + (Math.random() > 0.5 ? 1 : 0),
         }));
       }
@@ -142,12 +135,10 @@ export function useVibes() {
     return () => clearInterval(interval);
   }, []);
 
-  const nextUpEvent = wedState?.isNext ? { name: 'Wednesday @ Herriman', state: wedState } : { name: 'Friday @ SLC', state: friState };
+  const nextUpEvent = { name: 'Friday @ SLC', state: friState };
 
   return {
-    wedState,
     friState,
-    isWednesdayToday,
     isFridayToday,
     rsvps,
     hasRsvpd,

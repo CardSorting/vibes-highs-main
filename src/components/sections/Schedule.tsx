@@ -9,28 +9,24 @@ import { Separator } from '@/components/ui/separator';
 import { EventState } from '@/hooks/use-vibes';
 
 interface ScheduleProps {
-  wedState: EventState | null;
   friState: EventState | null;
-  isWednesdayToday: boolean;
   isFridayToday: boolean;
-  rsvps: { wed: number; fri: number };
-  hasRsvpd: { wed: boolean; fri: boolean };
-  onRsvp: (event: 'wed' | 'fri') => void;
-  onCalendar: (event: 'wed' | 'fri') => void;
+  rsvps: { fri: number };
+  hasRsvpd: { fri: boolean };
+  onRsvp: (event: 'fri') => void;
+  onCalendar: (event: 'fri') => void;
 }
 
 export function Schedule({
-  wedState,
   friState,
-  isWednesdayToday,
   isFridayToday,
   rsvps,
   hasRsvpd,
   onRsvp,
   onCalendar
 }: ScheduleProps) {
-  const handleShare = async (type: 'wed' | 'fri') => {
-    const text = type === 'wed' ? "Join the next Wednesday session at GameHaven Herriman! ⚡️" : "Join the next Friday session at Woodbine in SLC! ⚡️";
+  const handleShare = async () => {
+    const text = "Join the next Friday session at Woodbine in SLC! ⚡️";
     if (navigator.share) {
       try { await navigator.share({ title: 'VIBES & HIGHS', text, url: window.location.href }); } catch (err) { console.error(err); }
     } else {
@@ -46,7 +42,7 @@ export function Schedule({
             <div className="text-[10px] font-mono text-primary font-black uppercase tracking-[0.4em]">Join the Sessions</div>
             <h2 className="font-display font-black text-6xl md:text-9xl tracking-tighter leading-[0.8] uppercase">WHERE WE<br/><span className="font-serif italic font-light text-white/40 lowercase">Gather.</span></h2>
             <p className="text-white/40 text-xs font-mono uppercase tracking-widest leading-relaxed">
-              We cover the exact same friendly lessons at both locations weekly. Choose whichever is closest or matches your vibe!
+              Join us downtown for creative coding, friendly conversations, and project demos.
             </p>
           </div>
           <div className="flex items-center gap-6 text-white/30 text-[10px] font-mono uppercase tracking-widest font-black">
@@ -56,20 +52,6 @@ export function Schedule({
 
         <div className="grid gap-2">
           <SessionRow 
-            day="Wednesday"
-            time="1:00 PM — Concludes"
-            location="GameHaven Herriman"
-            address="5254 Anthem Peak Ln, Herriman, UT 84096"
-            state={wedState}
-            isToday={isWednesdayToday}
-            onRsvp={() => onRsvp('wed')}
-            onCalendar={() => onCalendar('wed')}
-            onShare={() => handleShare('wed')}
-            attending={rsvps.wed}
-            hasRsvpd={hasRsvpd.wed}
-            mapUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3034.908447833056!2d-112.0154817234293!3d40.47728445230983!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87528f97159f81d1%3A0xc48c90352932f91b!2sGameHaven%20Herriman!5e0!3m2!1sen!2sus!4v1714864433355!5m2!1sen!2sus"
-          />
-          <SessionRow 
             day="Friday"
             time="1:00 PM — Concludes"
             location="Woodbine SLC"
@@ -78,7 +60,7 @@ export function Schedule({
             isToday={isFridayToday}
             onRsvp={() => onRsvp('fri')}
             onCalendar={() => onCalendar('fri')}
-            onShare={() => handleShare('fri')}
+            onShare={() => handleShare()}
             attending={rsvps.fri}
             hasRsvpd={hasRsvpd.fri}
             mapUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.905477833056!2d-111.90692112341517!3d40.7631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8752f50c0c0c0c0c%3A0x0!2sWoodbine%20Food%20Hall!5e0!3m2!1sen!2sus!4v1714864433355!5m2!1sen!2sus"

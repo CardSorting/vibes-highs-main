@@ -43,7 +43,7 @@ export const editorialPosts: BlogPost[] = [
     title: "Cursed Demos and Divine Failures",
     excerpt: "In praise of the broken, the buggy, and the projects that crash five seconds into the presentation.",
     content: `
-      <p>There's a specific magic in a project that is currently on fire. At our Wednesday sessions, we've seen everything from memory leaks that accidentally create beautiful visual glitches to neural networks that have gone completely "off-script" in the middle of a live demo.</p>
+      <p>There's a specific magic in a project that is currently on fire. At our Friday sessions, we've seen everything from memory leaks that accidentally create beautiful visual glitches to neural networks that have gone completely "off-script" in the middle of a live demo.</p>
       
       <h3>The Aesthetics of Entropy</h3>
       <p>Most tech culture is obsessed with "production-ready." At Vibes & Highs, we're obsessed with "interesting-ready." A bug isn't just a failure of logic; it's a glimpse into the underlying system's personality. When your code crashes, it's telling you something about the world it lives in.</p>
