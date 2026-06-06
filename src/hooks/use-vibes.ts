@@ -88,7 +88,7 @@ export function useVibes() {
       
       setIsFridayToday(mtDate.getDay() === 5);
       
-      const friInfo = computeEventState(mtDate, 5, 13, 15);
+      const friInfo = computeEventState(mtDate, 5, 17, 20);
       
       setFriState({ isHappeningNow: friInfo.isHappeningNow, isNext: true, timeLeft: friInfo.timeLeft });
     };
@@ -101,8 +101,8 @@ export function useVibes() {
   const handleCalendar = useCallback((type: 'fri') => {
     const now = new Date();
     const dayOfWeek = 5;
-    const startHour = 13;
-    const endHour = 15;
+    const startHour = 17;
+    const endHour = 20;
 
     // Find next occurrence
     const nextDate = new Date(now);

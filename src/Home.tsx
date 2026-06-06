@@ -74,8 +74,8 @@ export default function Home() {
           {
             "@type": "Event",
             "name": "Friday Creative Hangout",
-            "startDate": "2024-05-10T13:00",
-            "endDate": "2024-05-10T15:00",
+            "startDate": "2024-05-10T17:00",
+            "endDate": "2024-05-10T20:00",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
             "eventStatus": "https://schema.org/EventScheduled",
             "location": {
@@ -90,7 +90,7 @@ export default function Home() {
                 "addressCountry": "US"
               }
             },
-            "description": "Weekly session for builders and creative coders in Salt Lake City. Drop-ins welcome from 1:00 PM MST. Ends when the event concludes (usually ~2 hours, but can run longer sometimes). Check in on our Discord for more info."
+            "description": "Weekly session for builders and creative coders in Salt Lake City. Drop-ins welcome from 5:00 PM MST. Ends at 8:00 PM MST (usually ~3 hours). Check in on our Discord for more info."
           }
         ]}
       />

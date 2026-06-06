@@ -53,7 +53,7 @@ export function Schedule({
         <div className="grid gap-2">
           <SessionRow 
             day="Friday"
-            time="1:00 PM — Concludes"
+            time="5:00 PM — 8:00 PM"
             location="Woodbine SLC"
             address="545 West 700 S, Salt Lake City, UT 84101"
             state={friState}
@@ -107,7 +107,7 @@ function SessionRow({ day, time, location, address, state, isToday, onRsvp, onCa
                  <Clock size={14} className="text-primary mt-0.5 shrink-0" />
                  <div>
                    <span className="text-white font-bold">{time.split(' — ')[0]} MST</span> — Drop-ins welcome from {time.split(' — ')[0]}. 
-                   Ends when the event concludes (usually ~2 hours, but can run longer sometimes). 
+                   Ends at 8:00 PM (usually ~3 hours). 
                    Check in on our <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-primary hover:underline font-semibold inline-flex items-center gap-0.5">Discord <MessageSquare size={10} /></a> for more info.
                  </div>
                </div>
