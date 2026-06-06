@@ -82,7 +82,7 @@ export default function CommandPalette() {
       { 
         id: 'home', 
         title: 'Home Page', 
-        subtitle: 'Explore the main Vibes & Highs landing hub.', 
+        subtitle: 'Explore the main SLC AI Town Hall landing hub.', 
         category: 'Site Navigation', 
         path: '/', 
         icon: <Terminal size={16} /> 

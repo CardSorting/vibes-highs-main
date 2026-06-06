@@ -17,7 +17,7 @@ export const editorialPosts: BlogPost[] = [
     title: "The Rise of Latent Space Explorers",
     excerpt: "Why the next generation of creative output isn't written, but prompted and steered through multi-dimensional matrices.",
     content: `
-      <p>We are entering an era where the boundary between human intent and machine execution has dissolved into a fluid, multi-dimensional space. At Vibes & Highs, we call this the "Latent Age."</p>
+      <p>We are entering an era where the boundary between human intent and machine execution has dissolved into a fluid, multi-dimensional space. At SLC AI Town Hall, we call this the "Latent Age."</p>
       
       <h3>The Architecture of Emergence</h3>
       <p>Traditional coding is deterministic. You write X, you get Y. But working with modern AI models is more like gardening or alchemy. You're not building a structure; you're steering a probability distribution. This shift requires a new kind of "technical intuition"—the ability to sense the edges of what a model can do and pushing it just beyond those limits.</p>
@@ -46,7 +46,7 @@ export const editorialPosts: BlogPost[] = [
       <p>There's a specific magic in a project that is currently on fire. At our Friday sessions, we've seen everything from memory leaks that accidentally create beautiful visual glitches to neural networks that have gone completely "off-script" in the middle of a live demo.</p>
       
       <h3>The Aesthetics of Entropy</h3>
-      <p>Most tech culture is obsessed with "production-ready." At Vibes & Highs, we're obsessed with "interesting-ready." A bug isn't just a failure of logic; it's a glimpse into the underlying system's personality. When your code crashes, it's telling you something about the world it lives in.</p>
+      <p>Most tech culture is obsessed with "production-ready." At SLC AI Town Hall, we're obsessed with "interesting-ready." A bug isn't just a failure of logic; it's a glimpse into the underlying system's personality. When your code crashes, it's telling you something about the world it lives in.</p>
       
       <p>We encourage people to bring their most "cursed" demos. The ones that only work on your machine, under specific atmospheric conditions, when the moon is in a certain phase. That's where the real innovation happens.</p>
       
@@ -68,7 +68,7 @@ export const editorialPosts: BlogPost[] = [
       <p>The internet used to be a collection of weird, hand-crafted digital houses. Then it became a series of identical white boxes owned by four companies. We're witnessing a quiet rebellion against this homogeneity.</p>
       
       <h3>Small, Beautiful, and Useless</h3>
-      <p>The "Vibes" part of Vibes & Highs is about the feeling of building for its own sake. When you don't have a roadmap, a pitch deck, or a KPI, you're free to build things that are "unscalable." You can spend three days perfecting a single hover animation or building an entire operating system for a fictional planet.</p>
+      <p>SLC AI Town Hall is about the feeling of building for its own sake. When you don't have a roadmap, a pitch deck, or a KPI, you're free to build things that are "unscalable." You can spend three days perfecting a single hover animation or building an entire operating system for a fictional planet.</p>
       
       <p>This is the personal web. It's not about traffic; it's about expression. It's about making sure the digital world still has texture.</p>
       

@@ -95,7 +95,7 @@ export const partners: Partner[] = [
       { label: "Request Velocity", value: "50M/sec", trend: "up" },
       { label: "Community Trust", value: "High", trend: "stable" }
     ],
-    integrationNotes: "Fully integrated into the V&H backbone. Currently exploring Cloudflare AI at the edge for low-latency inference experiments."
+    integrationNotes: "Fully integrated into the SLC AI Town Hall backbone. Currently exploring Cloudflare AI at the edge for low-latency inference experiments."
   },
   {
     id: "google",
@@ -117,9 +117,9 @@ export const partners: Partner[] = [
     id: "silicon-slopes",
     name: "Silicon Slopes",
     logo: "https://www.siliconslopes.com/content/images/2023/04/Silicon-Slopes-Logo-Vertical-Black.png",
-    description: "Vibes & Highs emerged from the Silicon Slopes Start School community.",
-    longDescription: "Silicon Slopes is the heart of Utah's technology ecosystem. Vibes & Highs was born out of the 'Start School' initiative, where builders and creators gather to learn and grow.",
-    eli5: "The community of creators in Utah where Vibes & Highs first started, helping us find our feet and grow as a group of builders.",
+    description: "SLC AI Town Hall emerged from the Silicon Slopes Start School community.",
+    longDescription: "Silicon Slopes is the heart of Utah's technology ecosystem. SLC AI Town Hall was born out of the 'Start School' initiative, where builders and creators gather to learn and grow.",
+    eli5: "The community of creators in Utah where SLC AI Town Hall first started, helping us find our feet and grow as a group of builders.",
     systemRole: "THE ROOTS",
     tier: "SPOTLIGHT",
     category: "Community & Origins",

@@ -29,7 +29,7 @@ export default function Breadcrumbs() {
       >
         <Link to="/" className="hover:text-primary transition-colors flex items-center gap-1.5 group">
           <Home size={10} className="group-hover:scale-110 transition-transform" />
-          <span className="hidden sm:inline">VIBES & HIGHS</span>
+          <span className="hidden sm:inline">SLC AI TOWN HALL</span>
         </Link>
         
         {pathnames.map((value, index) => {

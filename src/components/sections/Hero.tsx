@@ -23,7 +23,7 @@ export function Hero({ nextUpEvent }: HeroProps) {
       <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
         <img 
           src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=3540&auto=format&fit=crop" 
-          alt="Vibes & Highs creative collective meetup in Salt Lake City" 
+          alt="SLC AI Town Hall meetup in Salt Lake City" 
           className="w-full h-full object-cover" 
         />
         <div className="absolute inset-0 bg-[#0A0A0B] bg-size-[40px_40px] opacity-90"></div>
@@ -35,7 +35,7 @@ export function Hero({ nextUpEvent }: HeroProps) {
           <div className="lg:col-span-8 space-y-12">
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-3">
               <div className="h-px w-8 bg-primary"></div>
-              <span className="text-[10px] uppercase font-mono tracking-[0.6em] text-primary font-bold">VIBES &AMP; HIGHS // COMMUNITY_LAB</span>
+              <span className="text-[10px] uppercase font-mono tracking-[0.6em] text-primary font-bold">SLC AI TOWN HALL // COMMUNITY_LAB</span>
             </motion.div>
             
             <div className="space-y-6">

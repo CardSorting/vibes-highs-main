@@ -16,7 +16,7 @@ export default function Editorial() {
         description={selectedPost ? selectedPost.excerpt : "Deep dives into AI exploration, creative coding, and the culture of building weird things. No fluff, just pure signal."}
         ogImage={selectedPost?.image}
         ogType={selectedPost ? "article" : "website"}
-        keywords={selectedPost ? [...selectedPost.tags, "editorial", "blog"] : ["creative coding", "AI research", "tech journal", "Vibes & Highs"]}
+        keywords={selectedPost ? [...selectedPost.tags, "editorial", "blog"] : ["creative coding", "AI research", "tech journal", "SLC AI Town Hall"]}
         breadcrumbs={[
           { name: 'Home', item: '/' },
           { name: 'Journal', item: '/editorial' },

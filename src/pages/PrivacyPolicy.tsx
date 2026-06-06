@@ -3,7 +3,7 @@ import SEO from '../components/SEO';
 export default function PrivacyPolicy() {
   return (
     <div className="pt-32 pb-24 px-6 max-w-4xl mx-auto min-h-screen">
-      <SEO title="Privacy Policy" description="Privacy policy and data handling for the Vibes & Highs community." />
+      <SEO title="Privacy Policy" description="Privacy policy and data handling for the SLC AI Town Hall." />
       <div className="text-[10px] uppercase tracking-[0.4em] text-primary font-bold mb-4">LEGAL / PRIVACY POLICY</div>
       <h1 className="font-display font-black text-4xl md:text-5xl tracking-tighter mb-12">PRIVACY POLICY</h1>
 
@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
         <section>
           <h2 className="text-xl font-bold text-white mb-4">1. Information We Collect</h2>
           <p>
-            When you visit VIBES & HIGHS or submit a message through our contact form, we collect the personal information you give us such as your name and email address. We do not sell or rent this information to anyone.
+            When you visit SLC AI TOWN HALL or submit a message through our contact form, we collect the personal information you give us such as your name and email address. We do not sell or rent this information to anyone.
           </p>
         </section>
 

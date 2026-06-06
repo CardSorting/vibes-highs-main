@@ -28,7 +28,7 @@ export function Schedule({
   const handleShare = async () => {
     const text = "Join the next Friday session at Woodbine in SLC! ⚡️";
     if (navigator.share) {
-      try { await navigator.share({ title: 'VIBES & HIGHS', text, url: window.location.href }); } catch (err) { console.error(err); }
+      try { await navigator.share({ title: 'SLC AI Town Hall', text, url: window.location.href }); } catch (err) { console.error(err); }
     } else {
       window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
     }

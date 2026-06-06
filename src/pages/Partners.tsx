@@ -178,7 +178,7 @@ export default function Partners() {
       <div className="pt-24 min-h-screen bg-[#0A0A0B] selection:bg-primary selection:text-black">
         <SEO 
           title={selectedPartner ? `${selectedPartner.name} | Community Map` : "Community Ecosystem | The Ecosystem"} 
-          description={selectedPartner ? selectedPartner.description : "A directory of the friends, tools, and infrastructure powering the Vibes & Highs collective."}
+          description={selectedPartner ? selectedPartner.description : "A directory of the friends, tools, and infrastructure powering the SLC AI Town Hall collective."}
           ogImage={selectedPartner?.logo}
           breadcrumbs={[
             { name: 'Home', item: '/' },
@@ -757,7 +757,7 @@ export default function Partners() {
                                     <div className="flex items-center gap-4 sm:gap-16">
                                        <div className="flex flex-col items-center gap-3">
                                           <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/20"><Terminal size={16} /></div>
-                                          <div className="text-[8px] font-mono uppercase text-white/40">V&H Core</div>
+                                          <div className="text-[8px] font-mono uppercase text-white/40">Town Hall Core</div>
                                        </div>
                                        <div className="flex-1 h-px w-16 sm:w-24 bg-linear-to-r from-white/10 via-primary/50 to-white/10 relative">
                                           <motion.div 
@@ -840,7 +840,7 @@ export default function Partners() {
                                   <div className="h-4 w-px bg-white/5 hidden sm:block" />
                                   <div className="text-[9px] font-mono text-white/20 uppercase tracking-[0.3em]">REGISTRY_ID: {selectedPartner.id.toUpperCase()}</div>
                                </div>
-                               <Badge variant="outline" className="border-primary/25 text-primary/50 text-[8px] font-mono rounded-none self-start sm:self-auto">V&H_SYSLOG_REV_06</Badge>
+                               <Badge variant="outline" className="border-primary/25 text-primary/50 text-[8px] font-mono rounded-none self-start sm:self-auto">SLC_AI_SYSLOG_REV_06</Badge>
                             </section>
                           </div>
                         )}
@@ -864,7 +864,7 @@ export default function Partners() {
                   Our Origin Spotlight
                 </h2>
                 <p className="text-white/40 text-xs font-mono uppercase tracking-widest leading-relaxed max-w-2xl">
-                  Celebrating the community and organizations that helped grow Vibes & Highs from day one.
+                  Celebrating the community and organizations that helped grow SLC AI Town Hall from day one.
                 </p>
               </div>
 

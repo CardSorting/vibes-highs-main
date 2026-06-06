@@ -11,7 +11,7 @@ import { Connect } from '@/components/sections/Connect';
 import { FAQ, GlobalCTA } from '@/components/sections/FooterSections';
 
 /**
- * Vibes & Highs - Primary Entry Point
+ * SLC AI Town Hall - Primary Entry Point
  * 
  * This component orchestrates the landing page experience.
  * It uses a modular section-based architecture for better maintainability
@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div className="selection:bg-primary selection:text-black bg-[#0A0A0B] min-h-screen text-white antialiased">
       <SEO 
-        title="Build Weird Things | Vibes & Highs SLC" 
+        title="Build Weird Things | SLC AI Town Hall" 
         description="A casual, no-pressure meetup for people making weird internet projects, creative code, and AI explorations in Salt Lake City."
         breadcrumbs={[
           { name: 'Home', item: '/' }
@@ -47,10 +47,10 @@ export default function Home() {
             "mainEntity": [
               {
                 "@type": "Question",
-                "name": "What is Vibes & Highs?",
+                "name": "What is SLC AI Town Hall?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Vibes & Highs is a casual, non-transactional meetup for builders, artists, and researchers in Salt Lake City. We focus on building weird internet projects and creative experiments."
+                  "text": "SLC AI Town Hall is a casual, non-transactional meetup for builders, artists, and researchers in Salt Lake City. We focus on building weird internet projects and creative experiments."
                 }
               },
               {
