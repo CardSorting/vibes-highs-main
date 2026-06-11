@@ -20,7 +20,7 @@ interface SEOProps {
   twitterHandle?: string;
 }
 
-const DEFAULT_TITLE = "SLC AI Town Hall | Creative Collective & Meetup";
+const DEFAULT_TITLE = "MarieCoder | Creative Collective & Meetup";
 const DEFAULT_DESCRIPTION = "A casual meetup for people who make weird things. Code. Art. Music. Games. AI experiments. Internet projects. Half-finished ideas. Side quests.";
 const DEFAULT_URL = "https://mariecoder.com";
 const DEFAULT_KEYWORDS = ["creative meetup", "salt lake city", "tech community", "builders", "designers", "artists", "coding meetup", "AI research", "open source", "mariecoder"];
@@ -37,11 +37,11 @@ export default function SEO({
   structuredData,
   breadcrumbs,
   robots = "index, follow",
-  author = "SLC AI Town Hall",
+  author = "MarieCoder",
   themeColor = "#0A0A0B",
   twitterHandle = DEFAULT_TWITTER_HANDLE
 }: SEOProps) {
-  const fullTitle = title ? `${title} | SLC AI Town Hall` : DEFAULT_TITLE;
+  const fullTitle = title ? `${title} | MarieCoder` : DEFAULT_TITLE;
   const fullDescription = description || DEFAULT_DESCRIPTION;
   const currentUrl = canonical || window.location.href;
 
@@ -76,7 +76,7 @@ export default function SEO({
     updateMetaTag('meta[property="og:url"]', 'property', 'og:url', normalizedUrl);
     updateMetaTag('meta[property="og:type"]', 'property', 'og:type', ogType);
     updateMetaTag('meta[property="og:image"]', 'property', 'og:image', ogImage);
-    updateMetaTag('meta[property="og:site_name"]', 'property', 'og:site_name', 'SLC AI Town Hall');
+    updateMetaTag('meta[property="og:site_name"]', 'property', 'og:site_name', 'MarieCoder');
     
     // Twitter
     updateMetaTag('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
@@ -113,7 +113,7 @@ export default function SEO({
     schemas.push({
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "SLC AI Town Hall",
+      "name": "MarieCoder",
       "url": DEFAULT_URL,
       "description": DEFAULT_DESCRIPTION,
       "potentialAction": {
@@ -127,7 +127,7 @@ export default function SEO({
     schemas.push({
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "SLC AI Town Hall",
+      "name": "MarieCoder",
       "url": DEFAULT_URL,
       "logo": DEFAULT_OG_IMAGE,
       "contactPoint": {
@@ -156,7 +156,7 @@ export default function SEO({
         },
         "publisher": {
           "@type": "Organization",
-          "name": "SLC AI Town Hall",
+          "name": "MarieCoder",
           "logo": DEFAULT_OG_IMAGE
         },
         "mainEntityOfPage": {

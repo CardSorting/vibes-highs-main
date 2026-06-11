@@ -35,7 +35,7 @@ export function Hero({ nextUpEvent }: HeroProps) {
           <div className="lg:col-span-8 space-y-12">
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-3">
               <div className="h-px w-8 bg-primary"></div>
-              <span className="text-[10px] uppercase font-mono tracking-[0.6em] text-primary font-bold">SLC AI TOWN HALL // COMMUNITY_LAB</span>
+              <span className="text-[10px] uppercase font-mono tracking-[0.6em] text-primary font-bold">MarieCoder // COMMUNITY_LAB</span>
             </motion.div>
             
             <div className="space-y-6">

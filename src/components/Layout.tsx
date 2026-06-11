@@ -39,11 +39,11 @@ export default function Layout() {
       <InteractiveGrid />
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0A0A0B]/80 border-b border-white/10">
         <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" aria-label="Main navigation">
-          <Link to="/" className="flex items-center gap-2 text-primary group" aria-label="SLC AI Town Hall Home">
+          <Link to="/" className="flex items-center gap-2 text-primary group" aria-label="MarieCoder Home">
             <div className="w-10 h-10 bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all duration-500">
               <Terminal size={20} />
             </div>
-            <span className="font-display font-black text-xl tracking-tighter text-white">SLC <span className="text-primary group-hover:text-white transition-colors">AI</span> TOWN HALL</span>
+            <span className="font-display font-black text-xl tracking-tighter text-white">Marie<span className="text-primary group-hover:text-white transition-colors">Coder</span></span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -220,7 +220,7 @@ export default function Layout() {
             <section className="lg:col-span-5 space-y-8">
               <Link to="/" className="flex items-center gap-2 text-primary">
                 <Terminal size={32} />
-                <span className="font-display font-black text-2xl tracking-tighter text-white">SLC <span className="text-primary">AI</span> TOWN HALL</span>
+                <span className="font-display font-black text-2xl tracking-tighter text-white">Marie<span className="text-primary">Coder</span></span>
               </Link>
               <p className="text-white/50 text-lg font-light leading-relaxed max-w-md">
                 A casual meetup for people who make weird things. We’re a passionate, creative community of builders, artists, and researchers sharing the joy of the build.
@@ -287,7 +287,7 @@ export default function Layout() {
               <div className="flex items-center gap-2"><div className="w-1 h-1 bg-primary rounded-full"></div> Pure Output</div>
             </div>
             <div className="flex items-center gap-6">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">&copy; {new Date().getFullYear()} SLC AI TOWN HALL</span>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">&copy; {new Date().getFullYear()} MarieCoder</span>
               <div className="h-4 w-px bg-white/10 hidden md:block"></div>
               <div className="flex items-center gap-2 text-primary animate-pulse">
                 <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>

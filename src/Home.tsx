@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div className="selection:bg-primary selection:text-black bg-[#0A0A0B] min-h-screen text-white antialiased">
       <SEO 
-        title="Build Weird Things | SLC AI Town Hall" 
+        title="Build Weird Things | MarieCoder" 
         description="A casual, no-pressure meetup for people making weird internet projects, creative code, and AI explorations in Salt Lake City."
         breadcrumbs={[
           { name: 'Home', item: '/' }
@@ -47,10 +47,10 @@ export default function Home() {
             "mainEntity": [
               {
                 "@type": "Question",
-                "name": "What is SLC AI Town Hall?",
+                "name": "What is MarieCoder?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "SLC AI Town Hall is a casual, non-transactional meetup for builders, artists, and researchers in Salt Lake City. We focus on building weird internet projects and creative experiments."
+                  "text": "MarieCoder is a casual, non-transactional meetup for builders, artists, and researchers in Salt Lake City. We focus on building weird internet projects and creative experiments."
                 }
               },
               {
