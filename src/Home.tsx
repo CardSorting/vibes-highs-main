@@ -66,7 +66,7 @@ export default function Home() {
                 "name": "Is there a cost to attend?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "No, our weekly meetups are free. We are a community-driven collective, not a business."
+                  "text": "No, our monthly meetups are free. We are a community-driven collective, not a business."
                 }
               }
             ]
@@ -90,7 +90,7 @@ export default function Home() {
                 "addressCountry": "US"
               }
             },
-            "description": "Weekly session for builders and creative coders in Salt Lake City. Drop-ins welcome from 5:00 PM MST. Ends at 8:00 PM MST (usually ~3 hours). Check in on our Discord for more info."
+            "description": "Monthly session for builders and creative coders in Salt Lake City. Drop-ins welcome from 5:00 PM MST. Ends at 8:00 PM MST (usually ~3 hours). Check in on our Discord for more info."
           }
         ]}
       />

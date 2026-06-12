@@ -55,7 +55,7 @@ const AGENDA_PILLARS: AgendaPillar[] = [
     ],
     terminalCommand: 'hermes run --demo-trace',
     terminalOutput: [
-      '❯ Injecting Prompt: "Synthesize the week\'s agentic trends..."',
+      '❯ Injecting Prompt: "Synthesize the month\'s agentic trends..."',
       '🧠 [Hermes Reasoning] Thinking Process Initiated:',
       '  ├─ Analyzing current open-source model releases...',
       '  ├─ Activating tools: git_pull, web_search, file_audit',
@@ -66,19 +66,19 @@ const AGENDA_PILLARS: AgendaPillar[] = [
   {
     id: 'breakdown',
     number: '03',
-    title: 'Weekly Tech Breakdowns',
+    title: 'Monthly Tech Breakdowns',
     icon: BookOpen,
-    description: 'Artificial intelligence moves incredibly fast. Each week, we gather, play with, and explain the newest free models, smart tools, and exciting tech.',
+    description: 'Artificial intelligence moves incredibly fast. Each month, we gather, play with, and explain the newest free models, smart tools, and exciting tech.',
     details: [
       'Exploring the newest free models released by Nous Research',
       'Breaking down top prompt designs and how smart new models are',
       'Looking at cool AI art, music, and creative web projects',
       'Helping you build your own fun side projects and ideas'
     ],
-    terminalCommand: 'hermes analyze --week-latest',
+    terminalCommand: 'hermes analyze --month-latest',
     terminalOutput: [
       '❯ Scraping the open intelligence frontier...',
-      '🔥 TRENDING THIS WEEK IN AGENTIC DEVELOPMENT:',
+      '🔥 TRENDING THIS MONTH IN AGENTIC DEVELOPMENT:',
       '  1. Nous Hermes 3 Preview (Open weights benchmark crusher)',
       '  2. Local-first distributed agent runtimes',
       '  3. Structured JSON output schema engines',
@@ -107,11 +107,11 @@ export function Agenda() {
               <Cpu size={12} className="animate-pulse" /> The Unified Curriculum
             </div>
             <h2 className="font-display font-black text-5xl md:text-8xl tracking-tighter leading-[0.9] mb-6 uppercase">
-              WEEKLY<br />
+              MONTHLY<br />
               <span className="font-serif italic font-light text-white/30 lowercase">agenda.</span>
             </h2>
             <p className="text-white/70 text-lg md:text-xl font-light leading-relaxed font-sans max-w-2xl">
-              We host a weekly meetup focusing on free, open-source AI tools. As the local <span className="text-white font-medium underline decoration-primary decoration-2 underline-offset-4">Nous Research Chapter of SLC</span>, our sessions are designed to be hands-on and friendly for all skill levels.
+              We host a monthly meetup focusing on free, open-source AI tools. As the local <span className="text-white font-medium underline decoration-primary decoration-2 underline-offset-4">Nous Research Chapter of SLC</span>, our sessions are designed to be hands-on and friendly for all skill levels.
             </p>
           </div>
           <div className="flex items-center gap-2 px-4 py-2 border border-white/10 bg-white/2 rounded-none text-white/50 text-[10px] font-mono uppercase tracking-widest font-black">
@@ -299,10 +299,10 @@ export function Agenda() {
                 <Compass size={12} className="text-primary" /> The Gathering Spot
               </div>
               <h3 className="text-3xl font-display font-black text-white uppercase tracking-tight">
-                Our Weekly Home: Woodbine SLC
+                Our Monthly Home: Woodbine SLC
               </h3>
               <p className="text-white/60 font-light leading-relaxed text-base">
-                We meet downtown every week to collaborate, learn, and share projects. Whether you are a seasoned engineer or just starting your journey, you will find a friendly, creative community here:
+                We meet downtown every month to collaborate, learn, and share projects. Whether you are a seasoned engineer or just starting your journey, you will find a friendly, creative community here:
               </p>
             </div>
 

@@ -41,22 +41,33 @@ export function useVibes() {
   }, [hasRsvpd]);
 
   useEffect(() => {
-    const computeEventState = (mtDate: Date, targetDayOfWeek: number, startHour: number, endHour: number) => {
-      const mtHour = mtDate.getHours();
-      const currentDayOfWeek = mtDate.getDay();
-      let targetDayOffset = 0;
+    const getFirstFridayOfMonth = (year: number, month: number, hour: number) => {
+      const date = new Date(year, month, 1, hour, 0, 0, 0);
+      while (date.getDay() !== 5) {
+        date.setDate(date.getDate() + 1);
+      }
+      return date;
+    };
+
+    const computeEventState = (mtDate: Date, startHour: number, endHour: number) => {
+      const currentFirstFriday = getFirstFridayOfMonth(mtDate.getFullYear(), mtDate.getMonth(), startHour);
+      const currentFirstFridayEnd = new Date(currentFirstFriday);
+      currentFirstFridayEnd.setHours(endHour);
+
+      let targetMtDate: Date;
       let isHappeningNow = false;
 
-      if (currentDayOfWeek === targetDayOfWeek) {
-        if (mtHour >= startHour && mtHour < endHour) { isHappeningNow = true; targetDayOffset = 0; }
-        else if (mtHour < startHour) targetDayOffset = 0;
-        else targetDayOffset = 7;
+      if (mtDate.getTime() < currentFirstFriday.getTime()) {
+        targetMtDate = currentFirstFriday;
+      } else if (mtDate.getTime() >= currentFirstFriday.getTime() && mtDate.getTime() < currentFirstFridayEnd.getTime()) {
+        isHappeningNow = true;
+        targetMtDate = currentFirstFriday;
       } else {
-        targetDayOffset = targetDayOfWeek - currentDayOfWeek;
-        if (targetDayOffset < 0) targetDayOffset += 7;
+        const nextMonth = mtDate.getMonth() + 1;
+        const nextYear = mtDate.getFullYear() + (nextMonth > 11 ? 1 : 0);
+        targetMtDate = getFirstFridayOfMonth(nextYear, nextMonth % 12, startHour);
       }
 
-      const targetMtDate = new Date(mtDate.getFullYear(), mtDate.getMonth(), mtDate.getDate() + targetDayOffset, startHour, 0, 0);
       const diffMs = targetMtDate.getTime() - mtDate.getTime();
       let timeLeft = null;
       if (diffMs > 0 && !isHappeningNow) {
@@ -86,9 +97,11 @@ export function useVibes() {
       const getPart = (type: string) => parseInt(parts.find(p => p.type === type)?.value || '0', 10);
       const mtDate = new Date(getPart('year'), getPart('month') - 1, getPart('day'), getPart('hour'), getPart('minute'), getPart('second'));
       
-      setIsFridayToday(mtDate.getDay() === 5);
+      const firstFriday = getFirstFridayOfMonth(mtDate.getFullYear(), mtDate.getMonth(), 17);
+      const isMeetupToday = mtDate.getDate() === firstFriday.getDate() && mtDate.getMonth() === firstFriday.getMonth();
+      setIsFridayToday(isMeetupToday);
       
-      const friInfo = computeEventState(mtDate, 5, 17, 20);
+      const friInfo = computeEventState(mtDate, 17, 20);
       
       setFriState({ isHappeningNow: friInfo.isHappeningNow, isNext: true, timeLeft: friInfo.timeLeft });
     };
@@ -99,18 +112,27 @@ export function useVibes() {
   }, []);
 
   const handleCalendar = useCallback((type: 'fri') => {
-    const now = new Date();
-    const dayOfWeek = 5;
-    const startHour = 17;
-    const endHour = 20;
+    const getFirstFridayOfMonth = (year: number, month: number, hour: number) => {
+      const date = new Date(year, month, 1, hour, 0, 0, 0);
+      while (date.getDay() !== 5) {
+        date.setDate(date.getDate() + 1);
+      }
+      return date;
+    };
 
-    // Find next occurrence
-    const nextDate = new Date(now);
-    nextDate.setDate(now.getDate() + (dayOfWeek + 7 - now.getDay()) % 7);
-    nextDate.setHours(startHour, 0, 0, 0);
+    const now = new Date();
+    let nextDate = getFirstFridayOfMonth(now.getFullYear(), now.getMonth(), 17);
+    const currentFirstFridayEnd = new Date(nextDate);
+    currentFirstFridayEnd.setHours(20);
+
+    if (now.getTime() >= currentFirstFridayEnd.getTime()) {
+      const nextMonth = now.getMonth() + 1;
+      const nextYear = now.getFullYear() + (nextMonth > 11 ? 1 : 0);
+      nextDate = getFirstFridayOfMonth(nextYear, nextMonth % 12, 17);
+    }
 
     const endDate = new Date(nextDate);
-    endDate.setHours(endHour, 0, 0, 0);
+    endDate.setHours(20, 0, 0, 0);
 
     const formatISO = (date: Date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
     
@@ -118,7 +140,7 @@ export function useVibes() {
     const dates = `${formatISO(nextDate)}/${formatISO(endDate)}`;
     const location = "545 West 700 S, Salt Lake City, UT 84101";
     
-    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${dates}&ctz=America/Denver&recur=${encodeURIComponent(`RRULE:FREQ=WEEKLY;BYDAY=FR`)}&location=${encodeURIComponent(location)}`;
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${dates}&ctz=America/Denver&recur=${encodeURIComponent(`RRULE:FREQ=MONTHLY;BYDAY=1FR`)}&location=${encodeURIComponent(location)}`;
     window.open(url, '_blank');
   }, []);
 
