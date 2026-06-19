@@ -18,13 +18,11 @@ export default function Layout() {
   }, [location]);
 
   const navLinks = [
-    { label: 'Our Story', path: '/#about', isAnchor: true, description: 'Learn about our mission and culture' },
+    { label: 'Story', path: '/#about', isAnchor: true, description: 'Learn about our mission and culture' },
     { label: 'Schedule', path: '/#schedule', isAnchor: true, description: 'Upcoming meetups and events' },
     { label: 'Journal', path: '/editorial', isAnchor: false, description: 'Technical deep dives and logic' },
     { label: 'Community', path: '/partners', isAnchor: false, description: 'The builders powering our ecosystem' },
-    { label: 'LUMI Agent', path: '/lumi', isAnchor: false, description: 'Our calm, comfort-first VS Code coding companion' },
-    { label: 'Join Us', path: '/#location', isAnchor: true, description: 'Find our physical and digital roots' },
-    { label: 'Contact', path: '/#contact', isAnchor: true, description: 'Get in touch with the collective' },
+    { label: 'LUMI', path: '/lumi', isAnchor: false, description: 'Our calm, comfort-first VS Code coding companion' },
   ];
 
   const isActive = (path: string) => {
@@ -39,7 +37,7 @@ export default function Layout() {
       <CommandPalette />
       <InteractiveGrid />
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0A0A0B]/80 border-b border-white/10">
-        <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" aria-label="Main navigation">
+        <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
           <Link to="/" className="flex items-center gap-2 text-primary group" aria-label="MarieCoder Home">
             <div className="w-10 h-10 bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all duration-500">
               <Terminal size={20} />
@@ -50,7 +48,7 @@ export default function Layout() {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
-              <div key={link.path} className="relative group/nav">
+              <div key={link.path} className="relative">
                 {link.isAnchor ? (
                   <a
                     href={link.path}
@@ -72,51 +70,29 @@ export default function Layout() {
                     )}
                   </Link>
                 )}
-
-                {/* Mega-menu Tooltip */}
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 pointer-events-none group-hover/nav:opacity-100 transition-opacity z-50">
-                  <div className="bg-[#141415] border border-white/10 p-3 w-48 shadow-2xl shadow-black">
-                    <p className="text-[9px] font-bold uppercase tracking-widest text-primary mb-1">{link.label}</p>
-                    <p className="text-[10px] text-white/40 leading-tight font-light">{link.description}</p>
-                  </div>
-                </div>
               </div>
             ))}
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Visible Search Button for Non-Technical Users */}
+            {/* Compact Icon-Only Search Button */}
             <button
-              className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-none hover:bg-white/10 transition-colors group"
+              className="flex items-center justify-center w-10 h-10 bg-white/5 border border-white/10 rounded-none hover:bg-white/10 transition-colors group"
               onClick={() => window.dispatchEvent(new CustomEvent('open-command-palette'))}
               aria-label="Open search"
             >
               <Search size={16} className="text-white/40 group-hover:text-primary transition-colors" />
-              <span className="hidden md:block text-[10px] font-bold uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">Search</span>
-              <div className="hidden xl:flex items-center gap-0.5 ml-2 opacity-20">
-                <Command size={10} />
-                <span className="text-[9px] font-bold">K</span>
-              </div>
             </button>
 
-            <div className="hidden sm:flex items-center gap-3 border-r border-white/10 pr-6 mr-2">
-              <a href="https://x.com/goldeneggie" target="_blank" rel="noreferrer" className="text-white/40 hover:text-[#1DA1F2] transition-colors" aria-label="Follow us on X">
-                <Twitter size={16} />
-              </a>
-              <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-white/40 hover:text-[#5865F2] transition-colors" aria-label="Join our Discord">
-                <MessageSquare size={16} />
-              </a>
-            </div>
-
             <a href="/#contact" className="hidden md:block">
-              <Button className="bg-primary text-black hover:bg-white font-bold uppercase tracking-widest text-[10px] h-11 px-8 rounded-none transition-all shadow-lg shadow-primary/20">
+              <Button className="bg-primary text-black hover:bg-white font-bold uppercase tracking-widest text-[10px] h-10 px-6 rounded-none transition-all shadow-lg shadow-primary/20">
                 Get in Touch
               </Button>
             </a>
 
             {/* Mobile Menu Toggle */}
             <button
-              className="lg:hidden w-11 h-11 flex items-center justify-center bg-white/5 border border-white/10 text-white"
+              className="lg:hidden w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-expanded={isMobileMenuOpen}
               aria-label="Toggle mobile menu"
@@ -185,7 +161,7 @@ export default function Layout() {
         )}
       </AnimatePresence>
 
-      <main className="relative pt-20">
+      <main className="relative pt-16">
         <Breadcrumbs />
         <Outlet />
       </main>
