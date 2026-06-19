@@ -13,6 +13,7 @@ const Partners = lazy(() => import('./pages/Partners'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const CodeOfConduct = lazy(() => import('./pages/CodeOfConduct'));
+const Lumi = lazy(() => import('./pages/Lumi'));
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/conduct" element={<CodeOfConduct />} />
+            <Route path="/lumi" element={<Lumi />} />
           </Route>
         </Routes>
       </Suspense>

@@ -88,6 +88,14 @@ export default function CommandPalette() {
         icon: <Terminal size={16} /> 
       },
       { 
+        id: 'lumi', 
+        title: 'LUMI Coding Agent', 
+        subtitle: 'Learn about our calm, comfort-first VS Code coding companion.', 
+        category: 'Site Navigation', 
+        path: '/lumi', 
+        icon: <Terminal size={16} /> 
+      },
+      { 
         id: 'about', 
         title: 'About the Collective', 
         subtitle: 'Learn about our culture, schedule, and community roots.', 
@@ -176,10 +184,10 @@ export default function CommandPalette() {
                       <Clock size={12} /> System Registry Shortcuts
                     </div>
                     <div className="flex flex-wrap gap-2 px-2">
-                      {['Editorial', 'Partners', 'Schedule'].map(tag => (
+                      {['Editorial', 'Partners', 'LUMI', 'Schedule'].map(tag => (
                         <button 
                           key={tag}
-                          onClick={() => handleSelect(tag === 'Partners' ? '/partners' : `/#${tag.toLowerCase()}`)}
+                          onClick={() => handleSelect(tag === 'Partners' ? '/partners' : tag === 'LUMI' ? '/lumi' : `/#${tag.toLowerCase()}`)}
                           className="px-3 py-1 bg-white/5 border border-white/10 text-[9px] font-mono font-bold uppercase tracking-widest text-white/40 hover:text-primary hover:border-primary transition-all"
                         >
                           {tag}

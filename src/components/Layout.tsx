@@ -22,6 +22,7 @@ export default function Layout() {
     { label: 'Schedule', path: '/#schedule', isAnchor: true, description: 'Upcoming meetups and events' },
     { label: 'Journal', path: '/editorial', isAnchor: false, description: 'Technical deep dives and logic' },
     { label: 'Community', path: '/partners', isAnchor: false, description: 'The builders powering our ecosystem' },
+    { label: 'LUMI Agent', path: '/lumi', isAnchor: false, description: 'Our calm, comfort-first VS Code coding companion' },
     { label: 'Join Us', path: '/#location', isAnchor: true, description: 'Find our physical and digital roots' },
     { label: 'Contact', path: '/#contact', isAnchor: true, description: 'Get in touch with the collective' },
   ];
