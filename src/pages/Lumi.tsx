@@ -21,6 +21,22 @@ interface CommitNode {
   type: 'read' | 'write' | 'checkpoint';
 }
 
+const mcpToolsList = {
+  sqlite: [
+    { name: 'execute_query', desc: 'Run SQL statements on database substrate', args: '{\n  "query": "SELECT * FROM memory;"\n}' },
+    { name: 'read_schema', desc: 'Inspect database tables and schemas', args: '{\n  "table": "tasks"\n}' }
+  ],
+  github: [
+    { name: 'list_pull_requests', desc: 'Fetch open pull requests from repository', args: '{\n  "repo": "DietCodeMarie",\n  "state": "open"\n}' },
+    { name: 'get_commit', desc: 'Inspect specific git commit details', args: '{\n  "sha": "a1b2c3d"\n}' }
+  ],
+  filesystem: [
+    { name: 'grep_search', desc: 'Fast ripgrep regex searching across files', args: '{\n  "pattern": "Controller",\n  "dir": "src/"\n}' },
+    { name: 'read_file', desc: 'Securely inspect physical file contents', args: '{\n  "path": "src/server.ts"\n}' }
+  ]
+};
+
+
 export default function Lumi() {
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'modes' | 'commands' | 'mentions' | 'hooks' | 'roadmap'>('modes');
@@ -96,9 +112,13 @@ export default function Lumi() {
     ''
   ]);
 
+  // Hovered Architecture Flowchart Node State
+  const [hoveredArchNode, setHoveredArchNode] = useState<string | null>(null);
+
   // Keyboard hotkey simulation state references
   const simStepRef = useRef(simStep);
   const simProgressRef = useRef(simProgress);
+  const terminalEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     simStepRef.current = simStep;
@@ -108,12 +128,24 @@ export default function Lumi() {
     simProgressRef.current = simProgress;
   }, [simProgress]);
 
+  // Auto scroll terminal logs
+  useEffect(() => {
+    if (terminalEndRef.current) {
+      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [simTerminalOutput]);
+
   // Keyboard event listener for Simulator Sandbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const activeEl = document.activeElement;
       if (
-        document.activeElement?.tagName === 'INPUT' || 
-        document.activeElement?.tagName === 'TEXTAREA'
+        activeEl && (
+          activeEl.tagName === 'INPUT' || 
+          activeEl.tagName === 'TEXTAREA' ||
+          activeEl.tagName === 'SELECT' ||
+          activeEl.getAttribute('contenteditable') === 'true'
+        )
       ) {
         return;
       }
@@ -234,6 +266,107 @@ app.listen(PORT, () => {
 - Run complete compile checks before attempt_completion.
 - Fail closed if checks return warnings.`
     }
+  };
+
+  // Custom regex-based runtime code tokenizer
+  const highlightCodeLine = (line: string, type: 'ts' | 'json' | 'md') => {
+    if (type === 'md') {
+      if (line.startsWith('#')) {
+        return <span className="text-primary font-black font-display">{line}</span>;
+      }
+      if (line.startsWith('-')) {
+        return <span><span className="text-primary font-bold mr-1">&bull;</span>{line.substring(2)}</span>;
+      }
+      return <span className="text-white/60">{line}</span>;
+    }
+
+    if (type === 'json') {
+      const parts: React.ReactNode[] = [];
+      let currentIdx = 0;
+      const regex = /(".*?")|(\d+|true|false|null)|([{}[\]:,])/g;
+      let match;
+      const text = line;
+      
+      while ((match = regex.exec(text)) !== null) {
+        if (match.index > currentIdx) {
+          parts.push(text.substring(currentIdx, match.index));
+        }
+        
+        const [lexeme] = match;
+        if (lexeme.startsWith('"')) {
+          const isKey = text[match.index + lexeme.length] === ':' || text.substring(match.index + lexeme.length).trim().startsWith(':');
+          if (isKey) {
+            parts.push(<span key={match.index} className="text-sky-300 font-semibold">{lexeme}</span>);
+          } else {
+            parts.push(<span key={match.index} className="text-emerald-400">{lexeme}</span>);
+          }
+        } else if (/^\d+$/.test(lexeme) || lexeme === 'true' || lexeme === 'false' || lexeme === 'null') {
+          parts.push(<span key={match.index} className="text-violet-400 font-bold">{lexeme}</span>);
+        } else {
+          parts.push(<span key={match.index} className="text-yellow-400">{lexeme}</span>);
+        }
+        currentIdx = regex.lastIndex;
+      }
+      
+      if (currentIdx < text.length) {
+        parts.push(text.substring(currentIdx));
+      }
+      
+      return <>{parts.length > 0 ? parts : line}</>;
+    }
+
+    // TypeScript/JavaScript colorizer
+    const keywords = ['import', 'from', 'const', 'let', 'process', 'env', 'response', 'req', 'res', 'console', 'log'];
+    const regex = /(".*?"|'.*?'|`.*?`)|(\b\w+\b)|([{}()[\]:;.,=+\-*&|<>!])/g;
+    const parts: React.ReactNode[] = [];
+    let currentIdx = 0;
+    const text = line;
+    let match;
+
+    while ((match = regex.exec(text)) !== null) {
+      if (match.index > currentIdx) {
+        parts.push(text.substring(currentIdx, match.index));
+      }
+
+      const [lexeme] = match;
+      if (lexeme.startsWith('"') || lexeme.startsWith("'") || lexeme.startsWith('`')) {
+        parts.push(<span key={match.index} className="text-emerald-400">{lexeme}</span>);
+      } else if (keywords.includes(lexeme)) {
+        parts.push(<span key={match.index} className="text-violet-400 font-bold">{lexeme}</span>);
+      } else if (/^\d+$/.test(lexeme)) {
+        parts.push(<span key={match.index} className="text-amber-400 font-bold">{lexeme}</span>);
+      } else if (['express', 'app', 'PORT'].includes(lexeme)) {
+        parts.push(<span key={match.index} className="text-sky-300 font-medium">{lexeme}</span>);
+      } else if (['{', '}', '(', ')', '[', ']'].includes(lexeme)) {
+        parts.push(<span key={match.index} className="text-yellow-200">{lexeme}</span>);
+      } else {
+        parts.push(lexeme);
+      }
+      currentIdx = regex.lastIndex;
+    }
+
+    if (currentIdx < text.length) {
+      parts.push(text.substring(currentIdx));
+    }
+
+    return <>{parts.length > 0 ? parts : line}</>;
+  };
+
+  // Helper code renderer inside sandbox editor
+  const getActiveCode = () => {
+    if (activeFile === 'server.ts') {
+      if (simStep < 3) return filesContent['server.ts'].original;
+      if (simStep === 3) return filesContent['server.ts'].proposed;
+      return simDiffAction === 'approved' ? filesContent['server.ts'].modified : filesContent['server.ts'].original;
+    }
+    return filesContent[activeFile].original;
+  };
+
+  // Helper filetype resolver
+  const getActiveFileType = (): 'ts' | 'json' | 'md' => {
+    if (activeFile === 'server.ts') return 'ts';
+    if (activeFile === 'package.json') return 'json';
+    return 'md';
   };
 
   // Simulator lifecycle logic
@@ -561,7 +694,6 @@ app.listen(PORT, () => {
     setFaqVotes((prev) => {
       const current = prev[idx];
       if (current.voted === type) {
-        // Undo vote
         return {
           ...prev,
           [idx]: {
@@ -902,57 +1034,120 @@ app.listen(PORT, () => {
     faq.a.toLowerCase().includes(faqSearch.toLowerCase())
   );
 
-  const mcpToolsList = {
-    sqlite: [
-      { name: 'execute_query', desc: 'Run SQL statements on database substrate', args: '{\n  "query": "SELECT * FROM memory;"\n}' },
-      { name: 'read_schema', desc: 'Inspect database tables and schemas', args: '{\n  "table": "tasks"\n}' }
-    ],
-    github: [
-      { name: 'list_pull_requests', desc: 'Fetch open pull requests from repository', args: '{\n  "repo": "DietCodeMarie",\n  "state": "open"\n}' },
-      { name: 'get_commit', desc: 'Inspect specific git commit details', args: '{\n  "sha": "a1b2c3d"\n}' }
-    ],
-    filesystem: [
-      { name: 'grep_search', desc: 'Fast ripgrep regex searching across files', args: '{\n  "pattern": "Controller",\n  "dir": "src/"\n}' },
-      { name: 'read_file', desc: 'Securely inspect physical file contents', args: '{\n  "path": "src/server.ts"\n}' }
-    ]
+  // SVG Wave latency generator based on provider latency speed setting
+  const renderLatencyGraph = () => {
+    const waveSpeed = planProvider === 'openrouter' ? 4 : planProvider === 'openai' ? 2.5 : planProvider === 'nous' ? 1.8 : 1.2;
+    const waveAmp = planProvider === 'openrouter' ? 22 : planProvider === 'openai' ? 14 : planProvider === 'nous' ? 10 : 6;
+    
+    return (
+      <div className="bg-black/60 border border-white/5 p-4 relative overflow-hidden h-24 flex flex-col justify-between rounded-none mt-4">
+        <div className="text-[8px] font-mono text-white/30 uppercase tracking-widest flex justify-between z-10">
+          <span>Dynamic Provider Latency Monitor</span>
+          <span className="text-primary font-bold">Hz Response</span>
+        </div>
+        
+        {/* Animated Wave Path */}
+        <svg className="w-full h-12 absolute bottom-2 left-0 right-0 opacity-45" viewBox="0 0 300 48" preserveAspectRatio="none">
+          <motion.path 
+            animate={{
+              d: [
+                `M 0 24 Q 50 ${24 - waveAmp} 100 24 T 200 24 T 300 24`,
+                `M 0 24 Q 50 ${24 + waveAmp} 100 24 T 200 24 T 300 24`,
+                `M 0 24 Q 50 ${24 - waveAmp} 100 24 T 200 24 T 300 24`
+              ]
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: waveSpeed,
+              ease: "easeInOut"
+            }}
+            stroke="#00FF66"
+            strokeWidth="1.5"
+            fill="none"
+          />
+        </svg>
+        
+        <div className="flex justify-between items-center text-[9px] font-mono text-white/40 mt-auto z-10">
+          <span>Latency: <strong className="text-white">{planProvider === 'openrouter' ? '480ms' : planProvider === 'openai' ? '310ms' : planProvider === 'nous' ? '180ms' : '90ms'}</strong></span>
+          <span>Jitter: <strong className="text-white">&plusmn;12ms</strong></span>
+        </div>
+      </div>
+    );
   };
 
-  // Helper code renderer inside sandbox editor
-  const getActiveCode = () => {
-    if (activeFile === 'server.ts') {
-      if (simStep < 3) return filesContent['server.ts'].original;
-      if (simStep === 3) return filesContent['server.ts'].proposed;
-      return simDiffAction === 'approved' ? filesContent['server.ts'].modified : filesContent['server.ts'].original;
-    }
-    return filesContent[activeFile].original;
-  };
-
-  // Draw SVG timeline branch checkpoints
+  // Draw SVG branching Git checkpoints
   const renderGitGraph = () => {
     return (
       <div className="flex gap-4 items-stretch font-mono text-[10px] w-full pt-4">
-        {/* SVG Canvas for Branch Lines */}
-        <div className="w-8 shrink-0 relative flex flex-col items-center min-h-[220px]">
-          <div className="w-px bg-white/10 flex-1 absolute top-0 bottom-0 left-1/2 -translate-x-1/2" />
+        {/* Curved SVG Branch Canvas */}
+        <div className="w-12 shrink-0 relative flex flex-col items-center min-h-[220px]">
+          <svg className="w-full h-full absolute inset-0 opacity-40" viewBox="0 0 48 240" fill="none" preserveAspectRatio="none">
+            {/* Main Master Trunk Line */}
+            <path d="M12 0 L12 240" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="2" />
+            {/* Branch paths connecting master to commits */}
+            {commitList.map((node, index) => {
+              const y = (index * 42) + 28;
+              if (node.type === 'checkpoint') {
+                return (
+                  <g key={node.hash}>
+                    <path 
+                      d={`M12 ${y - 20} C 12 ${y - 10}, 36 ${y - 10}, 36 ${y}`} 
+                      stroke="#EAB308" 
+                      strokeWidth="1.5" 
+                      strokeDasharray="2 2"
+                    />
+                    <path 
+                      d={`M36 ${y} C 36 ${y + 10}, 12 ${y + 10}, 12 ${y + 20}`} 
+                      stroke="#EAB308" 
+                      strokeWidth="1.5" 
+                      strokeDasharray="2 2"
+                    />
+                  </g>
+                );
+              }
+              if (node.type === 'write') {
+                return (
+                  <g key={node.hash}>
+                    <path 
+                      d={`M12 ${y - 20} C 12 ${y - 10}, 36 ${y - 10}, 36 ${y}`} 
+                      stroke="#00FF66" 
+                      strokeWidth="1.5"
+                    />
+                    <path 
+                      d={`M36 ${y} C 36 ${y + 10}, 12 ${y + 10}, 12 ${y + 20}`} 
+                      stroke="#00FF66" 
+                      strokeWidth="1.5"
+                    />
+                  </g>
+                );
+              }
+              return null;
+            })}
+          </svg>
+
+          {/* Interactive nodes rendered overlays */}
           {commitList.map((node, index) => {
+            const y = (index * 42) + 20;
             const isCheckpoint = node.type === 'checkpoint';
             const isWrite = node.type === 'write';
-            const colorClass = isCheckpoint 
-              ? 'border-yellow-400 bg-black text-yellow-400' 
-              : isWrite 
-                ? 'border-emerald-400 bg-black text-emerald-400' 
-                : 'border-white/20 bg-black text-white/50';
             
+            const leftOffset = (isCheckpoint || isWrite) ? 'right-0' : 'left-2.5';
+            const colorClass = isCheckpoint 
+              ? 'border-yellow-400 bg-black text-yellow-400 shadow-[0_0_8px_rgba(234,179,8,0.3)]' 
+              : isWrite 
+                ? 'border-emerald-400 bg-black text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.3)]' 
+                : 'border-white/20 bg-black text-white/50';
+
             return (
-              <div 
-                key={node.hash} 
-                style={{ top: `${(index * 42) + 20}px` }} 
-                className={`absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 flex items-center justify-center cursor-pointer hover:scale-125 transition-transform ${colorClass}`}
+              <button
+                key={node.hash}
+                style={{ top: `${y}px` }} 
+                className={`absolute w-4.5 h-4.5 rounded-full border-2 flex items-center justify-center cursor-pointer hover:scale-125 transition-all duration-300 z-10 focus:outline-none ${leftOffset} ${colorClass}`}
                 title={`Restore state from node ${node.hash}`}
                 onClick={() => rollbackToCheckpoint(node)}
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-current" />
-              </div>
+              </button>
             );
           })}
         </div>
@@ -983,53 +1178,134 @@ app.listen(PORT, () => {
     );
   };
 
+  // Hovered architecture detail values resolver
+  const getArchitectureDetail = () => {
+    switch (hoveredArchNode) {
+      case 'prompt':
+        return {
+          title: 'User Prompt Parser',
+          file: 'src/components/Chat.tsx',
+          desc: 'Processes user requests, resolves @mentions, and routes queries into active task states.',
+          snippet: `const processPrompt = async (text: string) => {\n  const mentions = parseMentions(text);\n  const task = await TaskStore.create(text, mentions);\n  return task;\n};`
+        };
+      case 'controller':
+        return {
+          title: 'Lumi Controller Session',
+          file: 'src/core/controller/index.ts',
+          desc: 'Keeps track of workspace status, rules databases, active task logs, and user consent gates.',
+          snippet: `class Controller {\n  async runTaskLoop(task: Task) {\n    const plan = await this.plan(task);\n    const approval = await this.askApproval(plan);\n    if (approval.accepted) return this.execute(plan);\n  }\n}`
+        };
+      case 'router':
+        return {
+          title: 'LLM Model Router',
+          file: 'src/core/router.ts',
+          desc: 'Binds provider configuration credentials to direct LLM endpoints, splitting reasoning and execution workloads.',
+          snippet: `export const getRouterModel = (mode: 'plan' | 'act') => {\n  const config = loadProviders();\n  return config[mode].provider;\n};`
+        };
+      case 'host':
+        return {
+          title: 'VS Code Host Bridge',
+          file: 'src/hosts/vscode/hostbridge/',
+          desc: 'Implements physical workspace tasks like executing terminal scripts or modifying file channels over gRPC.',
+          snippet: `export class VsCodeHostProvider implements HostProvider {\n  async applyFileEdit(path: string, diff: string) {\n    return gRpcBridge.call("applyEdit", { path, diff });\n  }\n}`
+        };
+      case 'workspace':
+        return {
+          title: 'Physical Workspace Files',
+          file: 'project root',
+          desc: 'Contains repository file contents, diagnostics, and linter check engines.',
+          snippet: `// completionGatePipeline.ts\nexport async function runChecks() {\n  const linter = exec("npm run lint");\n  if (linter.code !== 0) throw new Error("Gates failed");\n}`
+        };
+      default:
+        return {
+          title: 'Technical Framework Architecture',
+          file: 'codemarie monorepo',
+          desc: 'Hover over individual elements above to inspect data pathways, relative files mapping, and active code snippets.',
+          snippet: `// Select a node to view code bindings`
+        };
+    }
+  };
+
+  const activeArchDetails = getArchitectureDetail();
+
   // Render SVG Flowchart Architecture
   const renderArchitectureFlow = () => {
     return (
-      <div className="border border-white/10 bg-[#0C0C0D] p-6 space-y-6 relative rounded-none">
-        <div className="absolute top-4 right-4 text-[8px] font-mono text-white/20 uppercase tracking-widest">
-          Active IPC/gRPC Context Flow
-        </div>
+      <div className="space-y-6">
+        <div className="border border-white/10 bg-[#0C0C0D] p-6 relative rounded-none">
+          <div className="absolute top-4 right-4 text-[8px] font-mono text-white/20 uppercase tracking-widest">
+            Active gRPC/Protobuf Routing Lines
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 relative">
-          {[
-            { id: 'prompt', label: '1. User Prompt', desc: 'Developer intent expression in sidebar chat.', file: 'src/components/Chat.tsx' },
-            { id: 'controller', label: '2. Controller', desc: 'Manages sessions & state transitions.', file: 'src/core/controller/index.ts' },
-            { id: 'router', label: '3. Model Router', desc: 'Routes tasks between Plan & Act provider models.', file: 'src/core/router.ts' },
-            { id: 'host', label: '4. Host Bridge', desc: 'Executes physical commands in VS Code sandbox.', file: 'src/hosts/vscode/hostbridge/' },
-            { id: 'workspace', label: '5. Workspace', desc: 'Physical filesystem & compiler diagnostics.', file: 'workspace root' }
-          ].map((node, index) => (
-            <div 
-              key={node.id}
-              className="bg-black/50 border border-white/5 p-4 relative group hover:border-primary transition-all flex flex-col justify-between"
-              style={{ minHeight: '130px' }}
-            >
-              <div>
-                <span className="text-[10px] font-mono text-primary uppercase block mb-1 font-bold">{node.label}</span>
-                <p className="text-[10px] text-white/50 leading-relaxed font-sans">{node.desc}</p>
-              </div>
-              <code className="text-[8px] text-white/30 font-mono mt-4 block truncate group-hover:text-primary transition-colors">
-                {node.file}
-              </code>
-              {index < 4 && (
-                <div className="hidden sm:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-10 text-primary animate-pulse font-mono">
-                  &rarr;
+          <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 relative z-10 pt-4">
+            {[
+              { id: 'prompt', label: '1. User Prompt', file: 'src/components/Chat.tsx' },
+              { id: 'controller', label: '2. Controller', file: 'src/core/controller/' },
+              { id: 'router', label: '3. Model Router', file: 'src/core/router.ts' },
+              { id: 'host', label: '4. Host Bridge', file: 'src/hosts/vscode/' },
+              { id: 'workspace', label: '5. Workspace', file: 'workspace root' }
+            ].map((node, index) => (
+              <div 
+                key={node.id}
+                onMouseEnter={() => setHoveredArchNode(node.id)}
+                className={`bg-black/70 border p-4 relative group cursor-pointer transition-all flex flex-col justify-between min-h-[90px] ${
+                  hoveredArchNode === node.id ? 'border-primary shadow-[0_0_8px_rgba(0,255,102,0.15)] bg-primary/[0.02]' : 'border-white/5'
+                }`}
+              >
+                <div>
+                  <span className={`text-[10px] font-mono uppercase block mb-1 font-bold ${
+                    hoveredArchNode === node.id ? 'text-primary' : 'text-white/60'
+                  }`}>{node.label}</span>
+                  <span className="text-[8px] font-mono text-white/30 block truncate mt-2">{node.file}</span>
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
+                {index < 4 && (
+                  <div className="hidden sm:block absolute top-1/2 -right-2.5 -translate-y-1/2 z-25 text-primary font-mono select-none">
+                    &rarr;
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
 
-        <div className="bg-black/40 border border-dashed border-white/10 p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-2 h-2 bg-primary rounded-full animate-ping" />
-            <div>
-              <div className="text-[10px] font-mono font-bold text-white uppercase tracking-widest">Substrate Layer: BroccoliDB Connection</div>
-              <p className="text-white/45 text-[10px] font-sans">The Controller streams session steps to a SQLite substrate database, preserving checkpoints.</p>
+          <div className="bg-black/40 border border-dashed border-white/10 p-4 mt-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 bg-primary rounded-full animate-ping" />
+              <div>
+                <div className="text-[10px] font-mono font-bold text-white uppercase tracking-widest">Substrate Layer: BroccoliDB Connection</div>
+                <p className="text-white/45 text-[10px] font-sans">The Controller streams session steps to a SQLite substrate database, preserving checkpoints.</p>
+              </div>
+            </div>
+            <div className="font-mono text-[9px] text-white/35">
+              Sync Speed: <span className="text-primary font-bold">0.4ms</span> &bull; Checkpoint Overhead: <span className="text-primary font-bold">12ms</span>
             </div>
           </div>
-          <div className="font-mono text-[9px] text-white/35">
-            Sync Speed: <span className="text-primary font-bold">0.4ms</span> &bull; Checkpoint Overhead: <span className="text-primary font-bold">12ms</span>
+        </div>
+
+        {/* Hover inspector values board */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 animate-fade-in">
+          <div className="md:col-span-5 bg-white/2 border border-white/5 p-5 flex flex-col justify-between font-mono text-[10px]">
+            <div className="space-y-3">
+              <span className="text-primary font-bold uppercase tracking-widest border-b border-primary/25 pb-1 block">
+                {activeArchDetails.title}
+              </span>
+              <p className="text-white/60 font-sans text-xs leading-relaxed font-light">
+                {activeArchDetails.desc}
+              </p>
+            </div>
+            <div className="text-white/30 text-[8px] mt-6 flex justify-between">
+              <span>BOUNDS: {activeArchDetails.file}</span>
+              <span className="text-primary font-bold">ACTIVE_READ</span>
+            </div>
+          </div>
+
+          <div className="md:col-span-7 bg-[#050506] border border-white/10 p-4 flex flex-col justify-between">
+            <div className="flex justify-between items-center text-[8px] font-mono text-white/30 uppercase tracking-widest border-b border-white/5 pb-2 mb-2">
+              <span>Binding Interface Segment</span>
+              <span>Syntax: TypeScript</span>
+            </div>
+            <pre className="text-emerald-400 font-mono text-[10px] leading-relaxed overflow-x-auto whitespace-pre pr-2 max-h-[140px] custom-scrollbar">
+              <code>{activeArchDetails.snippet}</code>
+            </pre>
           </div>
         </div>
       </div>
@@ -1052,8 +1328,8 @@ app.listen(PORT, () => {
           <div className="p-3 flex-1 font-mono leading-relaxed">
             {originalLines.map((line, idx) => (
               <div key={idx} className="flex hover:bg-white/2 transition-colors">
-                <span className="w-8 text-white/20 select-none text-right pr-2 border-r border-white/5 mr-2">{idx + 1}</span>
-                <span className="text-white/60 whitespace-pre">{line || ' '}</span>
+                <span className="w-8 text-white/20 select-none text-right pr-2 border-r border-white/5 mr-2 shrink-0">{idx + 1}</span>
+                <span className="whitespace-pre">{highlightCodeLine(line, 'ts')}</span>
               </div>
             ))}
           </div>
@@ -1075,9 +1351,9 @@ app.listen(PORT, () => {
                     isAddedLine ? 'bg-emerald-950/40 border-l-2 border-emerald-400' : ''
                   }`}
                 >
-                  <span className="w-8 text-white/20 select-none text-right pr-2 border-r border-white/5 mr-2">{idx + 1}</span>
-                  <span className={`${isAddedLine ? 'text-emerald-300 font-semibold' : 'text-white/70'} whitespace-pre`}>
-                    {line || ' '}
+                  <span className="w-8 text-white/20 select-none text-right pr-2 border-r border-white/5 mr-2 shrink-0">{idx + 1}</span>
+                  <span className={`${isAddedLine ? 'text-emerald-300 font-semibold' : ''} whitespace-pre`}>
+                    {highlightCodeLine(line, 'ts')}
                   </span>
                 </div>
               );
@@ -1266,7 +1542,7 @@ app.listen(PORT, () => {
                 <div className="flex gap-1 h-10 items-end">
                   <button 
                     onClick={() => setActiveFile('server.ts')}
-                    className={`flex items-center gap-2 px-3 py-1 text-[10px] font-mono h-8 border-t-2 ${
+                    className={`flex items-center gap-2 px-3 py-1 text-[10px] font-mono h-8 border-t-2 transition-colors duration-150 ${
                       activeFile === 'server.ts' 
                         ? 'bg-[#0C0C0D] border-primary text-white font-bold' 
                         : 'bg-black/20 border-transparent text-white/40 hover:text-white/80'
@@ -1278,7 +1554,7 @@ app.listen(PORT, () => {
                   </button>
                   <button 
                     onClick={() => setActiveFile('package.json')}
-                    className={`flex items-center gap-2 px-3 py-1 text-[10px] font-mono h-8 border-t-2 ${
+                    className={`flex items-center gap-2 px-3 py-1 text-[10px] font-mono h-8 border-t-2 transition-colors duration-150 ${
                       activeFile === 'package.json' 
                         ? 'bg-[#0C0C0D] border-primary text-white font-bold' 
                         : 'bg-black/20 border-transparent text-white/40 hover:text-white/80'
@@ -1289,7 +1565,7 @@ app.listen(PORT, () => {
                   </button>
                   <button 
                     onClick={() => setActiveFile('dietcoderules')}
-                    className={`flex items-center gap-2 px-3 py-1 text-[10px] font-mono h-8 border-t-2 ${
+                    className={`flex items-center gap-2 px-3 py-1 text-[10px] font-mono h-8 border-t-2 transition-colors duration-150 ${
                       activeFile === 'dietcoderules' 
                         ? 'bg-[#0C0C0D] border-primary text-white font-bold' 
                         : 'bg-black/20 border-transparent text-white/40 hover:text-white/80'
@@ -1308,7 +1584,7 @@ app.listen(PORT, () => {
                   <div className="w-48 bg-black/20 border-r border-white/5 flex flex-col p-3 font-mono text-[10px] select-none text-white/60 shrink-0">
                     <div className="text-[9px] uppercase tracking-wider text-white/30 font-bold mb-3 flex justify-between items-center">
                       <span>File Explorer</span>
-                      <button onClick={() => setExplorerOpen(false)} className="text-white/20 hover:text-white">&larr;</button>
+                      <button onClick={() => setExplorerOpen(false)} className="text-white/20 hover:text-white cursor-pointer">&larr;</button>
                     </div>
                     
                     <div className="space-y-2">
@@ -1326,7 +1602,7 @@ app.listen(PORT, () => {
                         <div className="pl-3 space-y-1">
                           <button 
                             onClick={() => setActiveFile('server.ts')} 
-                            className={`flex items-center gap-1.5 w-full text-left truncate py-0.5 ${
+                            className={`flex items-center gap-1.5 w-full text-left truncate py-0.5 cursor-pointer ${
                               activeFile === 'server.ts' ? 'text-primary font-bold' : 'text-white/70 hover:text-white'
                             }`}
                           >
@@ -1343,7 +1619,7 @@ app.listen(PORT, () => {
 
                         <button 
                           onClick={() => setActiveFile('dietcoderules')}
-                          className={`flex items-center gap-1.5 w-full text-left truncate py-0.5 ${
+                          className={`flex items-center gap-1.5 w-full text-left truncate py-0.5 cursor-pointer ${
                             activeFile === 'dietcoderules' ? 'text-primary font-bold' : 'text-white/70 hover:text-white'
                           }`}
                         >
@@ -1353,7 +1629,7 @@ app.listen(PORT, () => {
 
                         <button 
                           onClick={() => setActiveFile('package.json')}
-                          className={`flex items-center gap-1.5 w-full text-left truncate py-0.5 ${
+                          className={`flex items-center gap-1.5 w-full text-left truncate py-0.5 cursor-pointer ${
                             activeFile === 'package.json' ? 'text-primary font-bold' : 'text-white/70 hover:text-white'
                           }`}
                         >
@@ -1369,7 +1645,7 @@ app.listen(PORT, () => {
                 {!explorerOpen && (
                   <button 
                     onClick={() => setExplorerOpen(true)} 
-                    className="w-5 bg-black/40 hover:bg-black/60 border-r border-white/5 text-white/40 hover:text-white flex items-center justify-center font-mono text-[9px]"
+                    className="w-5 bg-black/40 hover:bg-black/60 border-r border-white/5 text-white/40 hover:text-white flex items-center justify-center font-mono text-[9px] cursor-pointer"
                   >
                     &rarr;
                   </button>
@@ -1390,11 +1666,15 @@ app.listen(PORT, () => {
 
                     {simStep === 1 && (
                       <div className="font-mono text-[11px] text-white/70 w-full animate-fade-in flex">
-                        <div className="text-white/20 select-none text-right pr-3 border-r border-white/5 mr-3 w-8">
+                        <div className="text-white/20 select-none text-right pr-3 border-r border-white/5 mr-3 w-8 shrink-0">
                           {getActiveCode().split('\n').map((_, i) => <div key={i}>{i+1}</div>)}
                         </div>
-                        <pre className="text-white/80 font-mono leading-relaxed overflow-x-auto">
-                          <code>{getActiveCode()}</code>
+                        <pre className="text-white/80 font-mono leading-relaxed overflow-x-auto flex-1 select-text">
+                          <code>
+                            {getActiveCode().split('\n').map((line, idx) => (
+                              <div key={idx}>{highlightCodeLine(line, getActiveFileType())}</div>
+                            ))}
+                          </code>
                         </pre>
                       </div>
                     )}
@@ -1406,12 +1686,16 @@ app.listen(PORT, () => {
                           <span className="text-[10px] text-primary uppercase tracking-[0.2em] font-bold">Plan Mode: Gaining Context...</span>
                           <span className="text-[9px] text-white/40 mt-1 font-sans">LUMI is reading directory tree and analyzing imports</span>
                         </div>
-                        <div className="font-mono text-[11px] text-white/10 select-none flex">
-                          <div className="text-white/5 select-none text-right pr-3 border-r border-white/5 mr-3 w-8">
+                        <div className="font-mono text-[11px] text-white/10 select-none flex w-full">
+                          <div className="text-white/5 select-none text-right pr-3 border-r border-white/5 mr-3 w-8 shrink-0">
                             {getActiveCode().split('\n').map((_, i) => <div key={i}>{i+1}</div>)}
                           </div>
-                          <pre className="font-mono leading-relaxed">
-                            <code>{getActiveCode()}</code>
+                          <pre className="font-mono leading-relaxed flex-1">
+                            <code>
+                              {getActiveCode().split('\n').map((line, idx) => (
+                                <div key={idx}>{highlightCodeLine(line, getActiveFileType())}</div>
+                              ))}
+                            </code>
                           </pre>
                         </div>
                       </div>
@@ -1429,11 +1713,15 @@ app.listen(PORT, () => {
 
                     {simStep === 3 && activeFile !== 'server.ts' && (
                       <div className="font-mono text-[11px] text-white/70 w-full flex">
-                        <div className="text-white/20 select-none text-right pr-3 border-r border-white/5 mr-3 w-8">
+                        <div className="text-white/20 select-none text-right pr-3 border-r border-white/5 mr-3 w-8 shrink-0">
                           {getActiveCode().split('\n').map((_, i) => <div key={i}>{i+1}</div>)}
                         </div>
-                        <pre className="text-white/80 font-mono leading-relaxed overflow-x-auto">
-                          <code>{getActiveCode()}</code>
+                        <pre className="text-white/80 font-mono leading-relaxed overflow-x-auto flex-1 select-text">
+                          <code>
+                            {getActiveCode().split('\n').map((line, idx) => (
+                              <div key={idx}>{highlightCodeLine(line, getActiveFileType())}</div>
+                            ))}
+                          </code>
                         </pre>
                       </div>
                     )}
@@ -1500,7 +1788,7 @@ app.listen(PORT, () => {
                     <div className="flex gap-4">
                       <button 
                         onClick={() => setSimTerminalTab('terminal')}
-                        className={`font-bold uppercase tracking-widest pb-1 border-b ${
+                        className={`font-bold uppercase tracking-widest pb-1 border-b cursor-pointer ${
                           simTerminalTab === 'terminal' ? 'text-primary border-primary' : 'text-white/40 border-transparent hover:text-white'
                         }`}
                       >
@@ -1508,7 +1796,7 @@ app.listen(PORT, () => {
                       </button>
                       <button 
                         onClick={() => setSimTerminalTab('problems')}
-                        className={`font-bold uppercase tracking-widest pb-1 border-b flex items-center gap-1.5 ${
+                        className={`font-bold uppercase tracking-widest pb-1 border-b flex items-center gap-1.5 cursor-pointer ${
                           simTerminalTab === 'problems' ? 'text-primary border-primary' : 'text-white/40 border-transparent hover:text-white'
                         }`}
                       >
@@ -1516,7 +1804,7 @@ app.listen(PORT, () => {
                       </button>
                       <button 
                         onClick={() => setSimTerminalTab('logs')}
-                        className={`font-bold uppercase tracking-widest pb-1 border-b ${
+                        className={`font-bold uppercase tracking-widest pb-1 border-b cursor-pointer ${
                           simTerminalTab === 'logs' ? 'text-primary border-primary' : 'text-white/40 border-transparent hover:text-white'
                         }`}
                       >
@@ -1534,7 +1822,8 @@ app.listen(PORT, () => {
                         {simTerminalOutput.map((log, idx) => (
                           <div key={idx} className="whitespace-pre-wrap">{log}</div>
                         ))}
-                        <form onSubmit={handleTerminalCommandSubmit} className="flex items-center gap-1">
+                        <div ref={terminalEndRef} />
+                        <form onSubmit={handleTerminalCommandSubmit} className="flex items-center gap-1 mt-1">
                           <span className="text-primary font-bold">$</span>
                           <input 
                             type="text" 
@@ -1600,9 +1889,12 @@ app.listen(PORT, () => {
                   <h3 className="text-sm font-bold uppercase tracking-wider text-white flex justify-between items-center">
                     <span>LUMI_SIDEBAR_CHAT</span>
                     <button 
-                      onClick={() => setYoloMode(!yoloMode)}
-                      className={`text-[8px] font-mono px-2 py-0.5 border tracking-widest uppercase transition-all ${
-                        yoloMode ? 'bg-yellow-400 text-black border-yellow-400' : 'bg-white/5 border-white/10 text-white/50 hover:text-white'
+                      onClick={() => {
+                        setYoloMode(!yoloMode);
+                        toast.info(yoloMode ? 'YOLO Mode Deactivated' : 'YOLO Mode Activated');
+                      }}
+                      className={`text-[8px] font-mono px-2 py-0.5 border tracking-widest uppercase transition-all cursor-pointer ${
+                        yoloMode ? 'bg-yellow-400 text-black border-yellow-400 font-bold' : 'bg-white/5 border-white/10 text-white/50 hover:text-white'
                       }`}
                     >
                       YOLO Mode: {yoloMode ? 'ON' : 'OFF'}
@@ -1613,49 +1905,51 @@ app.listen(PORT, () => {
                 <Separator className="bg-white/5" />
 
                 {/* Simulated Conversation scrolls */}
-                <div className="space-y-4 max-h-[260px] overflow-y-auto text-[11px] leading-relaxed custom-scrollbar pr-2 font-sans flex-1">
-                  {simStep === 0 && (
-                    <div className="text-white/40 italic py-8 text-center font-sans">
-                      Console waiting to begin a task...
-                    </div>
-                  )}
-
-                  {simStep >= 1 && (
-                    <div className="space-y-3">
-                      <div className="bg-white/2 border border-white/5 p-3">
-                        <div className="text-[9px] font-mono text-white/30 uppercase mb-1">Human // Intent</div>
-                        <p className="text-white/70">Create a health check endpoint at \'/health\' returning 200 OK and server timestamps.</p>
+                <div className="space-y-4 max-h-[260px] overflow-y-auto text-[11px] leading-relaxed custom-scrollbar pr-2 font-sans flex-1 flex flex-col justify-between">
+                  <div>
+                    {simStep === 0 && (
+                      <div className="text-white/40 italic py-8 text-center font-sans">
+                        Console waiting to begin a task...
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {simStep >= 2 && (
-                    <div className="space-y-3 animate-fade-in">
-                      <div className="bg-primary/5 border border-primary/20 p-3">
-                        <div className="text-[9px] font-mono text-primary uppercase mb-1">LUMI // Plan Mode</div>
-                        <p className="text-white/70">Analyzing file dependencies. I will add the router block inside \'src/server.ts\' before the listen invocation.</p>
+                    {simStep >= 1 && (
+                      <div className="space-y-3">
+                        <div className="bg-white/2 border border-white/5 p-3">
+                          <div className="text-[9px] font-mono text-white/30 uppercase mb-1">Human // Intent</div>
+                          <p className="text-white/70">Create a health check endpoint at \'/health\' returning 200 OK and server timestamps.</p>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {simStep >= 3 && (
-                    <div className="space-y-3 animate-fade-in">
-                      <div className="bg-primary/5 border border-primary/20 p-3">
-                        <div className="text-[9px] font-mono text-primary uppercase mb-1">LUMI // Act Mode</div>
-                        <p className="text-white/70">Proposed changes staged in the workspace. Please review the file diff and approve the mutating write operation.</p>
+                    {simStep >= 2 && (
+                      <div className="space-y-3 mt-3 animate-fade-in">
+                        <div className="bg-primary/5 border border-primary/20 p-3">
+                          <div className="text-[9px] font-mono text-primary uppercase mb-1">LUMI // Plan Mode</div>
+                          <p className="text-white/70">Analyzing file dependencies. I will add the router block inside \'src/server.ts\' before the listen invocation.</p>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {simStep >= 4 && (
-                    <div className="space-y-3 animate-fade-in">
-                      <div className="bg-[#0C0C0D] border border-white/5 p-3 font-mono text-[9px] text-white/50 space-y-1">
-                        {simLog.map((log, idx) => (
-                          <div key={idx}>{log}</div>
-                        ))}
+                    {simStep >= 3 && (
+                      <div className="space-y-3 mt-3 animate-fade-in">
+                        <div className="bg-primary/5 border border-primary/20 p-3">
+                          <div className="text-[9px] font-mono text-primary uppercase mb-1">LUMI // Act Mode</div>
+                          <p className="text-white/70">Proposed changes staged in the workspace. Please review the file diff and approve the mutating write operation.</p>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+
+                    {simStep >= 4 && (
+                      <div className="space-y-3 mt-3 animate-fade-in">
+                        <div className="bg-[#0C0C0D] border border-white/5 p-3 font-mono text-[9px] text-white/50 space-y-1">
+                          {simLog.map((log, idx) => (
+                            <div key={idx}>{log}</div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -1664,7 +1958,7 @@ app.listen(PORT, () => {
                 {simStep === 0 && (
                   <Button 
                     onClick={() => setSimStep(1)} 
-                    className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12 rounded-none hover:bg-white flex justify-between px-4"
+                    className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12 rounded-none hover:bg-white flex justify-between px-4 cursor-pointer"
                   >
                     <span>Initialize Task</span>
                     <span className="bg-black/35 text-white/60 border border-white/10 px-1 py-0.5 rounded text-[8px]">Hotkey [I]</span>
@@ -1674,7 +1968,7 @@ app.listen(PORT, () => {
                 {simStep === 1 && (
                   <Button 
                     onClick={() => setSimStep(2)} 
-                    className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12 rounded-none hover:bg-white flex justify-between px-4"
+                    className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12 rounded-none hover:bg-white flex justify-between px-4 cursor-pointer"
                   >
                     <span>Start Plan Mode</span>
                     <span className="bg-black/35 text-white/60 border border-white/10 px-1 py-0.5 rounded text-[8px]">Hotkey [P]</span>
@@ -1685,7 +1979,7 @@ app.listen(PORT, () => {
                   <Button 
                     onClick={() => handleTransitionToActMode()} 
                     disabled={simProgress < 100}
-                    className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12 rounded-none hover:bg-white disabled:opacity-40 flex justify-between px-4"
+                    className="w-full bg-primary text-black font-black uppercase tracking-widest text-[10px] h-12 rounded-none hover:bg-white disabled:opacity-40 flex justify-between px-4 cursor-pointer"
                   >
                     <span>Transition to Act Mode</span>
                     <span className="bg-black/35 text-white/60 border border-white/10 px-1 py-0.5 rounded text-[8px]">Hotkey [A]</span>
@@ -1696,7 +1990,7 @@ app.listen(PORT, () => {
                   <div className="flex gap-2">
                     <Button 
                       onClick={approveMutatingWrite} 
-                      className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-black font-black uppercase tracking-widest text-[10px] h-12 rounded-none flex flex-col justify-center items-center gap-0.5"
+                      className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-black font-black uppercase tracking-widest text-[10px] h-12 rounded-none flex flex-col justify-center items-center gap-0.5 cursor-pointer"
                     >
                       <span>Approve Diff</span>
                       <span className="text-[7px] opacity-70 tracking-normal font-mono font-normal bg-black/20 px-1 rounded text-white">[Hotkey A]</span>
@@ -1704,7 +1998,7 @@ app.listen(PORT, () => {
                     <Button 
                       onClick={rejectMutatingWrite} 
                       variant="destructive"
-                      className="flex-1 font-black uppercase tracking-widest text-[10px] h-12 rounded-none flex flex-col justify-center items-center gap-0.5"
+                      className="flex-1 font-black uppercase tracking-widest text-[10px] h-12 rounded-none flex flex-col justify-center items-center gap-0.5 cursor-pointer"
                     >
                       <span>Reject</span>
                       <span className="text-[7px] opacity-70 tracking-normal font-mono font-normal bg-black/20 px-1 rounded text-white">[Hotkey R]</span>
@@ -1722,7 +2016,7 @@ app.listen(PORT, () => {
                   <Button 
                     onClick={resetSimulator} 
                     variant="outline"
-                    className="w-full border-white/10 text-white font-black uppercase tracking-widest text-[10px] h-12 rounded-none hover:bg-white/5 flex justify-between px-4"
+                    className="w-full border-white/10 text-white font-black uppercase tracking-widest text-[10px] h-12 rounded-none hover:bg-white/5 flex justify-between px-4 cursor-pointer"
                   >
                     <span>Reset Simulator</span>
                     <span className="bg-black/35 text-white/60 border border-white/10 px-1 py-0.5 rounded text-[8px]">Hotkey [R]</span>
@@ -1749,7 +2043,7 @@ app.listen(PORT, () => {
                 <button
                   key={idx}
                   onClick={() => setActivePhilosophyTab(idx)}
-                  className={`w-full text-left p-4 border transition-all relative flex flex-col rounded-none ${
+                  className={`w-full text-left p-4 border transition-all relative flex flex-col rounded-none cursor-pointer ${
                     activePhilosophyTab === idx 
                       ? 'bg-primary/5 border-primary text-white' 
                       : 'bg-white/2 border-white/5 text-white/40 hover:bg-white/5 hover:border-white/20'
@@ -1825,7 +2119,7 @@ app.listen(PORT, () => {
                       <span className="text-[8px] font-mono text-white/30 uppercase">// BroccoliDB Shadow Git Commits</span>
                       <button 
                         onClick={triggerBroccoliSnapshot}
-                        className="px-2.5 py-1 bg-primary/10 border border-primary/20 hover:bg-primary hover:text-black font-mono text-[8px] uppercase tracking-widest text-primary transition-all flex items-center gap-1 rounded-none"
+                        className="px-2.5 py-1 bg-primary/10 border border-primary/20 hover:bg-primary hover:text-black font-mono text-[8px] uppercase tracking-widest text-primary transition-all flex items-center gap-1 rounded-none cursor-pointer"
                       >
                         <RefreshCw size={8} className="animate-spin-slow" /> Audit Snapshot
                       </button>
@@ -1875,7 +2169,7 @@ app.listen(PORT, () => {
                 <button
                   key={idx}
                   onClick={() => setActiveStep(idx)}
-                  className={`w-full text-left p-4 border transition-all relative flex items-center justify-between rounded-none ${
+                  className={`w-full text-left p-4 border transition-all relative flex items-center justify-between rounded-none cursor-pointer ${
                     activeStep === idx 
                       ? 'bg-primary/5 border-primary text-white' 
                       : 'bg-white/2 border-white/5 text-white/40 hover:bg-white/5 hover:border-white/20'
@@ -1954,7 +2248,7 @@ app.listen(PORT, () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest border transition-all relative rounded-none ${
+                className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest border transition-all relative rounded-none cursor-pointer ${
                   activeTab === tab.id
                     ? 'bg-primary text-black border-primary font-black z-10'
                     : 'bg-white/2 border-white/5 text-white/50 hover:text-white hover:border-white/20'
@@ -1987,7 +2281,7 @@ app.listen(PORT, () => {
                             <button
                               key={prov}
                               onClick={() => setPlanProvider(prov as any)}
-                              className={`px-3 py-1.5 font-mono text-[9px] uppercase border tracking-wider transition-all rounded-none ${
+                              className={`px-3 py-1.5 font-mono text-[9px] uppercase border tracking-wider transition-all rounded-none cursor-pointer ${
                                 planProvider === prov
                                   ? 'bg-primary text-black border-primary font-bold'
                                   : 'bg-white/2 border-white/5 text-white/40 hover:text-white hover:border-white/20'
@@ -2007,7 +2301,7 @@ app.listen(PORT, () => {
                             <button
                               key={prov}
                               onClick={() => setActProvider(prov as any)}
-                              className={`px-3 py-1.5 font-mono text-[9px] uppercase border tracking-wider transition-all rounded-none ${
+                              className={`px-3 py-1.5 font-mono text-[9px] uppercase border tracking-wider transition-all rounded-none cursor-pointer ${
                                 actProvider === prov
                                   ? 'bg-primary text-black border-primary font-bold'
                                   : 'bg-white/2 border-white/5 text-white/40 hover:text-white hover:border-white/20'
@@ -2029,9 +2323,9 @@ app.listen(PORT, () => {
                           <button
                             key={mcp}
                             onClick={() => toggleMcpServer(mcp as any)}
-                            className={`px-4 py-2 border transition-all flex items-center gap-2 rounded-none ${
+                            className={`px-4 py-2 border transition-all flex items-center gap-2 rounded-none cursor-pointer ${
                               connectedMcps[mcp as keyof typeof connectedMcps]
-                                ? 'bg-[#00FF66]/10 border-primary text-white'
+                                ? 'bg-[#00FF66]/10 border-primary text-white font-semibold'
                                 : 'bg-white/2 border-white/5 text-white/40 hover:text-white'
                             }`}
                           >
@@ -2057,7 +2351,7 @@ app.listen(PORT, () => {
                                 setMcpSelectedTool(defaultTool);
                                 setMcpArguments(mcpToolsList[val][0].args);
                               }}
-                              className="bg-[#0C0C0D] border border-white/10 text-white/80 p-2 font-mono text-[10px] w-full rounded-none"
+                              className="bg-[#0C0C0D] border border-white/10 text-white/80 p-2 font-mono text-[10px] w-full rounded-none outline-none focus:border-primary/50"
                             >
                               <option value="sqlite">mcp://sqlite-server</option>
                               <option value="github">mcp://github-server</option>
@@ -2075,7 +2369,7 @@ app.listen(PORT, () => {
                                 const match = mcpToolsList[mcpSelectedServer].find(t => t.name === val);
                                 if (match) setMcpArguments(match.args);
                               }}
-                              className="bg-[#0C0C0D] border border-white/10 text-white/80 p-2 font-mono text-[10px] w-full rounded-none"
+                              className="bg-[#0C0C0D] border border-white/10 text-white/80 p-2 font-mono text-[10px] w-full rounded-none outline-none focus:border-primary/50"
                             >
                               {mcpToolsList[mcpSelectedServer].map(t => (
                                 <option key={t.name} value={t.name}>{t.name} ({t.desc.substring(0, 20)}...)</option>
@@ -2101,7 +2395,7 @@ app.listen(PORT, () => {
                           <Button 
                             onClick={executeMcpTest}
                             disabled={mcpExecuting || !connectedMcps[mcpSelectedServer]}
-                            className="bg-primary text-black font-black font-mono text-[9px] uppercase tracking-widest h-9 rounded-none disabled:opacity-40"
+                            className="bg-primary text-black font-black font-mono text-[9px] uppercase tracking-widest h-9 rounded-none disabled:opacity-40 cursor-pointer"
                           >
                             {mcpExecuting ? 'Executing Tool...' : !connectedMcps[mcpSelectedServer] ? 'Server Offline' : 'Execute Test Tool'}
                           </Button>
@@ -2121,7 +2415,7 @@ app.listen(PORT, () => {
                     </div>
                   </div>
 
-                  {/* Right: Simulated Provider Config Metrics */}
+                  {/* Right: Simulated Provider Config Metrics with Waveform */}
                   <div className="lg:col-span-5 bg-black border border-white/10 p-6 flex flex-col justify-between min-h-[300px] rounded-none">
                     <div className="space-y-6">
                       <div className="text-[10px] font-mono text-white/30 uppercase tracking-widest flex items-center justify-between">
@@ -2159,6 +2453,9 @@ app.listen(PORT, () => {
                         </div>
                       </div>
 
+                      {/* Live Latency Waveform visualizer */}
+                      {renderLatencyGraph()}
+
                       {/* MCP output log */}
                       {mcpLog.length > 0 && (
                         <div className="pt-2 border-t border-white/5">
@@ -2195,7 +2492,7 @@ app.listen(PORT, () => {
                         placeholder="FILTER COMMANDS..."
                         value={commandQuery}
                         onChange={(e) => setCommandQuery(e.target.value)}
-                        className="bg-transparent border-none focus:ring-0 text-white placeholder:text-white/20 text-[10px] uppercase font-mono tracking-widest w-full font-mono"
+                        className="bg-transparent border-none focus:ring-0 text-white placeholder:text-white/20 text-[10px] uppercase font-mono tracking-widest w-full font-mono outline-none"
                       />
                     </div>
 
@@ -2206,7 +2503,7 @@ app.listen(PORT, () => {
                             key={idx} 
                             onClick={() => runCommandSimulation(cmd.name)}
                             disabled={cmdRunning}
-                            className="bg-white/2 border border-white/5 p-3 flex flex-col justify-between hover:border-primary/30 text-left transition-colors group/cmd disabled:opacity-50 rounded-none"
+                            className="bg-white/2 border border-white/5 p-3 flex flex-col justify-between hover:border-primary/30 text-left transition-colors group/cmd disabled:opacity-50 rounded-none cursor-pointer"
                           >
                             <code className="text-primary text-[11px] font-mono font-bold mb-1 flex items-center justify-between w-full">
                               <span>{cmd.name}</span>
@@ -2297,7 +2594,7 @@ app.listen(PORT, () => {
                         <select 
                           value={hookType}
                           onChange={(e) => setHookType(e.target.value as any)}
-                          className="bg-[#0C0C0D] border border-white/10 text-white/80 p-2 font-mono text-[10px] w-full rounded-none"
+                          className="bg-[#0C0C0D] border border-white/10 text-white/80 p-2 font-mono text-[10px] w-full rounded-none outline-none focus:border-primary/50"
                         >
                           <option value="PreToolUse">PreToolUse (Fires before file writes)</option>
                           <option value="TaskComplete">TaskComplete (Fires on task finish)</option>
@@ -2310,7 +2607,7 @@ app.listen(PORT, () => {
                         <select 
                           value={hookPolicy}
                           onChange={(e) => setHookPolicy(e.target.value as any)}
-                          className="bg-[#0C0C0D] border border-white/10 text-white/80 p-2 font-mono text-[10px] w-full rounded-none"
+                          className="bg-[#0C0C0D] border border-white/10 text-white/80 p-2 font-mono text-[10px] w-full rounded-none outline-none focus:border-primary/50"
                         >
                           <option value="allow">ALLOW (Pass checks & log)</option>
                           <option value="warn">WARN (Trigger warning prompts)</option>
@@ -2534,7 +2831,7 @@ app.listen(PORT, () => {
                 placeholder="SEARCH FAQ RECORDS..."
                 value={faqSearch}
                 onChange={(e) => setFaqSearch(e.target.value)}
-                className="bg-transparent border-none focus:ring-0 text-white placeholder:text-white/20 uppercase tracking-widest text-[9px] w-full font-mono"
+                className="bg-transparent border-none focus:ring-0 text-white placeholder:text-white/20 uppercase tracking-widest text-[9px] w-full font-mono outline-none"
               />
             </div>
           </div>
@@ -2546,7 +2843,7 @@ app.listen(PORT, () => {
                   <div className="flex items-center justify-between text-left group">
                     <button
                       onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                      className="flex-1 flex items-center justify-between text-left focus:outline-none"
+                      className="flex-1 flex items-center justify-between text-left focus:outline-none cursor-pointer"
                     >
                       <h3 className="text-sm font-bold uppercase tracking-wide text-white group-hover:text-primary transition-colors pr-4">
                         {faq.q}
@@ -2554,28 +2851,30 @@ app.listen(PORT, () => {
                       <HelpCircle size={16} className={`text-white/40 transition-transform duration-300 ${openFaq === idx ? 'rotate-180 text-primary' : ''}`} />
                     </button>
                     
-                    {/* Thumbs Feedback Rating */}
+                    {/* Thumbs Feedback Rating with Spring effect */}
                     <div className="flex items-center gap-3 ml-4 shrink-0 font-mono text-[9px] text-white/40">
-                      <button 
+                      <motion.button 
+                        whileTap={{ scale: 1.3, y: -2 }}
                         onClick={() => handleFaqVote(idx, 'up')}
-                        className={`flex items-center gap-1 hover:text-emerald-400 transition-colors p-1 ${
+                        className={`flex items-center gap-1 hover:text-emerald-400 transition-colors p-1 cursor-pointer ${
                           faqVotes[idx]?.voted === 'up' ? 'text-emerald-400 font-bold' : ''
                         }`}
                         title="Mark as helpful"
                       >
                         <ThumbsUp size={11} />
                         <span>{faqVotes[idx]?.up}</span>
-                      </button>
-                      <button 
+                      </motion.button>
+                      <motion.button 
+                        whileTap={{ scale: 1.3, y: 2 }}
                         onClick={() => handleFaqVote(idx, 'down')}
-                        className={`flex items-center gap-1 hover:text-red-400 transition-colors p-1 ${
+                        className={`flex items-center gap-1 hover:text-red-400 transition-colors p-1 cursor-pointer ${
                           faqVotes[idx]?.voted === 'down' ? 'text-red-400 font-bold' : ''
                         }`}
                         title="Mark as unhelpful"
                       >
                         <ThumbsDown size={11} />
                         <span>{faqVotes[idx]?.down}</span>
-                      </button>
+                      </motion.button>
                     </div>
                   </div>
 
