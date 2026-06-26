@@ -203,10 +203,10 @@ export default function Layout() {
                 A casual meetup for people who make weird things. We’re a passionate, creative community of builders, artists, and researchers sharing the joy of the build.
               </p>
               <div className="flex items-center gap-4">
-                <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="w-10 h-10 rounded-full border-2 border-[#0A0A0B] bg-white/10 overflow-hidden">
-                      <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Community member" className="grayscale" />
+                <div className="flex -space-x-2" aria-label="Community member avatars">
+                  {['AI', 'CC', 'UX', 'OS'].map((label) => (
+                    <div key={label} className="w-10 h-10 rounded-full border-2 border-[#0A0A0B] bg-white/10 flex items-center justify-center text-[9px] font-black text-primary">
+                      {label}
                     </div>
                   ))}
                 </div>
@@ -239,10 +239,10 @@ export default function Layout() {
               <section className="space-y-6" aria-label="Social connections">
                 <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-primary">Socials</h4>
                 <ul className="space-y-4">
-                  <li><a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Discord Server</a></li>
-                  <li><a href="https://x.com/goldeneggie" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Twitter / X</a></li>
+                  <li><a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Discord Server</a></li>
+                  <li><a href="https://x.com/goldeneggie" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Twitter / X</a></li>
                   <li><a href="mailto:willcruzdesigner@gmail.com" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">Email Contact</a></li>
-                  <li><a href="https://github.com/cardsorting" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">GitHub</a></li>
+                  <li><a href="https://github.com/cardsorting" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors text-sm font-medium flex items-center gap-2">GitHub</a></li>
                 </ul>
               </section>
 
@@ -278,5 +278,3 @@ export default function Layout() {
     </div>
   );
 }
-
-

@@ -36,8 +36,8 @@ export default function Home() {
   return (
     <div className="selection:bg-primary selection:text-black bg-[#0A0A0B] min-h-screen text-white antialiased">
       <SEO 
-        title="Build Weird Things | MarieCoder" 
-        description="A casual, no-pressure meetup for people making weird internet projects, creative code, and AI explorations in Salt Lake City."
+        title="Build Weird Things" 
+        description="MarieCoder is a Salt Lake City creative coding meetup for AI experiments, internet projects, and unfinished side quests."
         breadcrumbs={[
           { name: 'Home', item: '/' }
         ]}
@@ -70,27 +70,6 @@ export default function Home() {
                 }
               }
             ]
-          },
-          {
-            "@type": "Event",
-            "name": "Friday Creative Hangout",
-            "startDate": "2024-05-10T17:00",
-            "endDate": "2024-05-10T20:00",
-            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "eventStatus": "https://schema.org/EventScheduled",
-            "location": {
-              "@type": "Place",
-              "name": "Woodbine SLC",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "545 West 700 S",
-                "addressLocality": "Salt Lake City",
-                "addressRegion": "UT",
-                "postalCode": "84101",
-                "addressCountry": "US"
-              }
-            },
-            "description": "Monthly session for builders and creative coders in Salt Lake City. Drop-ins welcome from 5:00 PM MST. Ends at 8:00 PM MST (usually ~3 hours). Check in on our Discord for more info."
           }
         ]}
       />

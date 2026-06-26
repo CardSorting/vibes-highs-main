@@ -141,7 +141,7 @@ export function useVibes() {
     const location = "545 West 700 S, Salt Lake City, UT 84101";
     
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${dates}&ctz=America/Denver&recur=${encodeURIComponent(`RRULE:FREQ=MONTHLY;BYDAY=1FR`)}&location=${encodeURIComponent(location)}`;
-    window.open(url, '_blank');
+    window.open(url, '_blank', 'noopener,noreferrer');
   }, []);
 
   // Simulated live registration drift

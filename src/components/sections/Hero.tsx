@@ -66,7 +66,7 @@ export function Hero({ nextUpEvent }: HeroProps) {
               transition={{ delay: 0.3 }} 
               className="flex flex-wrap gap-4"
             >
-              <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer">
+              <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noopener noreferrer">
                 <Button className="bg-primary text-black hover:bg-white font-black uppercase tracking-widest text-[10px] h-16 px-10 rounded-none transition-all group">
                   Join Community <ChevronRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>

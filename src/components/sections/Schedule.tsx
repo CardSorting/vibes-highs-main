@@ -30,7 +30,7 @@ export function Schedule({
     if (navigator.share) {
       try { await navigator.share({ title: 'SLC AI Town Hall', text, url: window.location.href }); } catch (err) { console.error(err); }
     } else {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -108,7 +108,7 @@ function SessionRow({ day, time, location, address, state, isToday, onRsvp, onCa
                  <div>
                    <span className="text-white font-bold">{time.split(' — ')[0]} MST</span> — Drop-ins welcome from {time.split(' — ')[0]}. 
                    Ends at 8:00 PM (usually ~3 hours). 
-                   Check in on our <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noreferrer" className="text-primary hover:underline font-semibold inline-flex items-center gap-0.5">Discord <MessageSquare size={10} /></a> for more info.
+                   Check in on our <a href="https://discord.gg/ua5UUXZTyz" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold inline-flex items-center gap-0.5">Discord <MessageSquare size={10} /></a> for more info.
                  </div>
                </div>
              </div>

@@ -179,7 +179,6 @@ export default function Partners() {
         <SEO 
           title={selectedPartner ? `${selectedPartner.name} | Community Map` : "Community Ecosystem | The Ecosystem"} 
           description={selectedPartner ? selectedPartner.description : "A directory of the friends, tools, and infrastructure powering the SLC AI Town Hall collective."}
-          ogImage={selectedPartner?.logo}
           breadcrumbs={[
             { name: 'Home', item: '/' },
             { name: 'Community', item: '/partners' },
@@ -633,7 +632,7 @@ export default function Partners() {
                       </div>
                       
                       <div className="space-y-4 mt-12">
-                        <a href={selectedPartner.link} target="_blank" rel="noreferrer" className="block">
+                        <a href={selectedPartner.link} target="_blank" rel="noopener noreferrer" className="block">
                           <Button className="w-full bg-white text-black hover:bg-primary font-black uppercase tracking-widest text-[10px] h-12 rounded-none transition-all">
                             Visit official site <ExternalLink size={14} className="ml-2" />
                           </Button>

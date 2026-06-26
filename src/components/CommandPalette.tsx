@@ -108,7 +108,7 @@ export default function CommandPalette() {
 
   const handleSelect = (path: string, isExternal?: boolean) => {
     if (isExternal) {
-      window.open(path, '_blank');
+      window.open(path, '_blank', 'noopener,noreferrer');
     } else {
       navigate(path);
     }

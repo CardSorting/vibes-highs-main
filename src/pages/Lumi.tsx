@@ -1445,11 +1445,11 @@ app.listen(PORT, () => {
               </div>
               <div className="bg-white/2 border border-white/5 p-3 flex flex-col justify-between">
                 <span className="text-white/30 mb-2">VS Marketplace</span>
-                <span className="font-bold text-primary hover:underline"><a href="https://marketplace.visualstudio.com/items?itemName=CardSorting.lumi-vscode" target="_blank" rel="noreferrer">Active</a></span>
+                <span className="font-bold text-primary hover:underline"><a href="https://marketplace.visualstudio.com/items?itemName=CardSorting.lumi-vscode" target="_blank" rel="noopener noreferrer">Active</a></span>
               </div>
               <div className="bg-white/2 border border-white/5 p-3 flex flex-col justify-between">
                 <span className="text-white/30 mb-2">Open VSX ID</span>
-                <span className="font-bold text-primary hover:underline"><a href="https://open-vsx.org/extension/CardSorting/lumi" target="_blank" rel="noreferrer">CardSorting.lumi</a></span>
+                <span className="font-bold text-primary hover:underline"><a href="https://open-vsx.org/extension/CardSorting/lumi" target="_blank" rel="noopener noreferrer">CardSorting.lumi</a></span>
               </div>
               <div className="bg-white/2 border border-white/5 p-3 flex flex-col justify-between">
                 <span className="text-white/30 mb-2">Substrate</span>
@@ -1465,7 +1465,7 @@ app.listen(PORT, () => {
               </div>
               <div className="bg-white/2 border border-white/5 p-3 flex flex-col justify-between">
                 <span className="text-white/30 mb-2">Homepage</span>
-                <span className="font-bold text-white hover:text-primary"><a href="https://dietcode.io" target="_blank" rel="noreferrer">dietcode.io</a></span>
+                <span className="font-bold text-white hover:text-primary"><a href="https://dietcode.io" target="_blank" rel="noopener noreferrer">dietcode.io</a></span>
               </div>
             </motion.div>
 
@@ -1483,7 +1483,7 @@ app.listen(PORT, () => {
                     <div>
                       <div className="text-[10px] font-mono text-primary uppercase tracking-widest mb-1">
                         {method.url ? (
-                          <a href={method.url} target="_blank" rel="noreferrer" className="hover:underline inline-flex items-center gap-1">
+                          <a href={method.url} target="_blank" rel="noopener noreferrer" className="hover:underline inline-flex items-center gap-1">
                             {method.title} <ExternalLink size={10} />
                           </a>
                         ) : (
